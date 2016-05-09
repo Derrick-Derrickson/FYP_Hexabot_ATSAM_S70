@@ -59,16 +59,62 @@
 // From module: Common build items for user board support templates
 #include <user_board.h>
 
+// From module: FreeRTOS - kernel 8.2.3
+#include <FreeRTOS.h>
+#include <StackMacros.h>
+#include <croutine.h>
+#include <deprecated_definitions.h>
+#include <event_groups.h>
+#include <list.h>
+#include <mpu_wrappers.h>
+#include <portable.h>
+#include <projdefs.h>
+#include <queue.h>
+#include <semphr.h>
+#include <task.h>
+#include <timers.h>
+
 // From module: Generic board support
 #include <board.h>
 
 // From module: Interrupt management - SAM implementation
 #include <interrupt.h>
 
+// From module: PIO - Parallel Input/Output Controller
+#include <pio.h>
+
+// From module: PMC - Power Management Controller
+#include <pmc.h>
+#include <sleep.h>
+
 // From module: Part identification macros
 #include <parts.h>
 
 // From module: SAM FPU driver
 #include <fpu.h>
+
+// From module: System Clock Control - SAMS70 implementation
+#include <sysclk.h>
+
+// From module: TWI - Two-wire Interface High Speed
+#include <twihs.h>
+
+// From module: TWIHS - Two-Wire Interface High Speed- SAM implementation
+#include <sam_twihs/twihs_master.h>
+#include <sam_twihs/twihs_slave.h>
+#include <twihs_master.h>
+#include <twihs_slave.h>
+
+// From module: UART - Univ. Async Rec/Trans
+#include <uart.h>
+
+// From module: USART - Univ. Syn Async Rec/Trans
+#include <usart.h>
+
+// From module: WDT - Watchdog Timer
+#include <wdt.h>
+
+// From module: pio_handler support enabled
+#include <pio_handler.h>
 
 #endif // ASF_H
