@@ -21,20 +21,20 @@
 
 // External oscillator settings.
 // Uncomment and set correct values if external oscillator is used.
-
+#define BOARD_MCK 300000000
 // External oscillator frequency
-//#define BOARD_XOSC_HZ          8000000
+#define BOARD_XOSC_HZ          12000000
 
 // External oscillator type.
 //!< External clock signal
-//#define BOARD_XOSC_TYPE        XOSC_TYPE_EXTERNAL
+#define BOARD_XOSC_TYPE        XOSC_TYPE_EXTERNAL
 //!< 32.768 kHz resonator on TOSC
-//#define BOARD_XOSC_TYPE        XOSC_TYPE_32KHZ
+#define BOARD_XOSC_TYPE        XOSC_TYPE_32KHZ
 //!< 0.4 to 16 MHz resonator on XTALS
-//#define BOARD_XOSC_TYPE        XOSC_TYPE_XTAL
+#define BOARD_XOSC_TYPE        XOSC_TYPE_XTAL
 
 // External oscillator startup time
-//#define BOARD_XOSC_STARTUP_US  500000
+#define BOARD_XOSC_STARTUP_US  500000
 
 
 #endif // USER_BOARD_H

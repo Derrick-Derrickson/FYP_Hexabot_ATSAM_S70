@@ -29,12 +29,14 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include <asf.h>
+#include "../Debug.h"
 
 int main (void)
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
 
 	board_init();
+	sendDebugString("BOARD INIT COMPLETE\n");
 
 	/* Insert application code here, after the board has been initialized. */
 }
