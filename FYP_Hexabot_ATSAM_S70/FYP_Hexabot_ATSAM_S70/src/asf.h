@@ -52,12 +52,18 @@
  * running the ASF driver selector tool. Any changes will be discarded.
  */
 
+// From module: ACC - Analog Comparator Controller
+#include <acc.h>
+
 // From module: Common SAM compiler driver
 #include <compiler.h>
 #include <status_codes.h>
 
 // From module: Common build items for user board support templates
 #include <user_board.h>
+
+// From module: Delay routines
+#include <delay.h>
 
 // From module: FreeRTOS - kernel 8.2.3
 #include <FreeRTOS.h>
@@ -77,8 +83,14 @@
 // From module: Generic board support
 #include <board.h>
 
+// From module: ISI - Image Sensor Interface
+#include <isi.h>
+
 // From module: Interrupt management - SAM implementation
 #include <interrupt.h>
+
+// From module: MATRIX - Bus Matrix
+#include <matrix.h>
 
 // From module: PIO - Parallel Input/Output Controller
 #include <pio.h>
@@ -90,8 +102,24 @@
 // From module: Part identification macros
 #include <parts.h>
 
+// From module: QSPI - QUAD Serial Peripheral Interface
+#include <qspi.h>
+
 // From module: SAM FPU driver
 #include <fpu.h>
+
+// From module: SAM SDRAMC Driver
+#include <sdramc.h>
+
+// From module: SMC - Static Memory Controller
+#include <smc.h>
+
+// From module: SUPC - Supply Controller
+#include <supc.h>
+
+// From module: Sleep manager - SAM implementation
+#include <sam/sleepmgr.h>
+#include <sleepmgr.h>
 
 // From module: System Clock Control - SAMS70 implementation
 #include <sysclk.h>

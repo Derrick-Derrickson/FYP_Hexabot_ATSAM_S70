@@ -30,14 +30,23 @@
       <framework-data>
   <options>
     <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="thirdparty.os.freertos.version" value="Add" config="8.2.3" content-id="Atmel.ASF" />
-    <option id="sam.drivers.pmc" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="sam.drivers.pio" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="sam.drivers.usart" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="sam.drivers.uart" value="Add" config="" content-id="Atmel.ASF" />
-    <option id="sam.drivers.twihs" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.services.delay" value="Add" config="" content-id="Atmel.ASF" />
     <option id="common.services.basic.twihs" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="common.utils.interrupt" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.acc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.smc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.isi" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.matrix" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.pio" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.pmc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.sdramc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.supc" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.twihs" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.uart" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="sam.drivers.usart" value="Add" config="" content-id="Atmel.ASF" />
     <option id="sam.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
+    <option id="thirdparty.os.freertos.version" value="Add" config="8.2.3" content-id="Atmel.ASF" />
+    <option id="sam.drivers.qspi" value="Add" config="" content-id="Atmel.ASF" />
     <option id="sam.utils.linker_scripts" value="Add" config="" content-id="Atmel.ASF" />
   </options>
   <configurations>
@@ -244,6 +253,28 @@
     <file path="src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/port.c" framework="" version="3.30.1" source="thirdparty\freertos\freertos-8.2.3\Source\portable\GCC\ARM_CM7\r0p1\port.c" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h" framework="" version="3.30.1" source="thirdparty\freertos\freertos-8.2.3\Source\portable\GCC\ARM_CM7\r0p1\portmacro.h" changed="False" content-id="Atmel.ASF" />
     <file path="src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.c" framework="" version="3.30.1" source="thirdparty\freertos\freertos-8.2.3\Source\portable\MemMang\heap_1.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common/services/delay/sam/cycle_counter.c" framework="" version="3.30.1" source="common\services\delay\sam\cycle_counter.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common/services/delay/sam/cycle_counter.h" framework="" version="3.30.1" source="common\services\delay\sam\cycle_counter.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common/services/delay/delay.h" framework="" version="3.30.1" source="common\services\delay\delay.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/supc/supc.c" framework="" version="3.30.1" source="sam\drivers\supc\supc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/supc/supc.h" framework="" version="3.30.1" source="sam\drivers\supc\supc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/isi/isi.c" framework="" version="3.30.1" source="sam\drivers\isi\isi.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/isi/isi.h" framework="" version="3.30.1" source="sam\drivers\isi\isi.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/acc/acc.c" framework="" version="3.30.1" source="sam\drivers\acc\acc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/acc/acc_example/acc_example.h" framework="" version="3.30.1" source="sam\drivers\acc\acc_example\acc_example.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/acc/acc.h" framework="" version="3.30.1" source="sam\drivers\acc\acc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/sdramc/sdramc.c" framework="" version="3.30.1" source="sam\drivers\sdramc\sdramc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/sdramc/sdramc.h" framework="" version="3.30.1" source="sam\drivers\sdramc\sdramc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common/services/sleepmgr/sam/sleepmgr.c" framework="" version="3.30.1" source="common\services\sleepmgr\sam\sleepmgr.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common/services/sleepmgr/sleepmgr.h" framework="" version="3.30.1" source="common\services\sleepmgr\sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/common/services/sleepmgr/sam/sleepmgr.h" framework="" version="3.30.1" source="common\services\sleepmgr\sam\sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/Config/conf_sleepmgr.h" framework="" version="3.30.1" source="common\services\sleepmgr\sam\module_config\conf_sleepmgr.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/matrix/matrix.c" framework="" version="3.30.1" source="sam\drivers\matrix\matrix.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/matrix/matrix.h" framework="" version="3.30.1" source="sam\drivers\matrix\matrix.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/ebi/smc/smc.c" framework="" version="3.30.1" source="sam\drivers\ebi\smc\smc.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/ebi/smc/smc.h" framework="" version="3.30.1" source="sam\drivers\ebi\smc\smc.h" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/qspi/qspi.c" framework="" version="3.30.1" source="sam\drivers\qspi\qspi.c" changed="False" content-id="Atmel.ASF" />
+    <file path="src/ASF/sam/drivers/qspi/qspi.h" framework="" version="3.30.1" source="sam\drivers\qspi\qspi.h" changed="False" content-id="Atmel.ASF" />
   </files>
   <documentation help="http://asf.atmel.com/docs/3.30.1/common.applications.user_application.user_board.sams70q20/html/index.html" />
   <offline-documentation help="" />
@@ -260,7 +291,7 @@
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <SwdClock>10000000</SwdClock>
+          <SwdClock>2000000</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
@@ -269,7 +300,7 @@
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>SWD</avrtoolinterface>
-    <avrtoolinterfaceclock>10000000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -315,6 +346,15 @@
       <Value>../src/ASF/sam/drivers/wdt</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1</Value>
+      <Value>../src/ASF/common/services/delay</Value>
+      <Value>../src/ASF/sam/drivers/supc</Value>
+      <Value>../src/ASF/sam/drivers/isi</Value>
+      <Value>../src/ASF/sam/drivers/acc</Value>
+      <Value>../src/ASF/sam/drivers/sdramc</Value>
+      <Value>../src/ASF/common/services/sleepmgr</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/sam/drivers/ebi/smc</Value>
+      <Value>../src/ASF/sam/drivers/qspi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -361,6 +401,15 @@
       <Value>../src/ASF/sam/drivers/wdt</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1</Value>
+      <Value>../src/ASF/common/services/delay</Value>
+      <Value>../src/ASF/sam/drivers/supc</Value>
+      <Value>../src/ASF/sam/drivers/isi</Value>
+      <Value>../src/ASF/sam/drivers/acc</Value>
+      <Value>../src/ASF/sam/drivers/sdramc</Value>
+      <Value>../src/ASF/common/services/sleepmgr</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/sam/drivers/ebi/smc</Value>
+      <Value>../src/ASF/sam/drivers/qspi</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM7=true -DBOARD=USER_BOARD -Dprintf=iprintf -Dscanf=iscanf -D__FREERTOS__</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -390,6 +439,15 @@
       <Value>../src/ASF/sam/drivers/wdt</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1</Value>
+      <Value>../src/ASF/common/services/delay</Value>
+      <Value>../src/ASF/sam/drivers/supc</Value>
+      <Value>../src/ASF/sam/drivers/isi</Value>
+      <Value>../src/ASF/sam/drivers/acc</Value>
+      <Value>../src/ASF/sam/drivers/sdramc</Value>
+      <Value>../src/ASF/common/services/sleepmgr</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/sam/drivers/ebi/smc</Value>
+      <Value>../src/ASF/sam/drivers/qspi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -439,6 +497,15 @@
       <Value>../src/ASF/sam/drivers/wdt</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1</Value>
+      <Value>../src/ASF/common/services/delay</Value>
+      <Value>../src/ASF/sam/drivers/supc</Value>
+      <Value>../src/ASF/sam/drivers/isi</Value>
+      <Value>../src/ASF/sam/drivers/acc</Value>
+      <Value>../src/ASF/sam/drivers/sdramc</Value>
+      <Value>../src/ASF/common/services/sleepmgr</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/sam/drivers/ebi/smc</Value>
+      <Value>../src/ASF/sam/drivers/qspi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -486,6 +553,15 @@
       <Value>../src/ASF/sam/drivers/wdt</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1</Value>
+      <Value>../src/ASF/common/services/delay</Value>
+      <Value>../src/ASF/sam/drivers/supc</Value>
+      <Value>../src/ASF/sam/drivers/isi</Value>
+      <Value>../src/ASF/sam/drivers/acc</Value>
+      <Value>../src/ASF/sam/drivers/sdramc</Value>
+      <Value>../src/ASF/common/services/sleepmgr</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/sam/drivers/ebi/smc</Value>
+      <Value>../src/ASF/sam/drivers/qspi</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -516,6 +592,15 @@
       <Value>../src/ASF/sam/drivers/wdt</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include</Value>
       <Value>../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1</Value>
+      <Value>../src/ASF/common/services/delay</Value>
+      <Value>../src/ASF/sam/drivers/supc</Value>
+      <Value>../src/ASF/sam/drivers/isi</Value>
+      <Value>../src/ASF/sam/drivers/acc</Value>
+      <Value>../src/ASF/sam/drivers/sdramc</Value>
+      <Value>../src/ASF/common/services/sleepmgr</Value>
+      <Value>../src/ASF/sam/drivers/matrix</Value>
+      <Value>../src/ASF/sam/drivers/ebi/smc</Value>
+      <Value>../src/ASF/sam/drivers/qspi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -531,14 +616,27 @@
     <Folder Include="src\ASF\common\services\" />
     <Folder Include="src\ASF\common\services\clock\" />
     <Folder Include="src\ASF\common\services\clock\sams70\" />
+    <Folder Include="src\ASF\common\services\delay\" />
+    <Folder Include="src\ASF\common\services\delay\sam\" />
+    <Folder Include="src\ASF\common\services\sleepmgr\" />
+    <Folder Include="src\ASF\common\services\sleepmgr\sam\" />
     <Folder Include="src\ASF\common\services\twi\" />
     <Folder Include="src\ASF\common\services\twi\sam_twihs\" />
     <Folder Include="src\ASF\common\utils\" />
     <Folder Include="src\ASF\common\utils\interrupt\" />
     <Folder Include="src\ASF\sam\" />
     <Folder Include="src\ASF\sam\drivers\" />
+    <Folder Include="src\ASF\sam\drivers\acc\" />
+    <Folder Include="src\ASF\sam\drivers\acc\acc_example\" />
+    <Folder Include="src\ASF\sam\drivers\ebi\" />
+    <Folder Include="src\ASF\sam\drivers\ebi\smc\" />
+    <Folder Include="src\ASF\sam\drivers\isi\" />
+    <Folder Include="src\ASF\sam\drivers\matrix\" />
     <Folder Include="src\ASF\sam\drivers\pio\" />
     <Folder Include="src\ASF\sam\drivers\pmc\" />
+    <Folder Include="src\ASF\sam\drivers\qspi\" />
+    <Folder Include="src\ASF\sam\drivers\sdramc\" />
+    <Folder Include="src\ASF\sam\drivers\supc\" />
     <Folder Include="src\ASF\sam\drivers\twihs\" />
     <Folder Include="src\ASF\sam\drivers\uart\" />
     <Folder Include="src\ASF\sam\drivers\usart\" />
@@ -586,9 +684,72 @@
     <Compile Include="Debug.h">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\ASF\common\services\delay\delay.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common\services\delay\sam\cycle_counter.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common\services\delay\sam\cycle_counter.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\common\services\sleepmgr\sam\sleepmgr.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\common\services\sleepmgr\sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\services\sleepmgr\sam\sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\acc\acc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\acc\acc_example\acc_example.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam\drivers\acc\acc.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\ebi\smc\smc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\ebi\smc\smc.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\isi\isi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\isi\isi.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\matrix\matrix.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\matrix\matrix.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam\drivers\pio\pio_handler.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\ASF\sam\drivers\qspi\qspi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\qspi\qspi.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\sdramc\sdramc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\sdramc\sdramc.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\supc\supc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\supc\supc.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\ASF\sam\drivers\usart\usart.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1171,6 +1332,9 @@
     <Compile Include="src\ASF\sam\utils\syscalls\gcc\syscalls.c">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="src\config\conf_sleepmgr.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\main.c">
       <SubType>compile</SubType>
     </Compile>
