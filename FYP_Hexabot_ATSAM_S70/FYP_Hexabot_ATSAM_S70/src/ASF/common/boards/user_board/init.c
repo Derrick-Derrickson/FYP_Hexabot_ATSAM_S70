@@ -117,22 +117,24 @@ void board_init(void)
 	//Build Memory device settings:
 	sendDebugString("BEGINING SDRAM INIT\n");
 	const sdramc_memory_dev_t SDRAM_ALLIANCE_AS4C = {
-		25,
+		24,
 		//0b00000000010000000001000000,
 		0x0FFFFFFF,
 		//0,
-		{
+		//0b000000000110000,
+		//0b00000000010000000001000000,
+		(
 			SDRAMC_CR_NC_COL9		|
 			SDRAMC_CR_NR_ROW13		|
 			SDRAMC_CR_NB_BANK4		|
 			SDRAMC_CR_CAS_LATENCY3	|
 			SDRAMC_CR_DBW			|
-			SDRAMC_CR_TWR(3)		|
-			SDRAMC_CR_TRC_TRFC(4)	|
-			SDRAMC_CR_TRP(4)		|
-			SDRAMC_CR_TRCD(4)		|
-			SDRAMC_CR_TRAS(7)		|
-			SDRAMC_CR_TXSR(2)		}
+			SDRAMC_CR_TWR(1)		|
+			SDRAMC_CR_TRC_TRFC(1)	|
+			SDRAMC_CR_TRP(1)		|
+			SDRAMC_CR_TRCD(1)		|
+			SDRAMC_CR_TRAS(1)		|
+			SDRAMC_CR_TXSR(1)		)
 	};
 	//enable the clock for the SDRAM Controller
 	pmc_enable_periph_clk(ID_SDRAMC);
@@ -140,7 +142,6 @@ void board_init(void)
 	pmc_enable_periph_clk(ID_PIOC);
 	pmc_enable_periph_clk(ID_PIOD);
 	pmc_enable_periph_clk(ID_PIOE);
-	pmc_enable_periph_clk(ID_SMC);
 	//set all the SDRAMC pins to SDRAMC Mode (This took way too fucking long)
 	pio_set_peripheral(PIOC,PIO_TYPE_PIO_PERIPH_A,
 	1<<0	|
@@ -166,16 +167,86 @@ void board_init(void)
 	1<<30	|
 	1<<31	);
 	
+	pio_pull_down(PIOC,
+	1<<0	|
+	1<<1	|
+	1<<2	|
+	1<<3	|
+	1<<4	|
+	1<<5	|
+	1<<6	|
+	1<<7	|
+	1<<18	|
+	1<<19	|
+	1<<20	|
+	1<<21	|
+	1<<22	|
+	1<<23	|
+	1<<24	|
+	1<<25	|
+	1<<26	|
+	1<<27	|
+	1<<28	|
+	1<<29	|
+	1<<30	|
+	1<<31	,
+	1);
+	
+	pio_pull_up(PIOC,
+	1<<15	|
+	1<<0	|
+	1<<1	|
+	1<<2	|
+	1<<3	|
+	1<<4	|
+	1<<5	|
+	1<<6	|
+	1<<7	|
+	1<<18	|
+	1<<19	|
+	1<<20	|
+	1<<21	|
+	1<<22	|
+	1<<23	|
+	1<<24	|
+	1<<25	|
+	1<<26	|
+	1<<27	|
+	1<<28	|
+	1<<29	|
+	1<<30	|
+	1<<31	,
+	0);
+	
+	
 	pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_A,
 	1<<15	|
-	1<<16	|
+	1<<16	);
+	
+	pio_pull_down(PIOA,1<<15	|	1<<16	,0);
+	pio_pull_up(PIOA,1<<15	|	1<<16	,1);
+	
+	pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_C,
 	1<<18	|
 	1<<19	|
 	1<<20	|
 	1<<0	);
 	
+	pio_pull_down(PIOA,
+	1<<18	|
+	1<<19	|
+	1<<20	|
+	1<<0	,
+	1);
+	pio_pull_up(PIOA,
+	1<<18	|
+	1<<19	|
+	1<<20	|
+	1<<0	,
+	0);
+	
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_C,
-	1<<	15	|
+	1<<15	|
 	1<<16	|
 	1<<17	|
 	1<<13	|
@@ -183,30 +254,68 @@ void board_init(void)
 	1<<14	|
 	1<<29	);
 	
+	pio_pull_down(PIOD,1<<15	|
+	1<<16	|
+	1<<17	|
+	1<<13	|
+	1<<23	|
+	1<<14	|
+	1<<29	,
+	1);
+	pio_pull_up(PIOD,1<<15	|
+	1<<16	|
+	1<<17	|
+	1<<13	|
+	1<<23	|
+	1<<14	|
+	1<<29	,
+	0);
+	
 	pio_set_peripheral(PIOE,PIO_TYPE_PIO_PERIPH_A,
 	1<<2	|
 	1<<3	|
+	1<<0	|
+	1<<1	|
 	1<<4	|
 	1<<5	);
+	
+	pio_pull_down(PIOE,
+	1<<2	|
+	1<<3	|
+	1<<0	|
+	1<<1	|
+	1<<4	|
+	1<<5	,
+	1);
+	
+	pio_pull_up(PIOE,
+	1<<2	|
+	1<<3	|
+	1<<0	|
+	1<<1	|
+	1<<4	|
+	1<<5	,
+	0);
 	
 	//THIS LINE IS A CUNT
 	MATRIX->CCFG_SMCNFCS = MATRIX->CCFG_SMCNFCS | CCFG_SMCNFCS_SDRAMEN;
 	//WHAT A CUNT, RIGHT?
 	
 	pio_set_peripheral(PIOC,PIO_TYPE_PIO_PERIPH_A,1<<15);
-	sdramc_init((sdramc_memory_dev_t *)&SDRAM_ALLIANCE_AS4C,300000000);
+	sdramc_init((sdramc_memory_dev_t *)&SDRAM_ALLIANCE_AS4C,sysclk_get_main_hz()/4);
 	sendDebugString("SDRAM CONTROLLER STARTED.. I dont think it works...\n");
 	
 	pio_set_output(PIOD,PIO_PD26,LOW,DISABLE,DISABLE);
 	pio_set(PIOD,PIO_PD26);
 	
-    qspi_config_t qspiConf;
-	qspiConf->serial_memory_mode = 0;
-	qspiConf->loopback_en = 0;
-	qspiConf->wait_data_for_transfer = 0;
-	qspiConf->csmode = 0;
-	qspiConf->bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
-	qspiConf->baudrate = 1000000;
+	MATRIX->CCFG_SYSIO = MATRIX->CCFG_SYSIO | CCFG_SYSIO_SYSIO12; 
+    //qspi_config_t qspiConf;
+	//qspiConf->serial_memory_mode = 0;
+	//qspiConf->loopback_en = 0;
+	//qspiConf->wait_data_for_transfer = 0;
+	//qspiConf->csmode = 0;
+	//qspiConf->bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
+	//qspiConf->baudrate = 1000000;
 	
 		
 }

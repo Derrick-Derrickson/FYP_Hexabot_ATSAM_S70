@@ -49,7 +49,7 @@
 #define LED7 PIO_PA6
 #define BOARD_SDRAM_ADDR  0x70000000
 
-#define GLOBAL_SLOWDOWN 1
+#define GLOBAL_SLOWDOWN 4
 
 
 #endif // USER_BOARD_H

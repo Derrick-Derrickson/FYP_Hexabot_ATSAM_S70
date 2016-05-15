@@ -72,10 +72,11 @@ void vTask1 (void* pvParameters) {
 				pio_set(PIOA,LED7);
 				
 				for(int i = 0;i<3;i++) {
-					*(SDRAMstart+0x000300) = 0;
-					*(SDRAMstart+0x000200) = 0;
-					*(SDRAMstart+0x000100) = 0;
+					*(SDRAMstart+0x0) = T;
+					*(SDRAMstart+0x02) = T+1;
+					*(SDRAMstart+0x04) = T+2;
 				}
+
 				
 				tg = !tg;
 				}
@@ -91,13 +92,16 @@ void vTask1 (void* pvParameters) {
 				
 				//pio_set(PIOC,1<<15);
 				//pio_clear(PIOC,1<<15);
-				sprintf(buf,"%x,%x,%x",*((SDRAMstart+0x000300)),*(SDRAMstart+0x1000200),*(SDRAMstart+0x000100));
+				sprintf(buf,"%x,%x,%x",*(SDRAMstart+0x01),*(SDRAMstart+0x02),*(SDRAMstart+0x04));
 				sendDebugString(buf);
 				sendDebugString("\n");
 				
 				//for(int i = 0;i<3;i++) {
 				//	 if(SDRAMstart[i] != T+i) sendDebugString("MEM ERROR\n");
 				//}
+				
+				
+				
 					tg = !tg;
 					T++;
 				}

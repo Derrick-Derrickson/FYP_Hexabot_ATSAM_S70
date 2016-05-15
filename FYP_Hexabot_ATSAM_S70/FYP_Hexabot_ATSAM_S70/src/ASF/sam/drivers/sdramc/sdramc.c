@@ -199,7 +199,7 @@ void sdramc_init(sdramc_memory_dev_t *p_sdram, uint32_t ul_clk)
 	/* Write the refresh rate into the count field in the SDRAMC Refresh
 	   Timer register. Set Refresh timer to 15.625 us. */
 	i = ul_clk / 1000u;
-	i *= 15625u;
+	i *= 7800u;
 	i /= 1000000u;
 	SDRAMC->SDRAMC_TR = SDRAMC_TR_COUNT(i);
 }
