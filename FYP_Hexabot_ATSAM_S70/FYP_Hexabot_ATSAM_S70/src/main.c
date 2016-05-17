@@ -28,21 +28,26 @@
 /*
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
+#include <Hexabot/Hexabot.h>
 #include <asf.h>
 #include "../Debug.h"
 
+char buf [20];
 volatile int* SYST_RVR = (int*)0xE000E014;
 volatile uint32_t* SDRAMstart = (uint32_t*)BOARD_SDRAM_ADDR;
-
 
 void vTask1 (void*);
 
 int main (void)
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
-	*SYST_RVR = 2;
+	//*SYST_RVR = 2;
+	//final i2C init
+		
+	
 	board_init();
 	sendDebugString("BOARD INIT COMPLETE\n");
+	
 	xTaskCreate(vTask1,"TASK1",400,NULL,2,NULL);
 	sendDebugString("STARTING RTOS\n");
 	vTaskStartScheduler();
@@ -52,7 +57,7 @@ int main (void)
 }
 
 void vTask1 (void* pvParameters) {
-	char buf [20];
+	
 	sendDebugString("STARTED TASK 1\n");
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	int tg = 1;
@@ -61,52 +66,24 @@ void vTask1 (void* pvParameters) {
 		sendDebugString("TASK1 RUNNING\n");
 		
 				if(tg) {
+				pio_set(LED0);
 					
-				pio_set(PIOA,LED0);
-				pio_set(PIOA,LED1);
-				pio_set(PIOA,LED2);
-				pio_set(PIOB,LED3);
-				pio_set(PIOB,LED4);
-				pio_set(PIOA,LED5);
-				pio_set(PIOA,LED6);
-				pio_set(PIOA,LED7);
-				
-				for(int i = 0;i<3;i++) {
-					*(SDRAMstart+0x0) = T;
-					*(SDRAMstart+0x02) = T+1;
-					*(SDRAMstart+0x04) = T+2;
-				}
-
+				WriteServo(L0_S0,0);
 				
 				tg = !tg;
 				}
+				
+				
 				else {
-				pio_clear(PIOA,LED0);
-				pio_clear(PIOA,LED1);
-				pio_clear(PIOA,LED2);
-				pio_clear(PIOB,LED3);
-				pio_clear(PIOB,LED4);
-				pio_clear(PIOA,LED5);
-				pio_clear(PIOA,LED6);
-				pio_clear(PIOA,LED7);
+				pio_clear(LED0);	
 				
-				//pio_set(PIOC,1<<15);
-				//pio_clear(PIOC,1<<15);
-				sprintf(buf,"%x,%x,%x",*(SDRAMstart+0x01),*(SDRAMstart+0x02),*(SDRAMstart+0x04));
-				sendDebugString(buf);
-				sendDebugString("\n");
+				WriteServo(L0_S0,180);
 				
-				//for(int i = 0;i<3;i++) {
-				//	 if(SDRAMstart[i] != T+i) sendDebugString("MEM ERROR\n");
-				//}
-				
-				
-				
-					tg = !tg;
-					T++;
+				tg = !tg;
+				T++;
 				}
 				
-				vTaskDelayUntil(&xLastWakeTime,500);
+				vTaskDelayUntil(&xLastWakeTime,1000);
 	}
 	
 }

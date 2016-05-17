@@ -12,7 +12,7 @@
 #include <board.h>
 #include <conf_board.h>
 #include "../Debug.h"
-
+#include "Hexabot/Hexabot.h"
 //define board specific paramaters
 
 #define CONF_BOARD_SDRAMC
@@ -62,11 +62,12 @@ void board_init(void)
 	uart_enable(USART_SERIAL);
 	uart_enable_tx(USART_SERIAL);
 	uart_enable_rx(USART_SERIAL);
-	uart_set_clock_divisor(UART4,(1000/GLOBAL_SLOWDOWN));
+	uart_set_clock_divisor(UART4,(1000));
 	pmc_enable_periph_clk(ID_PIOD);
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_C,1<<3 | 1<<18);
 	//Test UART
 	sendDebugString("UART CONSOLE STARTED ON UART4\n\n");
+	
 	
 	
 	
@@ -79,16 +80,15 @@ void board_init(void)
 	
 		pmc_enable_periph_clk(ID_PIOA);
 		pmc_enable_periph_clk(ID_PIOB);
-		pio_set_output(PIOA,LED0,LOW,DISABLE,DISABLE);
-		pio_set_output(PIOA,LED1,LOW,DISABLE,DISABLE);
-		pio_set_output(PIOA,LED2,LOW,DISABLE,DISABLE);
+		pio_set_output(LED0,LOW,DISABLE,DISABLE);
+		pio_set_output(LED1,LOW,DISABLE,DISABLE);
+		pio_set_output(LED2,LOW,DISABLE,DISABLE);		
+		pio_set_output(LED3,LOW,DISABLE,DISABLE);
 		
-		pio_set_output(PIOB,LED3,LOW,DISABLE,DISABLE);
-		pio_set_output(PIOB,LED4,LOW,DISABLE,DISABLE);
-		
-		pio_set_output(PIOA,LED5,LOW,DISABLE,DISABLE);
-		pio_set_output(PIOA,LED6,LOW,DISABLE,DISABLE);
-		pio_set_output(PIOA,LED7,LOW,DISABLE,DISABLE);
+		pio_set_output(LED4,LOW,DISABLE,DISABLE);
+		pio_set_output(LED5,LOW,DISABLE,DISABLE);
+		pio_set_output(LED6,LOW,DISABLE,DISABLE);
+		pio_set_output(LED7,LOW,DISABLE,DISABLE);
 		
 		sendDebugString("LED INIT COMPLETE\n");
 		
@@ -117,24 +117,24 @@ void board_init(void)
 	//Build Memory device settings:
 	sendDebugString("BEGINING SDRAM INIT\n");
 	const sdramc_memory_dev_t SDRAM_ALLIANCE_AS4C = {
-		24,
+		25,
 		//0b00000000010000000001000000,
-		0x0FFFFFFF,
+		//0x0FFFFFFF,
 		//0,
 		//0b000000000110000,
-		//0b00000000010000000001000000,
+		0b0001001110001001110,
 		(
 			SDRAMC_CR_NC_COL9		|
 			SDRAMC_CR_NR_ROW13		|
 			SDRAMC_CR_NB_BANK4		|
 			SDRAMC_CR_CAS_LATENCY3	|
 			SDRAMC_CR_DBW			|
-			SDRAMC_CR_TWR(1)		|
-			SDRAMC_CR_TRC_TRFC(1)	|
-			SDRAMC_CR_TRP(1)		|
-			SDRAMC_CR_TRCD(1)		|
-			SDRAMC_CR_TRAS(1)		|
-			SDRAMC_CR_TXSR(1)		)
+			SDRAMC_CR_TWR(3)		|
+			SDRAMC_CR_TRC_TRFC(10)	|
+			SDRAMC_CR_TRP(4)		|
+			SDRAMC_CR_TRCD(4)		|
+			SDRAMC_CR_TRAS(7)		|
+			SDRAMC_CR_TXSR(10)		)
 	};
 	//enable the clock for the SDRAM Controller
 	pmc_enable_periph_clk(ID_SDRAMC);
@@ -302,7 +302,7 @@ void board_init(void)
 	//WHAT A CUNT, RIGHT?
 	
 	pio_set_peripheral(PIOC,PIO_TYPE_PIO_PERIPH_A,1<<15);
-	sdramc_init((sdramc_memory_dev_t *)&SDRAM_ALLIANCE_AS4C,sysclk_get_main_hz()/4);
+	sdramc_init((sdramc_memory_dev_t *)&SDRAM_ALLIANCE_AS4C,sysclk_get_main_hz());
 	sendDebugString("SDRAM CONTROLLER STARTED.. I dont think it works...\n");
 	
 	pio_set_output(PIOD,PIO_PD26,LOW,DISABLE,DISABLE);
@@ -317,5 +317,18 @@ void board_init(void)
 	//qspiConf->bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
 	//qspiConf->baudrate = 1000000;
 	
-		
+	//setup I2C
+	pio_set_output(PIOA,PIO_PA26,LOW,DISABLE,DISABLE);
+	pio_clear(PIOA,PIO_PA26);
+	pmc_enable_periph_clk(ID_TWIHS0);
+	pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_A,1<<3 | 1<<4);
+	
+	twihs_enable_master_mode(TWIHS0);
+	twihs_options_t twihs_opts;
+	twihs_opts.master_clk = sysclk_get_cpu_hz();
+	twihs_opts.speed = 10000;
+	twihs_master_init(TWIHS0,&twihs_opts);
+	
+	ServoDriverInit(PWM_CTRL_A_I2C_ADDR_A);
+	ServoDriverInit(PWM_CTRL_A_I2C_ADDR_B);
 }

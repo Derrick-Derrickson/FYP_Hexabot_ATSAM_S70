@@ -66,5 +66,7 @@ src\ASF\sam\utils\cmsis\sams70\source\templates\system_sams70.c
 
 src\ASF\sam\utils\syscalls\gcc\syscalls.c
 
+src\Hexabot\Hexabot.c
+
 src\main.c
 
