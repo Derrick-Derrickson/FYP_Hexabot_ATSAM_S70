@@ -176,7 +176,9 @@ void sdramc_init(sdramc_memory_dev_t *p_sdram, uint32_t ul_clk)
 	   of the SDRAM devices, in particular CAS latency and burst length. */
 	SDRAMC->SDRAMC_MR = SDRAMC_MR_MODE_LOAD_MODEREG;
 	*((uint16_t *)(pSdram + p_sdram->ul_mode)) = 0xcafe;
-
+	*((uint16_t *)(pSdram + p_sdram->ul_mode)) = 0xcafe;
+	*((uint16_t *)(pSdram + p_sdram->ul_mode)) = 0xcafe;
+	*((uint16_t *)(pSdram + p_sdram->ul_mode)) = 0xcafe;
 	/* Step 9. */
 
 	/* For low-power SDR-SDRAM initialization, an Extended Mode Register Set

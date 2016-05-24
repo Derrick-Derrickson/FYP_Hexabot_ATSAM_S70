@@ -117,7 +117,7 @@ void board_init(void)
 	//Build Memory device settings:
 	sendDebugString("BEGINING SDRAM INIT\n");
 	const sdramc_memory_dev_t SDRAM_ALLIANCE_AS4C = {
-		25,
+		24,
 		//0b00000000010000000001000000,
 		//0x0FFFFFFF,
 		//0,
@@ -303,12 +303,17 @@ void board_init(void)
 	
 	pio_set_peripheral(PIOC,PIO_TYPE_PIO_PERIPH_A,1<<15);
 	sdramc_init((sdramc_memory_dev_t *)&SDRAM_ALLIANCE_AS4C,sysclk_get_main_hz());
-	sendDebugString("SDRAM CONTROLLER STARTED.. I dont think it works...\n");
+	sendDebugString("SDRAM CONTROLLER STARTED\n");
+	//checkSDRAM
+	SdramCheck();
 	
+	/* ######################################
+	   ######################################
+			  Setup SERVO DRIVERS/i2c
+	   ######################################
+	   ###################################### */
 	pio_set_output(PIOD,PIO_PD26,LOW,DISABLE,DISABLE);
 	pio_set(PIOD,PIO_PD26);
-	
-	MATRIX->CCFG_SYSIO = MATRIX->CCFG_SYSIO | CCFG_SYSIO_SYSIO12; 
     //qspi_config_t qspiConf;
 	//qspiConf->serial_memory_mode = 0;
 	//qspiConf->loopback_en = 0;
@@ -322,6 +327,8 @@ void board_init(void)
 	pio_clear(PIOA,PIO_PA26);
 	pmc_enable_periph_clk(ID_TWIHS0);
 	pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_A,1<<3 | 1<<4);
+	pio_set_output(PIOD,PIO_PD26,LOW,DISABLE,DISABLE);
+	pio_set(PIOD,PIO_PD26);
 	
 	twihs_enable_master_mode(TWIHS0);
 	twihs_options_t twihs_opts;
@@ -331,4 +338,11 @@ void board_init(void)
 	
 	ServoDriverInit(PWM_CTRL_A_I2C_ADDR_A);
 	ServoDriverInit(PWM_CTRL_A_I2C_ADDR_B);
+	
+	/* ######################################
+	   ######################################
+			    	Setup CAMERA
+	   ######################################
+	   ###################################### */
+	
 }

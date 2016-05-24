@@ -34,7 +34,7 @@
 
 char buf [20];
 volatile int* SYST_RVR = (int*)0xE000E014;
-volatile uint32_t* SDRAMstart = (uint32_t*)BOARD_SDRAM_ADDR;
+volatile uint16_t* SDRAMstart = (uint16_t*)BOARD_SDRAM_ADDR;
 
 void vTask1 (void*);
 
@@ -61,14 +61,21 @@ void vTask1 (void* pvParameters) {
 	sendDebugString("STARTED TASK 1\n");
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	int tg = 1;
-	int T = 0;
+	uint16_t T = 0;
+	int cleanTest = 1;
+	int testCountPass = 0;
+	int testCountFail = 0;
 	for(;;) {
-		sendDebugString("TASK1 RUNNING\n");
+		//sendDebugString("TASK1 RUNNING\n");
 		
 				if(tg) {
 				pio_set(LED0);
-					
-				WriteServo(L0_S0,0);
+				cleanTest = 1;
+				//WriteServo(L0_S0,0);
+				for(int i = 0;i<BOARD_SDRAM_ADDR_NUM;i++) {
+					SDRAMstart[i] = T;
+					T++;
+				}
 				
 				tg = !tg;
 				}
@@ -76,14 +83,31 @@ void vTask1 (void* pvParameters) {
 				
 				else {
 				pio_clear(LED0);	
-				
-				WriteServo(L0_S0,180);
-				
-				tg = !tg;
-				T++;
+				T=0;
+				for(int i = 0;i<BOARD_SDRAM_ADDR_NUM;i++) {
+					if(SDRAMstart[i] != T){
+						sprintf(buf,"MEM ERROR AT 0x%x\n",i);
+						sendDebugString(buf);
+						cleanTest = 0;
+					}
+					T++;
+				}
+				if(cleanTest) {
+					sendDebugString("CLEAN MEMTEST DONE\n");
+					testCountPass++;
+				}
+				else {
+					sendDebugString("MEMTEST WAS BAD\n");
+					testCountFail++;
 				}
 				
-				vTaskDelayUntil(&xLastWakeTime,1000);
+				sprintf(buf,"PASSED:%d\nFAILED:%d\n",testCountPass,testCountFail);
+						sendDebugString(buf);
+				//WriteServo(L0_S0,180);
+				tg = !tg;
+				}
+				
+				vTaskDelayUntil(&xLastWakeTime,300);
 	}
 	
 }
