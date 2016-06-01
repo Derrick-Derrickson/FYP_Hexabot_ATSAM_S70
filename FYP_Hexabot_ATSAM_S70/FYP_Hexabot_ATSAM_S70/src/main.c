@@ -31,6 +31,7 @@
 #include <Hexabot/Hexabot.h>
 #include <asf.h>
 #include "../Debug.h"
+#include "DW1000.h"
 
 char buf [20];
 volatile int* SYST_RVR = (int*)0xE000E014;
@@ -47,7 +48,8 @@ int main (void)
 	
 	board_init();
 	sendDebugString("BOARD INIT COMPLETE\n");
-	
+	//DW1000_writeReg(0x26,DW1000_SUB,0x08,0xF0,1);
+	//DW1000_writeReg(0x26,DW1000_SUB,0x0C,0xFF,1);
 	xTaskCreate(vTask1,"TASK1",400,NULL,2,NULL);
 	sendDebugString("STARTING RTOS\n");
 	vTaskStartScheduler();
@@ -61,53 +63,85 @@ void vTask1 (void* pvParameters) {
 	sendDebugString("STARTED TASK 1\n");
 	TickType_t xLastWakeTime = xTaskGetTickCount();
 	int tg = 1;
-	uint16_t T = 0;
+	uint8_t T = 0;
 	int cleanTest = 1;
 	int testCountPass = 0;
+	char Qbuf[20];
+	char buf[20];
+	pio_set(LED0);
 	int testCountFail = 0;
 	for(;;) {
 		//sendDebugString("TASK1 RUNNING\n");
 		
 				if(tg) {
 				pio_set(LED0);
-				cleanTest = 1;
-				//WriteServo(L0_S0,0);
-				for(int i = 0;i<BOARD_SDRAM_ADDR_NUM;i++) {
-					SDRAMstart[i] = T;
-					T++;
-				}
+				//sprintf(buf,"read: 0x%x\n",DW1000_readDeviceIdentifier());
+				//sendDebugString(buf);
 				
+				
+				
+				//DW1000_writeReg(0x26,DW1000_SUB,0x08,0xF0,1);
+			//	DW1000_writeReg(0x26,DW1000_SUB,0x0C,0xFF,1);
+				Qbuf[0] = 0x26 | 1<<7 | 1<<6;
+				Qbuf[1] = 0x08;
+				Qbuf[2] = 0xF0;
+				Qbuf[3] = 0x00;
+				Qbuf[4] = 0x00;
+				Qbuf[5] = 0x00;
+				qspi_write(QSPI,Qbuf,1);
+				qspi_write(QSPI,Qbuf+1,1);
+				qspi_write(QSPI,Qbuf+2,1);
+				qspi_write(QSPI,Qbuf+3,1);
+				qspi_write(QSPI,Qbuf+4,1);
+				qspi_write(QSPI,Qbuf+5,1);
+				delay_ms(100);
+			
+				
+				
+				memset(Qbuf,0,20);
+				Qbuf[0] = 0x26 | 1<<6;
+				Qbuf[1] = 0x08;
+				qspi_write(QSPI,Qbuf,1);
+				qspi_write(QSPI,Qbuf+1,1);
+				qspi_read(QSPI,Qbuf,4);
+				sprintf(buf,"recived Test: 0x%02x%02x%02x%02x\n",Qbuf[3],Qbuf[2],Qbuf[1],Qbuf[0]);
+				sendDebugString(buf);
 				tg = !tg;
 				}
+				
 				
 				
 				else {
 				pio_clear(LED0);	
-				T=0;
-				for(int i = 0;i<BOARD_SDRAM_ADDR_NUM;i++) {
-					if(SDRAMstart[i] != T){
-						sprintf(buf,"MEM ERROR AT 0x%x\n",i);
-						sendDebugString(buf);
-						cleanTest = 0;
-					}
-					T++;
-				}
-				if(cleanTest) {
-					sendDebugString("CLEAN MEMTEST DONE\n");
-					testCountPass++;
-				}
-				else {
-					sendDebugString("MEMTEST WAS BAD\n");
-					testCountFail++;
-				}
+				T++;
+				memset(Qbuf,0,20);
+				Qbuf[0] = 0x26 | 1<<7 | 1<<6;
+				Qbuf[1] = 0x0C;
+				Qbuf[2] = 0xF0 | (1<<(0x3&T));
+				Qbuf[3] = 0x00;
+				Qbuf[4] = 0x00;
+				Qbuf[5] = 0x00;
+				qspi_write(QSPI,Qbuf,1);
+				qspi_write(QSPI,Qbuf+1,1);
+				qspi_write(QSPI,Qbuf+2,1);
+				qspi_write(QSPI,Qbuf+3,1);
+				qspi_write(QSPI,Qbuf+4,1);
+				qspi_write(QSPI,Qbuf+5,1);
+				delay_ms(100);
 				
-				sprintf(buf,"PASSED:%d\nFAILED:%d\n",testCountPass,testCountFail);
-						sendDebugString(buf);
-				//WriteServo(L0_S0,180);
+				
+				memset(Qbuf,0,20);
+				Qbuf[0] = 0x00;
+				delay_ms(25);
+				qspi_write(QSPI,Qbuf,1);
+				qspi_read(QSPI,Qbuf,4);
+				sprintf(buf,"recived Base: 0x%02x%02x%02x%02x\n",Qbuf[3],Qbuf[2],Qbuf[1],Qbuf[0]);
+				sendDebugString(buf);
+				//sendDebugString("\n");
 				tg = !tg;
 				}
 				
-				vTaskDelayUntil(&xLastWakeTime,300);
+				vTaskDelayUntil(&xLastWakeTime,400);
 	}
 	
 }

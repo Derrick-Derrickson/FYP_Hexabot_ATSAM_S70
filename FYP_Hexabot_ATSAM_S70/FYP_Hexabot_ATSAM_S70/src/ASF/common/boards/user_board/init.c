@@ -13,6 +13,7 @@
 #include <conf_board.h>
 #include "../Debug.h"
 #include "Hexabot/Hexabot.h"
+#include "DW1000.h"
 //define board specific paramaters
 
 #define CONF_BOARD_SDRAMC
@@ -62,7 +63,7 @@ void board_init(void)
 	uart_enable(USART_SERIAL);
 	uart_enable_tx(USART_SERIAL);
 	uart_enable_rx(USART_SERIAL);
-	uart_set_clock_divisor(UART4,(1000));
+	uart_set_clock_divisor(UART4,(1000/GLOBAL_SLOWDOWN));
 	pmc_enable_periph_clk(ID_PIOD);
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_C,1<<3 | 1<<18);
 	//Test UART
@@ -129,11 +130,11 @@ void board_init(void)
 			SDRAMC_CR_NB_BANK4		|
 			SDRAMC_CR_CAS_LATENCY3	|
 			SDRAMC_CR_DBW			|
-			SDRAMC_CR_TWR(3)		|
+			SDRAMC_CR_TWR(5)		|
 			SDRAMC_CR_TRC_TRFC(10)	|
-			SDRAMC_CR_TRP(4)		|
-			SDRAMC_CR_TRCD(4)		|
-			SDRAMC_CR_TRAS(7)		|
+			SDRAMC_CR_TRP(5)		|
+			SDRAMC_CR_TRCD(5)		|
+			SDRAMC_CR_TRAS(9)		|
 			SDRAMC_CR_TXSR(10)		)
 	};
 	//enable the clock for the SDRAM Controller
@@ -305,7 +306,7 @@ void board_init(void)
 	sdramc_init((sdramc_memory_dev_t *)&SDRAM_ALLIANCE_AS4C,sysclk_get_main_hz());
 	sendDebugString("SDRAM CONTROLLER STARTED\n");
 	//checkSDRAM
-	SdramCheck();
+	//SdramCheck();
 	
 	/* ######################################
 	   ######################################
@@ -314,13 +315,7 @@ void board_init(void)
 	   ###################################### */
 	pio_set_output(PIOD,PIO_PD26,LOW,DISABLE,DISABLE);
 	pio_set(PIOD,PIO_PD26);
-    //qspi_config_t qspiConf;
-	//qspiConf->serial_memory_mode = 0;
-	//qspiConf->loopback_en = 0;
-	//qspiConf->wait_data_for_transfer = 0;
-	//qspiConf->csmode = 0;
-	//qspiConf->bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
-	//qspiConf->baudrate = 1000000;
+
 	
 	//setup I2C
 	pio_set_output(PIOA,PIO_PA26,LOW,DISABLE,DISABLE);
@@ -341,8 +336,131 @@ void board_init(void)
 	
 	/* ######################################
 	   ######################################
-			    	Setup CAMERA
+			 		Setup Camera
 	   ######################################
 	   ###################################### */
 	
+	//pio_set(PIOD,PIO_PD10);
+	
+	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_D,
+	1<<22	|
+	1<<21	|
+	1<<11	|
+	1<<12	|
+	1<<27	|
+	1<<28	|
+	1<<24	|
+	1<<25	);
+	pio_pull_up(PIOD,
+	1<<22	|
+	1<<21	|
+	1<<11	|
+	1<<12	|
+	1<<27	|
+	1<<28	|
+	1<<24	|
+	1<<25	,0);
+	
+	pio_set_peripheral(PIOB,PIO_TYPE_PIO_PERIPH_D,
+	1<<3);
+	
+	pio_pull_up(PIOB,1<<3,0);
+	
+	pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_D,
+	1<<9	|
+	1<<5	|
+	1<<27	|
+	1<<24	);
+	
+	pio_pull_up(PIOA,
+	1<<9	|
+	1<<5	|
+	1<<27	|
+	1<<24	,0);
+	
+	pmc_enable_periph_clk(ID_ISI);
+	
+	//set camera to 640x480
+	SetupCameraRAW();
+	
+	//setup ISI
+	//configure size
+	//configure input
+	//configure DMA
+	//isi_disable(ISI);
+	//isi_reset(ISI);
+	//struct isi_config_t isiConf;
+	//isiConf.hpol = 0;
+	//isiConf.vpol = 0;
+	//isiConf.pck_plo = 0;
+	//isiConf.emb_sync = 0;
+	//isiConf.crc_sync = 0;
+	//isiConf.thmask = 0;
+	//isiConf.sld = 0;
+	//isiConf.sfd = 0;
+	
+	
+	
+	
+	
+	pio_set_output(PIOD,PIO_PD10,LOW,DISABLE,DISABLE);
+	pio_set(PIOD,PIO_PD10);
+	for(int i =0;i<10000000;i++);
+	//pio_clear(PIOD,PIO_PD10);
+	
+	/* ######################################
+	   ######################################
+			 	Setup Wireless Module
+	   ######################################
+	   ###################################### */
+	
+	
+	    struct qspi_config_t qspiConf;
+	    qspiConf.serial_memory_mode = 0;
+	    qspiConf.loopback_en = 0;
+	    qspiConf.wait_data_for_transfer = 0;
+	    qspiConf.csmode = 0;
+	    qspiConf.bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
+	    qspiConf.baudrate = 1000000;
+		qspiConf.min_delay_qcs = 1;
+		qspiConf.delay_between_ct = 1;
+		qspiConf.clock_polarity = 0;
+		qspiConf.clock_phase = 0;
+				
+		pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_A,
+		1<<17	|
+		1<<12	|
+		1<<13	|
+		1<<14	|
+		1<<11);
+		
+		pio_pull_up(PIOA,
+		1<<17	|
+		1<<12	|
+		1<<13	|
+		1<<14	|
+		1<<11,1);
+		
+		
+		pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_A,
+		1<<31);
+		
+		pmc_enable_periph_clk(ID_QSPI);
+		
+		//test
+		
+		
+		qspi_disable(QSPI);
+		qspi_reset(QSPI);
+		qspi_initialize(QSPI,&qspiConf);
+		qspi_enable(QSPI);
+		
+		qspi_disable(QSPI);
+		qspi_reset(QSPI);
+		qspi_initialize(QSPI,&qspiConf);
+		delay_ms(100);
+		qspi_enable(QSPI);
+		delay_ms(100);
+		//DW1000_initialise();
+		
 }

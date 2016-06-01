@@ -138,6 +138,7 @@ C_SRCS +=  \
 ../src/ASF/sam/utils/cmsis/sams70/source/templates/gcc/startup_sams70.c \
 ../src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.c \
 ../src/ASF/sam/utils/syscalls/gcc/syscalls.c \
+../src/DW1000.c \
 ../src/Hexabot/Hexabot.c \
 ../src/main.c
 
@@ -181,6 +182,7 @@ src/ASF/common/utils/interrupt/interrupt_sam_nvic.o \
 src/ASF/sam/utils/cmsis/sams70/source/templates/gcc/startup_sams70.o \
 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o \
 src/ASF/sam/utils/syscalls/gcc/syscalls.o \
+src/DW1000.o \
 src/Hexabot/Hexabot.o \
 src/main.o
 
@@ -217,6 +219,7 @@ src/ASF/common/utils/interrupt/interrupt_sam_nvic.o \
 src/ASF/sam/utils/cmsis/sams70/source/templates/gcc/startup_sams70.o \
 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o \
 src/ASF/sam/utils/syscalls/gcc/syscalls.o \
+src/DW1000.o \
 src/Hexabot/Hexabot.o \
 src/main.o
 
@@ -253,6 +256,7 @@ src/ASF/common/utils/interrupt/interrupt_sam_nvic.d \
 src/ASF/sam/utils/cmsis/sams70/source/templates/gcc/startup_sams70.d \
 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.d \
 src/ASF/sam/utils/syscalls/gcc/syscalls.d \
+src/DW1000.d \
 src/Hexabot/Hexabot.d \
 src/main.d
 
@@ -289,6 +293,7 @@ src/ASF/common/utils/interrupt/interrupt_sam_nvic.d \
 src/ASF/sam/utils/cmsis/sams70/source/templates/gcc/startup_sams70.d \
 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.d \
 src/ASF/sam/utils/syscalls/gcc/syscalls.d \
+src/DW1000.d \
 src/Hexabot/Hexabot.d \
 src/main.d
 
@@ -307,6 +312,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 
@@ -551,14 +558,14 @@ src/ASF/sam/utils/syscalls/gcc/%.o: ../src/ASF/sam/utils/syscalls/gcc/%.c
 	@echo Finished building: $<
 	
 
-src/Hexabot/%.o: ../src/Hexabot/%.c
+src/%.o: ../src/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 4.9.3
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMS70Q20__ -DDEBUG -Dscanf=iscanf -DBOARD=USER_BOARD -DARM_MATH_CM7=true -Dprintf=iprintf -D__FREERTOS__  -I"../common/applications/user_application/user_board/config" -I"../src/config" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/sam/utils/fpu" -I"../src/ASF/sam/utils" -I"../src/ASF/sam/utils/preprocessor" -I"../src/ASF/common/boards" -I"../src/ASF/sam/utils/header_files" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/sam/utils/cmsis/sams70/source/templates" -I"../src/ASF/sam/utils/cmsis/sams70/include" -I"../src/ASF/sam/drivers/pio" -I"../src/ASF/sam/drivers/pmc" -I"../src/ASF/sam/drivers/twihs" -I"../src/ASF/sam/drivers/uart" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/twi" -I"../src/ASF/sam/drivers/usart" -I"../src/ASF/sam/drivers/wdt" -I"../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include" -I"../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1" -I"../src/ASF/common/services/delay" -I"../src/ASF/sam/drivers/supc" -I"../src/ASF/sam/drivers/isi" -I"../src/ASF/sam/drivers/acc" -I"../src/ASF/sam/drivers/sdramc" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/sam/drivers/matrix" -I"../src/ASF/sam/drivers/ebi/smc" -I"../src/ASF/sam/drivers/qspi"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m7 -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -mfloat-abi=softfp -mfpu=fpv5-sp-d16 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
-src/%.o: ../src/%.c
+src/Hexabot/%.o: ../src/Hexabot/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 4.9.3
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMS70Q20__ -DDEBUG -Dscanf=iscanf -DBOARD=USER_BOARD -DARM_MATH_CM7=true -Dprintf=iprintf -D__FREERTOS__  -I"../common/applications/user_application/user_board/config" -I"../src/config" -I"../src/ASF/thirdparty/CMSIS/Lib/GCC" -I"../src/ASF/common/utils" -I"../src" -I"../src/ASF/sam/utils/fpu" -I"../src/ASF/sam/utils" -I"../src/ASF/sam/utils/preprocessor" -I"../src/ASF/common/boards" -I"../src/ASF/sam/utils/header_files" -I"../src/ASF/common/boards/user_board" -I"../src/ASF/thirdparty/CMSIS/Include" -I"../src/ASF/sam/utils/cmsis/sams70/source/templates" -I"../src/ASF/sam/utils/cmsis/sams70/include" -I"../src/ASF/sam/drivers/pio" -I"../src/ASF/sam/drivers/pmc" -I"../src/ASF/sam/drivers/twihs" -I"../src/ASF/sam/drivers/uart" -I"../src/ASF/common/services/clock" -I"../src/ASF/common/services/twi" -I"../src/ASF/sam/drivers/usart" -I"../src/ASF/sam/drivers/wdt" -I"../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include" -I"../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1" -I"../src/ASF/common/services/delay" -I"../src/ASF/sam/drivers/supc" -I"../src/ASF/sam/drivers/isi" -I"../src/ASF/sam/drivers/acc" -I"../src/ASF/sam/drivers/sdramc" -I"../src/ASF/common/services/sleepmgr" -I"../src/ASF/sam/drivers/matrix" -I"../src/ASF/sam/drivers/ebi/smc" -I"../src/ASF/sam/drivers/qspi"  -O1 -fdata-sections -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m7 -c -pipe -fno-strict-aliasing -Wall -Wstrict-prototypes -Wmissing-prototypes -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500 -mfloat-abi=softfp -mfpu=fpv5-sp-d16 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

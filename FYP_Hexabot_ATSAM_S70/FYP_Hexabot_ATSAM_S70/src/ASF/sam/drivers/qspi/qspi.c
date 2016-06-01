@@ -347,9 +347,14 @@ enum status_code qspi_read(Qspi *qspi, uint16_t *us_data, uint32_t num_of_bytes)
 		}
 	} else {
 		/* Dummy read  and write to discard  first bytes received and start receiving new data */
-		dummy = qspi_read_spi(qspi);
-		qspi_write_spi(qspi, dummy);
+		//qspi_read_spi(qspi);
+		//qspi_read_spi(qspi);
+		qspi_write_spi(qspi, 0x00);
+		qspi_write_spi(qspi, 0x00);
+		qspi_write_spi(qspi, 0x00);
+		//qspi_write_spi(qspi, dummy);
 		for(; num_of_bytes_read < num_of_bytes;) {
+			
 			if (qspi->QSPI_SR & QSPI_SR_TDRE) {
 				*pw_data= qspi_read_spi(qspi);
 				if(qspi->QSPI_MR & QSPI_MR_NBBITS_Msk) {
@@ -360,7 +365,7 @@ enum status_code qspi_read(Qspi *qspi, uint16_t *us_data, uint32_t num_of_bytes)
 				num_of_bytes_read++;
 				num_of_attempt = 0;
 				status = STATUS_OK;
-				qspi_write_spi(qspi, dummy);
+				if(num_of_bytes_read <num_of_bytes-2) qspi_write_spi(qspi, 0x00);
 			} else {
 				if(num_of_attempt > 0xFFFF) {
 					status = ERR_TIMEOUT;
@@ -420,7 +425,7 @@ enum status_code qspi_write(Qspi *qspi, uint16_t *us_data, uint32_t num_of_bytes
 			Addr_Inc = sizeof(uint8_t);
 		}
 
-		for(; num_of_bytes_write < num_of_bytes; num_of_bytes_write++) {
+		for(; num_of_bytes_write <= num_of_bytes; num_of_bytes_write++) {
 			if (qspi->QSPI_SR & QSPI_SR_TXEMPTY) {
 				qspi_write_spi(qspi, (uint16_t)(*pw_data));
 				pw_data += Addr_Inc;
@@ -429,10 +434,10 @@ enum status_code qspi_write(Qspi *qspi, uint16_t *us_data, uint32_t num_of_bytes
 			} else {
 				status = STATUS_ERR_BUSY;
 				num_of_attempt++;
-				if(num_of_attempt > 0xFFFF) {
-					status = ERR_TIMEOUT;
-					break;
-				}
+				//if(num_of_attempt > 0xFFFF) {
+					//status = ERR_TIMEOUT;
+					//break;
+				//}
 			}
 		}
 	}

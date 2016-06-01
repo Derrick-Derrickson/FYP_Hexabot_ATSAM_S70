@@ -102,6 +102,16 @@ extern int _close(int file)
 	return -1;
 }
 
+extern int _write(int file)
+{
+	return -1;
+}
+
+extern int _read(int file)
+{
+	return -1;
+}
+
 extern int _fstat(int file, struct stat *st)
 {
 	st->st_mode = S_IFCHR;
