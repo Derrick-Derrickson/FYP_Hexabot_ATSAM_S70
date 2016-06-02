@@ -202,7 +202,7 @@ static inline void qspi_set_transfer_delay(Qspi *qspi, uint8_t uc_dlybs)
 static inline uint16_t qspi_read_spi(Qspi *qspi)
 {
 	assert(qspi);
-	while(!(qspi->QSPI_SR & QSPI_SR_RDRF));
+	//while(!(qspi->QSPI_SR & QSPI_SR_RDRF));
 	return  qspi->QSPI_RDR;
 }
 
@@ -349,7 +349,7 @@ enum status_code qspi_read(Qspi *qspi, uint16_t *us_data, uint32_t num_of_bytes)
 		/* Dummy read  and write to discard  first bytes received and start receiving new data */
 		//qspi_read_spi(qspi);
 		//qspi_read_spi(qspi);
-		qspi_write_spi(qspi, 0x00);
+		//qspi_write_spi(qspi, 0x00);
 		qspi_write_spi(qspi, 0x00);
 		qspi_write_spi(qspi, 0x00);
 		//qspi_write_spi(qspi, dummy);
@@ -365,7 +365,8 @@ enum status_code qspi_read(Qspi *qspi, uint16_t *us_data, uint32_t num_of_bytes)
 				num_of_bytes_read++;
 				num_of_attempt = 0;
 				status = STATUS_OK;
-				if(num_of_bytes_read <num_of_bytes-2) qspi_write_spi(qspi, 0x00);
+				//if(num_of_bytes_read <num_of_bytes-2)
+				 qspi_write_spi(qspi, 0x00);
 			} else {
 				if(num_of_attempt > 0xFFFF) {
 					status = ERR_TIMEOUT;

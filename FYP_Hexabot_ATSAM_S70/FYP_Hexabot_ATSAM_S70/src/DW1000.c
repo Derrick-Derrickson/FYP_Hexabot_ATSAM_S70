@@ -304,6 +304,32 @@ uint64_t DW1000_readReg(uint8_t cmd, int subindex, uint16_t offset, int n) {
 	//digitalWrite(_ss, HIGH);
 //
 	///* Invert uint8_ts because SPI transactions reads LSB first, data[] is arranged from MSB to LSB */
+	
+					//Qbuf[0] = 0x26 | 1<<7 | 1<<6;
+				//Qbuf[1] = 0x08;
+				//Qbuf[2] = 0xF0;
+				//Qbuf[3] = 0x00;
+				//Qbuf[4] = 0x00;
+				//Qbuf[5] = 0x00;
+				//qspi_write(QSPI,Qbuf,1);
+				//qspi_write(QSPI,Qbuf+1,1);
+				//qspi_write(QSPI,Qbuf+2,1);
+				//qspi_write(QSPI,Qbuf+3,1);
+				//qspi_write(QSPI,Qbuf+4,1);
+				//qspi_write(QSPI,Qbuf+5,1);
+				//delay_ms(100);
+			//
+				//
+				//
+				//memset(Qbuf,0,20);
+				//Qbuf[0] = 0x26 | 1<<6;
+				//Qbuf[1] = 0x08;
+				//qspi_write(QSPI,Qbuf,1);
+				//qspi_write(QSPI,Qbuf+1,1);
+				//qspi_read(QSPI,Qbuf,4);
+				//sprintf(buf,"recived Test: 0x%02x%02x%02x%02x\n",Qbuf[3],Qbuf[2],Qbuf[1],Qbuf[0]);
+				//sendDebugString(buf);
+	
 	for (i = n-1; i >= 0; i--) {
 		result = (result << 8) | data[i];
 	}
@@ -345,6 +371,32 @@ void DW1000_writeReg(uint8_t cmd, int subindex, uint16_t offset, uint64_t buffer
 	
 	qspi_write(QSPI,header,headerLen);
 	qspi_write(QSPI,data,n);
+	
+					//T++;
+				//memset(Qbuf,0,20);
+				//Qbuf[0] = 0x26 | 1<<7 | 1<<6;
+				//Qbuf[1] = 0x0C;
+				//Qbuf[2] = 0xF0 | (1<<(0x3&T));
+				//Qbuf[3] = 0x00;
+				//Qbuf[4] = 0x00;
+				//Qbuf[5] = 0x00;
+				//qspi_write(QSPI,Qbuf,1);
+				//qspi_write(QSPI,Qbuf+1,1);
+				//qspi_write(QSPI,Qbuf+2,1);
+				//qspi_write(QSPI,Qbuf+3,1);
+				//qspi_write(QSPI,Qbuf+4,1);
+				//qspi_write(QSPI,Qbuf+5,1);
+				//delay_ms(100);
+				//
+				//
+				//memset(Qbuf,0,20);
+				//Qbuf[0] = 0x00;
+				//delay_ms(25);
+				//qspi_write(QSPI,Qbuf,1);
+				//qspi_read(QSPI,Qbuf,4);
+				//sprintf(buf,"recived Base: 0x%02x%02x%02x%02x\n",Qbuf[3],Qbuf[2],Qbuf[1],Qbuf[0]);
+				//sendDebugString(buf);
+				//sendDebugString("\n");
 
     ///* SPI transaction */
     //digitalWrite(_ss, LOW);

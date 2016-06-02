@@ -381,7 +381,7 @@ void board_init(void)
 	pmc_enable_periph_clk(ID_ISI);
 	
 	//set camera to 640x480
-	SetupCameraRAW();
+	//SetupCameraRAW();
 	
 	//setup ISI
 	//configure size
@@ -421,9 +421,9 @@ void board_init(void)
 	    qspiConf.wait_data_for_transfer = 0;
 	    qspiConf.csmode = 0;
 	    qspiConf.bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
-	    qspiConf.baudrate = 1000000;
-		qspiConf.min_delay_qcs = 1;
-		qspiConf.delay_between_ct = 1;
+	    qspiConf.baudrate = 20000000;
+		qspiConf.min_delay_qcs = 4;
+		qspiConf.delay_between_ct = 0;
 		qspiConf.clock_polarity = 0;
 		qspiConf.clock_phase = 0;
 				
