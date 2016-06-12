@@ -128,7 +128,7 @@ src/Hexabot/Hexabot.d src/Hexabot/Hexabot.o: ../src/Hexabot/Hexabot.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
- ../src/ASF/sam/utils/status_codes.h \
+ ../src/ASF/sam/drivers/afec/afec.h ../src/ASF/sam/utils/status_codes.h \
  ../src/ASF/common/boards/user_board/user_board.h \
  ../src/config/conf_board.h ../src/ASF/common/services/delay/delay.h \
  ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
@@ -447,6 +447,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/common/utils/interrupt.h:
 
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h:
+
+../src/ASF/sam/drivers/afec/afec.h:
 
 ../src/ASF/sam/utils/status_codes.h:
 

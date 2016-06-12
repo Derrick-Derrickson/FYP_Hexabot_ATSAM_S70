@@ -16,7 +16,7 @@
 
 #ifndef USER_BOARD_H
 #define USER_BOARD_H
-
+#include <stdlib.h>
 #include <conf_board.h>
 
 // External oscillator settings.

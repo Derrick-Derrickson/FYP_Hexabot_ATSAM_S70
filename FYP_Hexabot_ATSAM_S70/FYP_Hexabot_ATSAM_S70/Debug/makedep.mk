@@ -10,6 +10,8 @@ src\ASF\common\services\sleepmgr\sam\sleepmgr.c
 
 src\ASF\sam\drivers\acc\acc.c
 
+src\ASF\sam\drivers\afec\afec.c
+
 src\ASF\sam\drivers\ebi\smc\smc.c
 
 src\ASF\sam\drivers\isi\isi.c
@@ -69,6 +71,10 @@ src\ASF\sam\utils\syscalls\gcc\syscalls.c
 src\DW1000.c
 
 src\Hexabot\Hexabot.c
+
+src\Hexabot\Hexabot_Cmd.c
+
+src\libjpeg\libjpeg.c
 
 src\main.c
 

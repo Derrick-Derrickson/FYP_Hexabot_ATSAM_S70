@@ -39,6 +39,7 @@
           <option id="sam.drivers.matrix" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.pio" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.pmc" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.qspi" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.sdramc" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.supc" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.twihs" value="Add" config="" content-id="Atmel.ASF" />
@@ -46,7 +47,7 @@
           <option id="sam.drivers.usart" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.os.freertos.version" value="Add" config="8.2.3" content-id="Atmel.ASF" />
-          <option id="sam.drivers.qspi" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.afec" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.linker_scripts" value="Add" config="" content-id="Atmel.ASF" />
         </options>
         <configurations>
@@ -275,6 +276,8 @@
           <file path="src/ASF/sam/drivers/ebi/smc/smc.h" framework="" version="3.30.1" source="sam\drivers\ebi\smc\smc.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/qspi/qspi.c" framework="" version="3.30.1" source="sam\drivers\qspi\qspi.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/qspi/qspi.h" framework="" version="3.30.1" source="sam\drivers\qspi\qspi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/afec/afec.c" framework="" version="3.30.1" source="sam\drivers\afec\afec.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/afec/afec.h" framework="" version="3.30.1" source="sam\drivers\afec\afec.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.30.1/common.applications.user_application.user_board.sams70q20/html/index.html" />
         <offline-documentation help="" />
@@ -355,6 +358,7 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
+      <Value>../src/ASF/sam/drivers/afec</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -366,11 +370,13 @@
     <ListValues>
       <Value>libarm_cortexM7lfsp_math_softfp</Value>
       <Value>libm</Value>
+      <Value>libjpeg_ewarm_rel.a</Value>
     </ListValues>
   </armgcc.linker.libraries.Libraries>
   <armgcc.linker.libraries.LibrarySearchPaths>
     <ListValues>
       <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
+      <Value>D:\SAMS70_DEV_FILES\studio\examples\Atmel\SAMV71_Xplained_Ultra\libraries\libjpeg\lib</Value>
     </ListValues>
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
@@ -410,6 +416,7 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
+      <Value>../src/ASF/sam/drivers/afec</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM7=true -DBOARD=USER_BOARD -Dprintf=iprintf -Dscanf=iscanf -D__FREERTOS__</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -448,6 +455,7 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
+      <Value>../src/ASF/sam/drivers/afec</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -506,6 +514,7 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
+      <Value>../src/ASF/sam/drivers/afec</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -518,11 +527,13 @@
     <ListValues>
       <Value>libarm_cortexM7lfsp_math_softfp</Value>
       <Value>libm</Value>
+      <Value>libjpeg_ewarm_rel.a</Value>
     </ListValues>
   </armgcc.linker.libraries.Libraries>
   <armgcc.linker.libraries.LibrarySearchPaths>
     <ListValues>
       <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
+      <Value>D:\SAMS70_DEV_FILES\studio\examples\Atmel\SAMV71_Xplained_Ultra\libraries\libjpeg\lib</Value>
     </ListValues>
   </armgcc.linker.libraries.LibrarySearchPaths>
   <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
@@ -562,6 +573,7 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
+      <Value>../src/ASF/sam/drivers/afec</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -601,6 +613,7 @@
       <Value>../src/ASF/sam/drivers/matrix</Value>
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
+      <Value>../src/ASF/sam/drivers/afec</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -628,6 +641,7 @@
     <Folder Include="src\ASF\sam\drivers\" />
     <Folder Include="src\ASF\sam\drivers\acc\" />
     <Folder Include="src\ASF\sam\drivers\acc\acc_example\" />
+    <Folder Include="src\ASF\sam\drivers\afec\" />
     <Folder Include="src\ASF\sam\drivers\ebi\" />
     <Folder Include="src\ASF\sam\drivers\ebi\smc\" />
     <Folder Include="src\ASF\sam\drivers\isi\" />
@@ -677,6 +691,8 @@
     <Folder Include="src\ASF\thirdparty\freertos\freertos-8.2.3\Source\portable\MemMang\" />
     <Folder Include="src\config\" />
     <Folder Include="src\Hexabot" />
+    <Folder Include="src\libjpeg" />
+    <Folder Include="src\libjpeg\include" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.c">
@@ -710,6 +726,12 @@
       <SubType>compile</SubType>
     </None>
     <None Include="src\ASF\sam\drivers\acc\acc.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\afec\afec.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\afec\afec.h">
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\ASF\sam\drivers\ebi\smc\smc.c">
@@ -1346,6 +1368,66 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Hexabot\Hexabot.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Hexabot\Hexabot_Cmd.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Hexabot\Hexabot_Cmd.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\cderror.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\cdjpeg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jconfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jdct.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jerror.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jinclude.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jmemsys.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jmorecfg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jpegint.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jpeglib.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\jversion.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\include\transupp.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\jconfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\jconfig_gcc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\jconfig_iar.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\jconfig_mdk.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\libjpeg.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\libjpeg\libjpeg.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\main.c">

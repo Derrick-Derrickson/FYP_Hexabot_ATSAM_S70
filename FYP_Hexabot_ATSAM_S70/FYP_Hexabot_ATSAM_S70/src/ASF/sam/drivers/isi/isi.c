@@ -184,8 +184,8 @@ void isi_gs_configue(Isi *p_isi, uint8_t mode)
 void isi_size_configure(Isi *p_isi, uint32_t image_hsize, uint32_t image_vsize,
 						uint32_t preview_hsize, uint32_t preview_vsize)
 {
-	p_isi->ISI_CFG2 = _isi_get_CFG2_workaround() & (~ISI_CFG2_IM_VSIZE_Msk);
-	p_isi->ISI_CFG2 = _isi_get_CFG2_workaround() & (~ISI_CFG2_IM_HSIZE_Msk);
+	p_isi->ISI_CFG2 = _isi_get_CFG2_workaround()  & (~ISI_CFG2_IM_VSIZE_Msk);
+	p_isi->ISI_CFG2 = _isi_get_CFG2_workaround()  & (~ISI_CFG2_IM_HSIZE_Msk);
 	p_isi->ISI_CFG2 = _isi_get_CFG2_workaround() | ISI_CFG2_IM_VSIZE(image_vsize - 1) | ISI_CFG2_IM_HSIZE(image_hsize - 1);
 
 	p_isi->ISI_PSIZE &= (~ISI_PSIZE_PREV_VSIZE_Msk);

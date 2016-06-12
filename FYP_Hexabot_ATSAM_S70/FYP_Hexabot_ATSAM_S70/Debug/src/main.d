@@ -128,7 +128,7 @@ src/main.d src/main.o: ../src/main.c ../src/Hexabot/Hexabot.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
- ../src/ASF/sam/utils/status_codes.h \
+ ../src/ASF/sam/drivers/afec/afec.h ../src/ASF/sam/utils/status_codes.h \
  ../src/ASF/common/boards/user_board/user_board.h \
  ../src/config/conf_board.h ../src/ASF/common/services/delay/delay.h \
  ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
@@ -184,7 +184,10 @@ src/main.d src/main.o: ../src/main.c ../src/Hexabot/Hexabot.h \
  ../src/ASF/sam/drivers/wdt/wdt.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
- ../src/../Debug.h ../src/../Debug.h ../src/DW1000.h
+ ../src/../Debug.h ../src/../Debug.h ../src/DW1000.h \
+ ../src/Hexabot/Hexabot_Cmd.h ../src/libjpeg/libjpeg.h \
+ ../src/libjpeg/include/jpeglib.h ../src/libjpeg/include/jconfig.h \
+ ../src/libjpeg/jconfig_gcc.h ../src/libjpeg/include/jmorecfg.h
 
 ../src/Hexabot/Hexabot.h:
 
@@ -448,6 +451,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h:
 
+../src/ASF/sam/drivers/afec/afec.h:
+
 ../src/ASF/sam/utils/status_codes.h:
 
 ../src/ASF/common/boards/user_board/user_board.h:
@@ -581,3 +586,15 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/../Debug.h:
 
 ../src/DW1000.h:
+
+../src/Hexabot/Hexabot_Cmd.h:
+
+../src/libjpeg/libjpeg.h:
+
+../src/libjpeg/include/jpeglib.h:
+
+../src/libjpeg/include/jconfig.h:
+
+../src/libjpeg/jconfig_gcc.h:
+
+../src/libjpeg/include/jmorecfg.h:

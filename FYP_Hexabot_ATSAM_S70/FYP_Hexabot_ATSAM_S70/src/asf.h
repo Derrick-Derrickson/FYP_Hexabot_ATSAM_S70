@@ -55,6 +55,9 @@
 // From module: ACC - Analog Comparator Controller
 #include <acc.h>
 
+// From module: AFEC - Analog-Front-End Controller
+#include <afec.h>
+
 // From module: Common SAM compiler driver
 #include <compiler.h>
 #include <status_codes.h>
