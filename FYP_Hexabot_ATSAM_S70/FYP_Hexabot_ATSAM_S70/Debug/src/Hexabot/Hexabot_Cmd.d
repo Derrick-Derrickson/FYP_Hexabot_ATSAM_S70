@@ -184,7 +184,8 @@ src/Hexabot/Hexabot_Cmd.d src/Hexabot/Hexabot_Cmd.o: \
  ../src/ASF/sam/drivers/wdt/wdt.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h ../src/../Debug.h \
  ../src/Hexabot/Hexabot.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
+ ../src/DW1000.h
 
 ../src/Hexabot/Hexabot_Cmd.h:
 
@@ -581,3 +582,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/Hexabot/Hexabot.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h:
+
+../src/DW1000.h:

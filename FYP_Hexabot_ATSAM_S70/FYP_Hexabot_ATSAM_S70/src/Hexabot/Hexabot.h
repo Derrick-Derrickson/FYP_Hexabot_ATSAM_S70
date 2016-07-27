@@ -14,13 +14,14 @@
 #include "../Debug.h"
 
 #define write_SCCB(X, Y) i2cWriteReg(CAMERA_I2C_ADDR,X,Y)
+#define write_SCCB_76(X, Y) i2cWriteReg(CAMERA_I2C_ADDR_OV7670,X,Y)
 #define CAM_FRAME0_ADDR  BOARD_SDRAM_ADDR
-#define CAM_FRAME1_ADDR  BOARD_SDRAM_ADDR+320*240*2*16
+#define CAM_FRAME1_ADDR  BOARD_SDRAM_ADDR+320*240*2 + 0x10;
 #define CAM_FRAME_DIF_ADDR  BOARD_SDRAM_ADDR+320*240*2*8
 
 
-#define A 100
-#define B 150
+#define A 120
+#define B 130
 #define HEXABOT_LEG_CYCLE_T 50
 
 typedef struct walk_data_s {
@@ -34,6 +35,7 @@ typedef struct walk_data_s {
 	int Walk_EN;
 	int max_i;
 	int i;
+	int ret;
 } walk_data;
 
 //typedefs
@@ -58,6 +60,7 @@ void SetupCameraC();
 void SetupCameraYUVVGA();
 void setupcameraLinuxDriver();
 void dumpFrame();
+void SetupCameraYUVVGA_OV7670();
 
 //servoManagement
 int i2cReadReg(uint8_t,uint8_t);

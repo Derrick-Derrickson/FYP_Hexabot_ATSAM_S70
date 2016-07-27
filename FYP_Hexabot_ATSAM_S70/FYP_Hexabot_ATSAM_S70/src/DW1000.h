@@ -1268,6 +1268,7 @@
 		
 		void DW1000_writePANAddress();
 		void DW1000_initialise();
+		void DW1000_initialise2();
 		void DW1000_mySettingsChannel1();
 		void DW1000_loadLDE();
 

@@ -54,6 +54,10 @@ void DW1000_writePANAddress() {
 	 DW1000_writeReg(PANADR_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x12345678, PANADR_LEN);
 }
 
+void DW1000_initialise2() {
+	
+
+}
 /* My settings (recommended values from DWM1000 User Manual)
  * Channel:				3
  * PRF:					16 MHz
@@ -106,11 +110,11 @@ void DW1000_initialise() {
 	// DW1000_writeReg(AON_ID, SUB, AON_WCFG_OFFSET, 0, AON_WCFG_LEN);
 
 	// Load LDE microcode from ROM to RAM
-	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 0x0301, 2);
-	 DW1000_writeReg(OTP_IF_ID, DW1000_SUB, OTP_CTRL, OTP_CTRL_LDELOAD, 2);
+	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 0x0000, 2);
+	 //DW1000_writeReg(OTP_IF_ID, DW1000_SUB, OTP_CTRL, OTP_CTRL_LDELOAD, 2);
 	 delay_ms(150);
-	 long temp = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 2);
-	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 0x0200, 2);
+	// long temp = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 2);
+	// DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 0x0200, 2);
 
 	// long temp = DW1000_readReg(PMSC_ID, SUB, PMSC_CTRL1_OFFSET, PMSC_CTRL1_LEN);
 	// DW1000_writeReg(PMSC_ID, SUB, PMSC_CTRL1_OFFSET, (temp & 0xFFFDFFFF), PMSC_CTRL1_LEN);
@@ -225,10 +229,10 @@ void DW1000_setSystemConfig(uint64_t buffer) {
 }
 
 void DW1000_toggleGPIO_MODE() {
-	 DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET, 0x00001400, GPIO_MODE_LEN);
+	 DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET,0x001540, GPIO_MODE_LEN);
 	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, 0x00000120, PMSC_LEDC_LEN);
 }
-
+ 
 void DW1000_setTxFrameControl(long buffer) {
 	 DW1000_writeReg(TX_FCTRL_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, buffer, TX_FCTRL_LEN);
 }
@@ -291,8 +295,9 @@ uint64_t DW1000_readReg(uint8_t cmd, int subindex, uint16_t offset, int n) {
     		headerLen = 3;
     	}
     }
-	qspi_write(QSPI,header,headerLen);
+	for(int i = 0;i<headerLen;i++) qspi_write(QSPI,header+i,1);
 	qspi_read(QSPI,data,n);
+	
 	///* SPI transaction */
 	//digitalWrite(_ss, LOW);
 	//for (i = 0; i < headerLen; i++) {
@@ -368,24 +373,18 @@ void DW1000_writeReg(uint8_t cmd, int subindex, uint16_t offset, uint64_t buffer
     		headerLen = 3;
     	}
     }
+	while(!(QSPI->QSPI_SR & QSPI_SR_TXEMPTY));
+	for(int i = 0;i<headerLen;i++){
+		 qspi_write(QSPI,header+i,1);
+	}
 	
-	qspi_write(QSPI,header,headerLen);
-	qspi_write(QSPI,data,n);
-	
+	for(int i = 0;i<n;i++)
+	{
+		 qspi_write(QSPI,data+i,1);
+	}
 					//T++;
 				//memset(Qbuf,0,20);
-				//Qbuf[0] = 0x26 | 1<<7 | 1<<6;
-				//Qbuf[1] = 0x0C;
-				//Qbuf[2] = 0xF0 | (1<<(0x3&T));
-				//Qbuf[3] = 0x00;
-				//Qbuf[4] = 0x00;
-				//Qbuf[5] = 0x00;
-				//qspi_write(QSPI,Qbuf,1);
-				//qspi_write(QSPI,Qbuf+1,1);
-				//qspi_write(QSPI,Qbuf+2,1);
-				//qspi_write(QSPI,Qbuf+3,1);
-				//qspi_write(QSPI,Qbuf+4,1);
-				//qspi_write(QSPI,Qbuf+5,1);
+				
 				//delay_ms(100);
 				//
 				//

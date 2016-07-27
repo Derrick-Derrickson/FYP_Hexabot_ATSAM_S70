@@ -127,7 +127,63 @@ src/ASF/sam/drivers/twihs/twihs.d src/ASF/sam/drivers/twihs/twihs.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\stdlib.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
- ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h
+ ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h ../src/../Debug.h \
+ ../src/asf.h ../src/ASF/sam/drivers/acc/acc.h \
+ ../src/ASF/sam/drivers/afec/afec.h ../src/ASF/sam/utils/status_codes.h \
+ ../src/ASF/common/boards/user_board/user_board.h \
+ ../src/config/conf_board.h ../src/ASF/common/services/delay/delay.h \
+ ../src/ASF/common/services/clock/sysclk.h ../src/config/conf_clock.h \
+ ../src/ASF/common/services/clock/sams70/sysclk.h \
+ ../src/ASF/common/services/clock/osc.h \
+ ../src/ASF/common/services/clock/sams70/osc.h \
+ ../src/ASF/common/boards/board.h ../src/ASF/sam/drivers/pmc/pmc.h \
+ ../src/ASF/common/services/clock/pll.h \
+ ../src/ASF/common/services/clock/sams70/pll.h \
+ ../src/ASF/common/services/delay/sam/cycle_counter.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/FreeRTOS.h \
+ ../src/config/FreeRTOSConfig.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/projdefs.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/portable.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/deprecated_definitions.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/mpu_wrappers.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/StackMacros.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/croutine.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/list.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/deprecated_definitions.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/event_groups.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/timers.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/task.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/list.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/mpu_wrappers.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/portable.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/projdefs.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/queue.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/semphr.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/queue.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/task.h \
+ ../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/timers.h \
+ ../src/ASF/sam/drivers/isi/isi.h ../src/ASF/sam/drivers/matrix/matrix.h \
+ ../src/ASF/sam/drivers/pio/pio.h ../src/ASF/sam/drivers/pmc/sleep.h \
+ ../src/ASF/sam/drivers/qspi/qspi.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\assert.h \
+ ../src/ASF/sam/utils/fpu/fpu.h ../src/ASF/sam/drivers/sdramc/sdramc.h \
+ ../src/ASF/common/services/sleepmgr/sleepmgr.h \
+ ../src/ASF/common/services/sleepmgr/sam/sleepmgr.h \
+ ../src/config/conf_sleepmgr.h ../src/ASF/sam/drivers/ebi/smc/smc.h \
+ ../src/ASF/sam/drivers/supc/supc.h \
+ ../src/ASF/common/services/sleepmgr/sam/sleepmgr.h \
+ ../src/ASF/sam/drivers/twihs/twihs.h \
+ ../src/ASF/common/services/twi/sam_twihs/twihs_master.h \
+ ../src/ASF/common/services/twi/sam_twihs/twihs_slave.h \
+ ../src/ASF/common/services/twi/twihs_master.h \
+ ../src/ASF/common/services/twi/sam_twihs/twihs_master.h \
+ ../src/ASF/common/services/twi/twihs_slave.h \
+ ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
+ ../src/ASF/sam/drivers/wdt/wdt.h \
+ ../src/ASF/sam/drivers/pio/pio_handler.h
 
 ../src/ASF/sam/drivers/twihs/twihs.h:
 
@@ -386,3 +442,137 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/common/utils/interrupt.h:
 
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h:
+
+../src/../Debug.h:
+
+../src/asf.h:
+
+../src/ASF/sam/drivers/acc/acc.h:
+
+../src/ASF/sam/drivers/afec/afec.h:
+
+../src/ASF/sam/utils/status_codes.h:
+
+../src/ASF/common/boards/user_board/user_board.h:
+
+../src/config/conf_board.h:
+
+../src/ASF/common/services/delay/delay.h:
+
+../src/ASF/common/services/clock/sysclk.h:
+
+../src/config/conf_clock.h:
+
+../src/ASF/common/services/clock/sams70/sysclk.h:
+
+../src/ASF/common/services/clock/osc.h:
+
+../src/ASF/common/services/clock/sams70/osc.h:
+
+../src/ASF/common/boards/board.h:
+
+../src/ASF/sam/drivers/pmc/pmc.h:
+
+../src/ASF/common/services/clock/pll.h:
+
+../src/ASF/common/services/clock/sams70/pll.h:
+
+../src/ASF/common/services/delay/sam/cycle_counter.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/FreeRTOS.h:
+
+../src/config/FreeRTOSConfig.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/projdefs.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/portable.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/deprecated_definitions.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/portmacro.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/mpu_wrappers.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/StackMacros.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/croutine.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/list.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/deprecated_definitions.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/event_groups.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/timers.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/task.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/list.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/mpu_wrappers.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/portable.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/projdefs.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/queue.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/semphr.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/queue.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/task.h:
+
+../src/ASF/thirdparty/freertos/freertos-8.2.3/Source/include/timers.h:
+
+../src/ASF/sam/drivers/isi/isi.h:
+
+../src/ASF/sam/drivers/matrix/matrix.h:
+
+../src/ASF/sam/drivers/pio/pio.h:
+
+../src/ASF/sam/drivers/pmc/sleep.h:
+
+../src/ASF/sam/drivers/qspi/qspi.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\assert.h:
+
+../src/ASF/sam/utils/fpu/fpu.h:
+
+../src/ASF/sam/drivers/sdramc/sdramc.h:
+
+../src/ASF/common/services/sleepmgr/sleepmgr.h:
+
+../src/ASF/common/services/sleepmgr/sam/sleepmgr.h:
+
+../src/config/conf_sleepmgr.h:
+
+../src/ASF/sam/drivers/ebi/smc/smc.h:
+
+../src/ASF/sam/drivers/supc/supc.h:
+
+../src/ASF/common/services/sleepmgr/sam/sleepmgr.h:
+
+../src/ASF/sam/drivers/twihs/twihs.h:
+
+../src/ASF/common/services/twi/sam_twihs/twihs_master.h:
+
+../src/ASF/common/services/twi/sam_twihs/twihs_slave.h:
+
+../src/ASF/common/services/twi/twihs_master.h:
+
+../src/ASF/common/services/twi/sam_twihs/twihs_master.h:
+
+../src/ASF/common/services/twi/twihs_slave.h:
+
+../src/ASF/sam/drivers/uart/uart.h:
+
+../src/ASF/sam/drivers/usart/usart.h:
+
+../src/ASF/sam/drivers/wdt/wdt.h:
+
+../src/ASF/sam/drivers/pio/pio_handler.h:

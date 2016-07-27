@@ -185,9 +185,7 @@ src/main.d src/main.o: ../src/main.c ../src/Hexabot/Hexabot.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
  ../src/../Debug.h ../src/../Debug.h ../src/DW1000.h \
- ../src/Hexabot/Hexabot_Cmd.h ../src/libjpeg/libjpeg.h \
- ../src/libjpeg/include/jpeglib.h ../src/libjpeg/include/jconfig.h \
- ../src/libjpeg/jconfig_gcc.h ../src/libjpeg/include/jmorecfg.h
+ ../src/Hexabot/Hexabot_Cmd.h
 
 ../src/Hexabot/Hexabot.h:
 
@@ -588,13 +586,3 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/DW1000.h:
 
 ../src/Hexabot/Hexabot_Cmd.h:
-
-../src/libjpeg/libjpeg.h:
-
-../src/libjpeg/include/jpeglib.h:
-
-../src/libjpeg/include/jconfig.h:
-
-../src/libjpeg/jconfig_gcc.h:
-
-../src/libjpeg/include/jmorecfg.h:

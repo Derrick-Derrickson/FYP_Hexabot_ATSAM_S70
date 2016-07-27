@@ -68,6 +68,12 @@ src\ASF\sam\utils\cmsis\sams70\source\templates\system_sams70.c
 
 src\ASF\sam\utils\syscalls\gcc\syscalls.c
 
+src\Decawave\deca_device.c
+
+src\Decawave\deca_params_init.c
+
+src\Decawave\deca_range_tables.c
+
 src\DW1000.c
 
 src\Hexabot\Hexabot.c

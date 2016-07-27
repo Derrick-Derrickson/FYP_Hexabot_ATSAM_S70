@@ -122,12 +122,12 @@ void board_init(void)
 	//Build Memory device settings:
 	sendDebugString("SDRAM INITIALIZATION - STARTED\n");
 	const sdramc_memory_dev_t SDRAM_ALLIANCE_AS4C = {
-		24,
+		25,
 		//0b00000000010000000001000000,
 		//0x0FFFFFFF,
 		//0,
 		//0b000000000110000,
-		0b0001001110001001110,
+		0b0001000000001000000,
 		(
 			SDRAMC_CR_NC_COL9		|
 			SDRAMC_CR_NR_ROW13		|
@@ -135,11 +135,11 @@ void board_init(void)
 			SDRAMC_CR_CAS_LATENCY3	|
 			SDRAMC_CR_DBW			|
 			SDRAMC_CR_TWR(5)		|
-			SDRAMC_CR_TRC_TRFC(10)	|
+			SDRAMC_CR_TRC_TRFC(12)	|
 			SDRAMC_CR_TRP(5)		|
 			SDRAMC_CR_TRCD(5)		|
-			SDRAMC_CR_TRAS(9)		|
-			SDRAMC_CR_TXSR(10)		)
+			SDRAMC_CR_TRAS(8)		|
+			SDRAMC_CR_TXSR(12)		)
 	};
 	//enable the clock for the SDRAM Controller
 	pmc_enable_periph_clk(ID_SDRAMC);
@@ -330,12 +330,14 @@ void board_init(void)
 	pio_set_output(PIOD,PIO_PD26,LOW,DISABLE,DISABLE);
 	pio_set(PIOD,PIO_PD26);
 	
-	twihs_reset(TWIHS0);
-	twihs_enable_master_mode(TWIHS0);
-	twihs_options_t twihs_opts;
-	twihs_opts.master_clk = sysclk_get_cpu_hz();
-	twihs_opts.speed = 400000;
-	twihs_master_init(TWIHS0,&twihs_opts);
+	Twihs_reinit();
+	
+	//twihs_reset(TWIHS0);
+	//twihs_enable_master_mode(TWIHS0);
+	//twihs_options_t twihs_opts;
+	//twihs_opts.master_clk = sysclk_get_cpu_hz();
+	//twihs_opts.speed = 200000;
+	//twihs_master_init(TWIHS0,&twihs_opts);
 	sendDebugString("TWIHS INITIALIZATION - FINISHED\n");
 	
 	
@@ -359,7 +361,7 @@ void board_init(void)
 	pio_set_output(PIOD,PIO_PD10,LOW,DISABLE,DISABLE);
 	pio_set(PIOD,PIO_PD10);
 	delay_ms(10);
-	pio_clear(PIOD,PIO_PD10);
+	//pio_clear(PIOD,PIO_PD10);
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_D,
 	1<<22	|
 	1<<21	|
@@ -419,7 +421,8 @@ void board_init(void)
 	pmc_enable_periph_clk(ID_ISI);
 	
 	//set camera to 640x480
-	SetupCameraYUVVGA();
+	//SetupCameraYUVVGA();
+	SetupCameraYUVVGA_OV7670();
 	//Optional Test Mode
 	//write_SCCB(0x8D,1<<4);
 	isi_reset(ISI);
@@ -447,7 +450,7 @@ void board_init(void)
 	isiFBD0->control =0x1;
 	
 	isiFBD1->next = isiFBD0;
-	isiFBD1->current =CAM_FRAME1_ADDR;
+	isiFBD1->current =CAM_FRAME0_ADDR;
 	isiFBD1->control =0x1;
 	
 	isi_init(ISI,&isiConf);
@@ -456,7 +459,8 @@ void board_init(void)
 	isi_set_dma_preview_path(ISI,0,isiFBD0,0x01,isiFBD0->current);
 	isi_dma_channel_enable(ISI,1);
 	
-	isi_size_configure(ISI,480,640,320,320);
+	isi_size_configure(ISI,640,640,320,320);
+	ISI->ISI_CFG2 = ISI->ISI_CFG2 | ISI_CFG2_YCC_SWAP_MODE1;
 	//ISI->ISI_PDECF = 32;
 	isi_enable(ISI);
 	sendDebugString("CAMERA INITIALIZATION - FINISHED\n");
@@ -467,16 +471,16 @@ void board_init(void)
 	   ######################################
 	   ###################################### */
 	
-		sendDebugString("WIRELESS MODULE INITIALIZATION - STARTED\n");
+		sendDebugString("QSPI INITIALIZATION - STARTED\n");
 	    struct qspi_config_t qspiConf;
 	    qspiConf.serial_memory_mode = 0;
 	    qspiConf.loopback_en = 0;
 	    qspiConf.wait_data_for_transfer = 0;
 	    qspiConf.csmode = 0;
 	    qspiConf.bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
-	    qspiConf.baudrate = 20000000;
+	    qspiConf.baudrate = 16000000;
 		qspiConf.min_delay_qcs = 4;
-		qspiConf.delay_between_ct = 0;
+		qspiConf.delay_between_ct = 10;
 		qspiConf.clock_polarity = 0;
 		qspiConf.clock_phase = 0;
 				
@@ -493,7 +497,6 @@ void board_init(void)
 		1<<13	|
 		1<<14	|
 		1<<11,1);
-		
 		
 		pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_A,
 		1<<31);
@@ -512,7 +515,15 @@ void board_init(void)
 		qspi_enable(QSPI);
 		delay_ms(100);
 		//DW1000_initialise();
-		sendDebugString("WIRELESS MODULE INITIALIZATION - FINISHED\n");
+		sendDebugString("QSPI INITIALIZATION - FINISHED\n");
+		
+		//Initalize the dwm1000 module 
+		sendDebugString("DWM1000 INITIALIZATION - STARTED\n");
+		//DW1000_initialise2();
+		//DW1000_toggleGPIO_MODE();
+		sendDebugString("DWM1000 INITIALIZATION - FINISHED\n");
+		
+		
 		
 		
 	/* ######################################
@@ -560,10 +571,10 @@ void board_init(void)
 	
 		sendDebugString("PERIFERAL IRQ INITIALIZATION - STARTED\n");
 		//ISI
-		isi_enable_interrupt(ISI,1<<16|1<<17);
-		NVIC_ClearPendingIRQ(ISI_IRQn);
-		NVIC_SetPriority(ISI_IRQn,7);
-		NVIC_EnableIRQ(ISI_IRQn);
+		//isi_enable_interrupt(ISI,1<<16|1<<17);
+		//NVIC_ClearPendingIRQ(ISI_IRQn);
+		//NVIC_SetPriority(ISI_IRQn,7);
+		//NVIC_EnableIRQ(ISI_IRQn);
 		
 		//UART4
 		uart_enable_interrupt(UART4,UART_IER_RXRDY);

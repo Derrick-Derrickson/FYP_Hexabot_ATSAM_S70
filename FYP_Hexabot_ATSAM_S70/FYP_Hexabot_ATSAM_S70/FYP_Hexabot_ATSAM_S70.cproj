@@ -370,7 +370,6 @@
     <ListValues>
       <Value>libarm_cortexM7lfsp_math_softfp</Value>
       <Value>libm</Value>
-      <Value>libjpeg_ewarm_rel.a</Value>
     </ListValues>
   </armgcc.linker.libraries.Libraries>
   <armgcc.linker.libraries.LibrarySearchPaths>
@@ -527,7 +526,6 @@
     <ListValues>
       <Value>libarm_cortexM7lfsp_math_softfp</Value>
       <Value>libm</Value>
-      <Value>libjpeg_ewarm_rel.a</Value>
     </ListValues>
   </armgcc.linker.libraries.Libraries>
   <armgcc.linker.libraries.LibrarySearchPaths>
@@ -693,6 +691,7 @@
     <Folder Include="src\Hexabot" />
     <Folder Include="src\libjpeg" />
     <Folder Include="src\libjpeg\include" />
+    <Folder Include="src\Decawave" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug.c">
@@ -1358,6 +1357,30 @@
     <None Include="src\config\conf_sleepmgr.h">
       <SubType>compile</SubType>
     </None>
+    <Compile Include="src\Decawave\deca_device.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_device_api.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_params_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_param_types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_range_tables.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_regs.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_types.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Decawave\deca_version.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\DW1000.c">
       <SubType>compile</SubType>
     </Compile>

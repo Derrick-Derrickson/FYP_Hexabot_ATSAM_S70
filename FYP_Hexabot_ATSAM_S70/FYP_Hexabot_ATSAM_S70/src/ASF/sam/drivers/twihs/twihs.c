@@ -45,7 +45,7 @@
  */
 
 #include "twihs.h"
-
+#include "../Debug.h"
 /// @cond 0
 /**INDENT-OFF**/
 #ifdef __cplusplus
@@ -301,6 +301,23 @@ uint32_t twihs_master_read(Twihs *p_twihs, twihs_packet_t *p_packet)
 	return TWIHS_SUCCESS;
 }
 
+void Twihs_reinit() {
+	sendDebugString("TWIHS RE-INITIALIZATION - STARTED\n");
+	pio_set_output(PIOA,1<<3 | 1<<4,LOW,DISABLE,DISABLE);
+	pio_clear(PIOA,1<<3 | 1<<4);
+	pio_set_peripheral(PIOA,PIO_TYPE_PIO_PERIPH_A,1<<3 | 1<<4);
+	pio_set_output(PIOA,PIO_PA26,LOW,DISABLE,DISABLE);
+	pio_clear(PIOA,PIO_PA26);
+	
+	twihs_reset(TWIHS0);
+	twihs_enable_master_mode(TWIHS0);
+	twihs_options_t twihs_opts;
+	twihs_opts.master_clk = sysclk_get_cpu_hz();
+	twihs_opts.speed = 200000;
+	twihs_master_init(TWIHS0,&twihs_opts);
+	sendDebugString("TWIHS RE-INITIALIZATION - FINISHED\n");
+}
+
 /**
  * \brief Write multiple bytes to a TWIHS compatible slave device.
  *
@@ -315,6 +332,7 @@ uint32_t twihs_master_write(Twihs *p_twihs, twihs_packet_t *p_packet)
 {
 	uint32_t status, cnt = p_packet->length;
 	uint8_t *buffer = p_packet->buffer;
+	uint32_t timeout =0;
 
 	/* Check argument */
 	if (cnt == 0) {
@@ -337,31 +355,39 @@ uint32_t twihs_master_write(Twihs *p_twihs, twihs_packet_t *p_packet)
 		if (status & TWIHS_SR_NACK) {
 			return TWIHS_RECEIVE_NACK;
 		}
-
+		timeout++;
+		if(timeout > 0xFFFF) { 
+			Twihs_reinit();
+			return TWIHS_RECEIVE_NACK;
+		}
 		if (!(status & TWIHS_SR_TXRDY)) {
 			continue;
 		}
+		
+		
 		p_twihs->TWIHS_THR = *buffer++;
 
 		cnt--;
 	}
-
+	timeout = 0;
 	while (1) {
 		status = p_twihs->TWIHS_SR;
-		if (status & TWIHS_SR_NACK) {
+		if (status & TWIHS_SR_NACK ||  timeout > 0xFFFF) {
 			return TWIHS_RECEIVE_NACK;
 		}
 
 		if (status & TWIHS_SR_TXRDY) {
 			break;
 		}
+		timeout++;
 	}
-
+	timeout = 0;
 	p_twihs->TWIHS_CR = TWIHS_CR_STOP;
 
-	while (!(p_twihs->TWIHS_SR & TWIHS_SR_TXCOMP)) {
+	while (!(p_twihs->TWIHS_SR & TWIHS_SR_TXCOMP) & timeout < 0xFFFF) {
+		timeout++;
 	}
-
+	
 	return TWIHS_SUCCESS;
 }
 

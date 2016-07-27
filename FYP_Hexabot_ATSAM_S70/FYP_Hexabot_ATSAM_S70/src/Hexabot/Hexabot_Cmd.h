@@ -18,8 +18,16 @@ void cmdServoMan(int L,int S ,int angle);
 
 void cmdBatVolt();
 
-void cmdDumpImage();
+void cmdDumpImage(int dumpLoc);
 
 void cmdWalk(int maxi);
+
+void cmdTestDW1000();
+
+void cmdDWMsend(char* tosend);
+
+void cmdOverrideLEDDWM1000();
+
+void cmdWriteTestDW1000(uint64_t toRW);
 
 #endif /* HEXABOT_CMD_H_ */

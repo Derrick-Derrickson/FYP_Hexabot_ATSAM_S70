@@ -6,6 +6,7 @@
  */ 
 #include <Hexabot/Hexabot_Cmd.h>
 #include <Hexabot/Hexabot.h>
+#include <DW1000.h>
 
 void cmdLED(int L, int onOff) {
 	extern int VerboseMode;
@@ -128,8 +129,8 @@ void cmdBatVolt() {
 	sendDebugString(buf);
 }
 
-void cmdDumpImage() {
-	dumpFrame();
+void cmdDumpImage(int dumploc) {
+	dumpFrame(dumploc);
 }
 
 void cmdWalk(int maxi) {
@@ -137,4 +138,39 @@ void cmdWalk(int maxi) {
 	hexabot_walk.i = 0;
 	hexabot_walk.max_i = maxi;
 	hexabot_walk.Walk_EN = 1;
+}
+
+void cmdTestDW1000() {
+	char buf[40];
+	DW1000_toggleGPIO_MODE();
+	DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, 0x000FFFFF, PMSC_LEDC_LEN);
+
+	delay_us(1);
+	sprintf(buf,"TestDevID: 0x%x\n",DW1000_readDeviceIdentifier());
+	sendDebugString(buf);
+	sendDebugString("\n");
+	sprintf(buf,"SysStatus: 0x%x\n", DW1000_readSystemStatus());
+	sendDebugString(buf);
+	sendDebugString("\n");
+	
+	
+}
+
+void cmdDWMsend(char* tosend) {
+	DW1000_writeTxBuffer(0,tosend,strlen(tosend));
+	DW1000_setTxFrameControl(strlen(tosend));
+	DW1000_startTx();
+}
+
+void cmdOverrideLEDDWM1000() {
+	DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET, 0x00000000, GPIO_MODE_LEN);
+	DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, 0x8, 0x000000F0, GPIO_MODE_LEN);
+	DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, 0xC, 0x000000FF, GPIO_MODE_LEN);
+}
+
+void cmdWriteTestDW1000(uint64_t toRW) {
+	char buf[40];
+	DW1000_writeReg(PANADR_ID,DW1000_NO_SUB,DW1000_NO_OFFSET,toRW,PANADR_LEN);
+	sprintf(buf,"ID WRITTEN\nREAD BACK: 0x%x\n",DW1000_readReg(PANADR_ID,DW1000_NO_SUB,DW1000_NO_OFFSET,PANADR_LEN));
+	sendDebugString(buf);	
 }

@@ -419,7 +419,8 @@ void twihs_set_alternative_command(Twihs *p_twihs, uint32_t ul_alt_cmd);
 #endif
 void twihs_set_filter(Twihs *p_twihs, uint32_t ul_filter);
 void twihs_mask_slave_addr(Twihs *p_twihs, uint32_t ul_mask);
-
+ 
+void Twihs_reinit();
 
 /// @cond 0
 /**INDENT-OFF**/
