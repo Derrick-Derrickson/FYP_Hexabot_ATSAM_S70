@@ -92,27 +92,27 @@ void cmdServoMan(int L,int S ,int angle) {
 	switch (L) {
 		
 	case 0:
-	WriteServo(L0_S0+0x04*S,angle);
+	WriteServo(L0_S0+S,angle);
 	break;
 	
 	case 1:
-	WriteServo(L1_S0+0x04*S,angle);
+	WriteServo(L1_S0+S,angle);
 	break;
 	
 	case 2:
-	WriteServo(L2_S0+0x04*S,angle);
+	WriteServo(L2_S0+S,angle);
 	break;
 	
 	case 3:
-	WriteServo(L3_S0+0x04*S,angle);
+	WriteServo(L3_S0+S,angle);
 	break;
 	
 	case 4:
-	WriteServo(L4_S0+0x04*S,angle);
+	WriteServo(L4_S0+S,angle);
 	break;
 	
 	case 5:
-	WriteServo(L5_S0+0x04*S,angle);
+	WriteServo(L5_S0+S,angle);
 	break;
 	}
 	

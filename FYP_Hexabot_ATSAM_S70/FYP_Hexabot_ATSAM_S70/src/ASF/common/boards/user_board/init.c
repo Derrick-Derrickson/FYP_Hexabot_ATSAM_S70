@@ -561,6 +561,8 @@ void board_init(void)
 		sendDebugString("SWITCH INITIALIZATION - STARTED\n");
 		pio_set_input(PIOC,1<<12,PIO_PULLUP | PIO_DEBOUNCE);
 		pio_set_input(PIOC,1<<11,PIO_PULLUP | PIO_DEBOUNCE);
+		pio_set_input(PIOC,1<<10,PIO_PULLUP | PIO_DEBOUNCE);
+		pio_set_input(PIOC,1<<9,PIO_PULLUP | PIO_DEBOUNCE);
 		sendDebugString("SWITCH INITIALIZATION - FINISHED\n");
 		
 	/* ######################################

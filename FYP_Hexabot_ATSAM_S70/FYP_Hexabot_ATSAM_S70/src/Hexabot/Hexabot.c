@@ -5,6 +5,7 @@
  *  Author: to300
  */ 
 #include "Hexabot/Hexabot.h"
+#include "Hexabot/Hexabot_Cmd.h"
 
 #define REG_GAIN		0x00	/* Gain control, AGC[7:0] */
 #define REG_BLUE		0x01	/* AWB - Blue chanel gain */
@@ -283,8 +284,9 @@ void WriteServo(int Leg,int svo,float angle)
 {
 	int addrData[2];
 	legGetI2Caddr(Leg,svo,addrData);
+	extern float* SvoCal;
 	 //uint16_t stop = (int)((1.00+((angle)/180.00))*(4095.00/(20.00)));
-	angle = angle + CalData[svo*12+2*Leg];
+	angle = angle + SvoCal[svo*12+2*Leg];
 	
 	uint16_t stop = (int)lroundf( (4095.00/(20.00)) * ((0.56) + (2.4-0.56)*(angle/180.00))  );	
 		
@@ -1148,4 +1150,240 @@ void writeLegOut(int leg, float S0, float S1, float S2) {
 	}
 
 
+}
+
+void getS0cal(int Leg, float* angOff, float* Lin) {
+	int calState = 0;
+	float ang = 90;
+	extern int But_Up;
+	while(!(!pio_get(SW4) &&  calState >= 1 && !But_Up)) {
+		
+		if(!pio_get(SW4)&& !But_Up) {
+			if(calState == 0){
+				*angOff = 90 - ang;
+			}
+			calState++;
+			ang = 45;
+			But_Up = 1;
+		}
+		
+		if(pio_get(SW4)) But_Up = 0;
+		
+		if(!pio_get(SW3)) {
+			ang += 0.1;
+		}
+		
+		if(!pio_get(SW2)) {
+			ang -= 0.1;
+		}
+		
+		if(calState == 1) pio_set(LED3);
+		else pio_clear(LED3);
+		
+		switch (Leg) {
+			
+			case 0:
+			WriteServo(L0_S0,ang);
+			break;
+			
+			case 1:
+			WriteServo(L1_S0,ang);
+			break;
+
+			case 2:
+			WriteServo(L2_S0,ang);
+			break;
+
+			case 3:
+			WriteServo(L3_S0,ang);
+			break;
+
+			case 4:
+			WriteServo(L4_S0,ang);
+			break;
+
+			case 5:
+			WriteServo(L5_S0,ang);
+			break;
+		}
+	}
+	But_Up = 1;
+	*Lin = (*angOff+ang)/45.00;
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,90.00);
+	cmdServoMan(6,2,180.00);
+}
+
+void getS1cal(int Leg, float* angOff, float* Lin) {
+	int calState = 0;
+	float ang = 90;
+	extern int But_Up;
+	while(!(!pio_get(SW4) &&  calState >= 1 && !But_Up)) {
+		
+		if(!pio_get(SW4)&& !But_Up) {
+			if(calState == 0){
+				*angOff = 90 - ang;
+			}
+			calState++;
+			ang = 45;
+			But_Up = 1;
+		}
+		
+		if(pio_get(SW4)) But_Up = 0;
+		
+		if(!pio_get(SW3)) {
+			ang += 0.1;
+		}
+		
+		if(!pio_get(SW2)) {
+			ang -= 0.1;
+		}
+		
+		if(calState == 1) pio_set(LED3);
+		else pio_clear(LED3);
+		
+		switch (Leg) {
+			
+			case 0:
+			WriteServo(L0_S0,ang);
+			break;
+			
+			case 1:
+			WriteServo(L1_S0,ang);
+			break;
+
+			case 2:
+			WriteServo(L2_S0,ang);
+			break;
+
+			case 3:
+			WriteServo(L3_S0,ang);
+			break;
+
+			case 4:
+			WriteServo(L4_S0,ang);
+			break;
+
+			case 5:
+			WriteServo(L5_S0,ang);
+			break;
+		}
+	}
+	But_Up = 1;
+	*Lin = (*angOff+ang)/45.00;
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,90.00);
+	cmdServoMan(6,2,180.00);
+}
+
+void getS2cal(int Leg, float* angOff, float* Lin) {
+	int calState = 0;
+	float ang = 180;
+	extern int But_Up;
+	while(!(!pio_get(SW4) &&  calState >= 1 && !But_Up)) {
+		
+		if(!pio_get(SW4)&& !But_Up) {
+			if(calState == 0){
+				*angOff = 90 - ang;
+			}
+			calState++;
+			ang = 90;
+			But_Up = 1;
+		}
+		
+		if(pio_get(SW4)) But_Up = 0;
+		
+		if(!pio_get(SW3)) {
+			ang += 0.1;
+		}
+		
+		if(!pio_get(SW2)) {
+			ang -= 0.1;
+		}
+		
+		if(calState == 1) pio_set(LED3);
+		else pio_clear(LED3);
+		
+		switch (Leg) {
+			
+			case 0:
+			WriteServo(L0_S0,ang);
+			break;
+			
+			case 1:
+			WriteServo(L1_S0,ang);
+			break;
+
+			case 2:
+			WriteServo(L2_S0,ang);
+			break;
+
+			case 3:
+			WriteServo(L3_S0,ang);
+			break;
+
+			case 4:
+			WriteServo(L4_S0,ang);
+			break;
+
+			case 5:
+			WriteServo(L5_S0,ang);
+			break;
+		}
+	}
+	But_Up = 1;
+	*Lin = (*angOff+ang)/90.00;
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,90.00);
+	cmdServoMan(6,2,180.00);
+}
+
+
+void calibServos(float* calData) {
+	sendDebugString("Started servo cal\n");
+	for(int i =0; i<6; i++) {
+		byteToLEDs(i>>4,0xF0);
+		getS0cal(i,&calData[i*2],&calData[i*2+1]);
+	}
+	for(int i =0; i<6; i++) {
+		byteToLEDs(i>>4,0xF0);
+		getS1cal(i,&calData[i*2+12],&calData[i*2+13]);
+	}
+	for(int i =0; i<6; i++) {
+		byteToLEDs(i>>4,0xF0);
+		getS2cal(i,&calData[i*2+24],&calData[i*2+25]);
+	}
+	sendDebugString("Finished servo cal data Follows:\n");
+	char buf[100];
+	for(int i =0; i<36; i++) {
+		sprintf(buf,"%f,%f,%f\n",calData[i*2],calData[i*2+1]);
+		sendDebugString(buf);
+	}
+}
+
+void byteToLEDs(uint8_t disp,uint8_t mask) {
+	if(mask&(1<<0) && disp&(1<<0)) pio_set(LED0);
+	else if(mask&(1<<0)) pio_clear(LED0);
+	
+	if(mask&(1<<1) && disp&(1<<1)) pio_set(LED1);
+	else if(mask&(1<<1)) pio_clear(LED1);
+	
+	if(mask&(1<<2) && disp&(1<<2)) pio_set(LED2);
+	else if(mask&(1<<2)) pio_clear(LED2);
+	
+	if(mask&(1<<3) && disp&(1<<3)) pio_set(LED3);
+	else if(mask&(1<<3)) pio_clear(LED3);
+	
+	if(mask&(1<<4) && disp&(1<<4)) pio_set(LED4);
+	else if(mask&(1<<4)) pio_clear(LED4);
+	
+	if(mask&(1<<5) && disp&(1<<5)) pio_set(LED5);
+	else if(mask&(1<<5)) pio_clear(LED5);
+	
+	if(mask&(1<<6) && disp&(1<<6)) pio_set(LED6);
+	else if(mask&(1<<6)) pio_clear(LED6);
+	
+	if(mask&(1<<7) && disp&(1<<7)) pio_set(LED7);
+	else if(mask&(1<<7)) pio_clear(LED7);
+	
 }

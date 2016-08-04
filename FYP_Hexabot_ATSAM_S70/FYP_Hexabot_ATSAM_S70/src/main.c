@@ -53,6 +53,7 @@ walk_data hexabot_walk;
 int VerboseMode = 0;
 int cam_dif_tsh = 25;
 
+float* SvoCal;
 //semaphores!
 SemaphoreHandle_t ISIsem = NULL;
 SemaphoreHandle_t UARTsem = NULL;
@@ -64,6 +65,7 @@ int main (void)
 	board_init();
 	sendDebugString("BOARD INITIALIZATION - FINISHED\n");
 	intl_frame = (uint16_t*)malloc(240*320*2); //assign
+	SvoCal = (float*)malloc(sizeof(float)*2*18);
 	sendDebugString("RTOS TASK INITIALIZATION - STARTED\n");
 	
 	xTaskCreate(vTask1,"TASK1",400,NULL,10,NULL);

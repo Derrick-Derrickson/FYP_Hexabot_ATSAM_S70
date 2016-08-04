@@ -76,4 +76,8 @@ XZ calcRotation(float inX, float inZ, float cenX,  float cenZ, float rotAng, int
 int sign(float in);
 angles legAngCalc(float x, float y, float z);
 void writeLegOut(int leg, float S0, float S1, float S2);
+
+//
+void byteToLEDs(uint8_t disp,uint8_t mask);
+void calibServos(float*);
 #endif /* HEXABOT_H_ */

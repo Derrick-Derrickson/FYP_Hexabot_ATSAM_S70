@@ -53,6 +53,12 @@
 
 #define GLOBAL_SLOWDOWN 1
 
+//Switches
+#define SW1 PIOC,PIO_INPUT,1<<12
+#define SW2 PIOC,PIO_INPUT,1<<11
+#define SW3 PIOC,PIO_INPUT,1<<10
+#define SW4 PIOC,PIO_INPUT,1<<9
+
 #define PWM_CTRL_A_I2C_ADDR_A 0x40
 #define PWM_CTRL_A_I2C_ADDR_B 0x41
 #define CAMERA_I2C_ADDR 0x30
