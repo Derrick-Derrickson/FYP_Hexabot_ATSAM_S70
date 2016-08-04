@@ -234,15 +234,64 @@ void ServoDriverInit(int ServoAddr) {
 	sendDebugString("SERVO DRIVER SETUP COMPLEATE\n");
 }
 
-void WriteServo(int i2cAddr,int baseReg,float angle) 
+void cpyIn(int Ain,int Bin,int* memaddr) {
+	memaddr[0] = Ain;
+	memaddr[1] = Bin;
+}
+
+void legGetI2Caddr(int Leg,int Svo,int* addr) {
+	switch(Leg) {
+		case 0:
+		if(Svo == 0)	  cpyIn(L0_S0_ADDR,addr);
+		else if(Svo == 1) cpyIn(L0_S1_ADDR,addr);
+		else if(Svo == 2) cpyIn(L0_S2_ADDR,addr);
+		break;
+		
+		case 1:
+		if(Svo == 0)	  cpyIn(L1_S0_ADDR,addr);
+		else if(Svo == 1) cpyIn(L1_S1_ADDR,addr);
+		else if(Svo == 2) cpyIn(L1_S2_ADDR,addr);
+		break;
+		
+		case 2:
+		if(Svo == 0)	  cpyIn(L2_S0_ADDR,addr);
+		else if(Svo == 1) cpyIn(L2_S1_ADDR,addr);
+		else if(Svo == 2) cpyIn(L2_S2_ADDR,addr);
+		break;
+		
+		case 3:
+		if(Svo == 0)	  cpyIn(L3_S0_ADDR,addr);
+		else if(Svo == 1) cpyIn(L3_S1_ADDR,addr);
+		else if(Svo == 2) cpyIn(L3_S2_ADDR,addr);
+		break;
+		
+		case 4:
+		if(Svo == 0)	  cpyIn(L4_S0_ADDR,addr);
+		else if(Svo == 1) cpyIn(L4_S1_ADDR,addr);
+		else if(Svo == 2) cpyIn(L4_S2_ADDR,addr);
+		break;
+		
+		case 5:
+		if(Svo == 0)	  cpyIn(L5_S0_ADDR,addr);
+		else if(Svo == 1) cpyIn(L5_S1_ADDR,addr);
+		else if(Svo == 2) cpyIn(L5_S2_ADDR,addr);
+		break;
+	}
+}
+
+void WriteServo(int Leg,int svo,float angle) 
 {
+	int addrData[2];
+	legGetI2Caddr(Leg,svo,addrData);
 	 //uint16_t stop = (int)((1.00+((angle)/180.00))*(4095.00/(20.00)));
+	angle = angle + CalData[svo*12+2*Leg];
+	
 	uint16_t stop = (int)lroundf( (4095.00/(20.00)) * ((0.56) + (2.4-0.56)*(angle/180.00))  );	
 		
-	i2cWriteReg(i2cAddr,baseReg,0x01);
-	i2cWriteReg(i2cAddr,baseReg+1,0x00);
-	i2cWriteReg(i2cAddr,baseReg+2,stop);
-	i2cWriteReg(i2cAddr,baseReg+3,stop >> 8);
+	i2cWriteReg(addrData[0],addrData[1],0x01);
+	i2cWriteReg(addrData[0],addrData[1]+1,0x00);
+	i2cWriteReg(addrData[0],addrData[1]+2,stop);
+	i2cWriteReg(addrData[0],addrData[1]+3,stop >> 8);
 	
 }
 
@@ -1050,8 +1099,8 @@ angles legAngCalc(float x, float y, float z) {
 	Ang.S1 = atan2(x,z);
 	
 	Ang.S1 = Ang.S1*180.00/M_PI;
-	Ang.S2 = 90 + Ang.S2*180.00/M_PI;
-	Ang.S3 = Ang.S3*180.00/M_PI;
+	Ang.S2 = 90 - Ang.S2*180.00/M_PI;
+	Ang.S3 = 180 - Ang.S3*180.00/M_PI;
 	
 	
 	return Ang;

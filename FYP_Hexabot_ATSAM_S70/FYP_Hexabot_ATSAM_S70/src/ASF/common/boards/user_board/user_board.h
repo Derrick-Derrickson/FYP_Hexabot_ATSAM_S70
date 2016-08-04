@@ -58,30 +58,57 @@
 #define CAMERA_I2C_ADDR 0x30
 #define CAMERA_I2C_ADDR_OV7670 0x21
 //First Driver
-#define L0_S0 PWM_CTRL_A_I2C_ADDR_A,0x1E
-#define L0_S1 PWM_CTRL_A_I2C_ADDR_A,0x22
-#define L0_S2 PWM_CTRL_A_I2C_ADDR_A,0x26
+#define L0_S0_ADDR PWM_CTRL_A_I2C_ADDR_A,0x1E
+#define L0_S1_ADDR PWM_CTRL_A_I2C_ADDR_A,0x22
+#define L0_S2_ADDR PWM_CTRL_A_I2C_ADDR_A,0x26
 
-#define L2_S0 PWM_CTRL_A_I2C_ADDR_A,0x12
-#define L2_S1 PWM_CTRL_A_I2C_ADDR_A,0x16
-#define L2_S2 PWM_CTRL_A_I2C_ADDR_A,0x1A
+#define L2_S0_ADDR PWM_CTRL_A_I2C_ADDR_A,0x12
+#define L2_S1_ADDR PWM_CTRL_A_I2C_ADDR_A,0x16
+#define L2_S2_ADDR PWM_CTRL_A_I2C_ADDR_A,0x1A
 
-#define L4_S0 PWM_CTRL_A_I2C_ADDR_A,0x06
-#define L4_S1 PWM_CTRL_A_I2C_ADDR_A,0x0A
-#define L4_S2 PWM_CTRL_A_I2C_ADDR_A,0x0E
+#define L4_S0_ADDR PWM_CTRL_A_I2C_ADDR_A,0x06
+#define L4_S1_ADDR PWM_CTRL_A_I2C_ADDR_A,0x0A
+#define L4_S2_ADDR PWM_CTRL_A_I2C_ADDR_A,0x0E
 
 //Other driver
-#define L1_S0 PWM_CTRL_A_I2C_ADDR_B,0x06
-#define L1_S1 PWM_CTRL_A_I2C_ADDR_B,0x0A
-#define L1_S2 PWM_CTRL_A_I2C_ADDR_B,0x0E
+#define L1_S0_ADDR PWM_CTRL_A_I2C_ADDR_B,0x06
+#define L1_S1_ADDR PWM_CTRL_A_I2C_ADDR_B,0x0A
+#define L1_S2_ADDR PWM_CTRL_A_I2C_ADDR_B,0x0E
 
-#define L3_S0 PWM_CTRL_A_I2C_ADDR_B,0x12
-#define L3_S1 PWM_CTRL_A_I2C_ADDR_B,0x16
-#define L3_S2 PWM_CTRL_A_I2C_ADDR_B,0x1A
+#define L3_S0_ADDR PWM_CTRL_A_I2C_ADDR_B,0x12
+#define L3_S1_ADDR PWM_CTRL_A_I2C_ADDR_B,0x16
+#define L3_S2_ADDR PWM_CTRL_A_I2C_ADDR_B,0x1A
 
-#define L5_S0 PWM_CTRL_A_I2C_ADDR_B,0x1E
-#define L5_S1 PWM_CTRL_A_I2C_ADDR_B,0x22
-#define L5_S2 PWM_CTRL_A_I2C_ADDR_B,0x26
+#define L5_S0_ADDR PWM_CTRL_A_I2C_ADDR_B,0x1E
+#define L5_S1_ADDR PWM_CTRL_A_I2C_ADDR_B,0x22
+#define L5_S2_ADDR PWM_CTRL_A_I2C_ADDR_B,0x26
+
+//Leg index definitions
+#define L0_S0 0,0
+#define L0_S1 0,1
+#define L0_S2 0,2
+
+#define L1_S0 1,0
+#define L1_S1 1,1
+#define L1_S2 1,2
+
+#define L2_S0 2,0
+#define L2_S1 2,1
+#define L2_S2 2,2
+
+#define L3_S0 3,0
+#define L3_S1 3,1
+#define L3_S2 3,2
+
+#define L4_S0 4,0
+#define L4_S1 4,1
+#define L4_S2 4,2
+
+#define L5_S0 5,0
+#define L5_S1 5,1
+#define L5_S2 5,2
+
+
 
 
 
