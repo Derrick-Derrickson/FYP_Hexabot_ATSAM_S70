@@ -52,7 +52,7 @@ int CLIbufIndex = 0;
 walk_data hexabot_walk;
 int VerboseMode = 0;
 int cam_dif_tsh = 25;
-
+int But_Up = 0;
 float* SvoCal;
 //semaphores!
 SemaphoreHandle_t ISIsem = NULL;
@@ -66,6 +66,9 @@ int main (void)
 	sendDebugString("BOARD INITIALIZATION - FINISHED\n");
 	intl_frame = (uint16_t*)malloc(240*320*2); //assign
 	SvoCal = (float*)malloc(sizeof(float)*2*18);
+	
+	for(int i = 0;i<36;i++) SvoCal[i] = 0;
+	
 	sendDebugString("RTOS TASK INITIALIZATION - STARTED\n");
 	
 	xTaskCreate(vTask1,"TASK1",400,NULL,10,NULL);
@@ -257,6 +260,7 @@ void CLItask(void* pvParameters) {
 			
 			else if(!strcmp(BaseCmd,"DWM-clrStatus\n")) DW1000_writeReg(SYS_STATUS_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0xFFFFFFFF, SYS_STATUS_LEN);
 			
+			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
 			//walk patern settings
 			
 			else if(!strcmp(BaseCmd,"gaitTurn")){

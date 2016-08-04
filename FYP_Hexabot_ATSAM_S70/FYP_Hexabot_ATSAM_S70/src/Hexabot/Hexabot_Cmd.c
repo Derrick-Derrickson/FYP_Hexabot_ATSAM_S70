@@ -114,6 +114,15 @@ void cmdServoMan(int L,int S ,int angle) {
 	case 5:
 	WriteServo(L5_S0+S,angle);
 	break;
+	
+	case 6:
+	WriteServo(L0_S0+S,angle);
+	WriteServo(L1_S0+S,angle);
+	WriteServo(L2_S0+S,angle);
+	WriteServo(L3_S0+S,angle);
+	WriteServo(L4_S0+S,angle);
+	WriteServo(L5_S0+S,angle);
+	break;
 	}
 	
 	if(VerboseMode) {

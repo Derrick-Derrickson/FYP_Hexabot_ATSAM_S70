@@ -282,11 +282,18 @@ void legGetI2Caddr(int Leg,int Svo,int* addr) {
 
 void WriteServo(int Leg,int svo,float angle) 
 {
+	char buf[100];
 	int addrData[2];
 	legGetI2Caddr(Leg,svo,addrData);
 	extern float* SvoCal;
 	 //uint16_t stop = (int)((1.00+((angle)/180.00))*(4095.00/(20.00)));
-	angle = angle + SvoCal[svo*12+2*Leg];
+	sprintf(buf,"Old ANG: %f\n",angle);
+	sendDebugString(buf);
+	
+	angle = angle - SvoCal[svo*12+2*Leg];
+	
+	sprintf(buf,"New ANG: %f\n",angle);
+	sendDebugString(buf);	
 	
 	uint16_t stop = (int)lroundf( (4095.00/(20.00)) * ((0.56) + (2.4-0.56)*(angle/180.00))  );	
 		
@@ -1147,6 +1154,8 @@ void writeLegOut(int leg, float S0, float S1, float S2) {
 		WriteServo(L5_S1,S1);
 		WriteServo(L5_S2,S2);
 	break;
+	
+	
 	}
 
 
@@ -1180,32 +1189,8 @@ void getS0cal(int Leg, float* angOff, float* Lin) {
 		if(calState == 1) pio_set(LED3);
 		else pio_clear(LED3);
 		
-		switch (Leg) {
+		WriteServo(Leg,0,ang);
 			
-			case 0:
-			WriteServo(L0_S0,ang);
-			break;
-			
-			case 1:
-			WriteServo(L1_S0,ang);
-			break;
-
-			case 2:
-			WriteServo(L2_S0,ang);
-			break;
-
-			case 3:
-			WriteServo(L3_S0,ang);
-			break;
-
-			case 4:
-			WriteServo(L4_S0,ang);
-			break;
-
-			case 5:
-			WriteServo(L5_S0,ang);
-			break;
-		}
 	}
 	But_Up = 1;
 	*Lin = (*angOff+ang)/45.00;
@@ -1242,32 +1227,7 @@ void getS1cal(int Leg, float* angOff, float* Lin) {
 		if(calState == 1) pio_set(LED3);
 		else pio_clear(LED3);
 		
-		switch (Leg) {
-			
-			case 0:
-			WriteServo(L0_S0,ang);
-			break;
-			
-			case 1:
-			WriteServo(L1_S0,ang);
-			break;
-
-			case 2:
-			WriteServo(L2_S0,ang);
-			break;
-
-			case 3:
-			WriteServo(L3_S0,ang);
-			break;
-
-			case 4:
-			WriteServo(L4_S0,ang);
-			break;
-
-			case 5:
-			WriteServo(L5_S0,ang);
-			break;
-		}
+		WriteServo(Leg,1,ang);
 	}
 	But_Up = 1;
 	*Lin = (*angOff+ang)/45.00;
@@ -1304,32 +1264,7 @@ void getS2cal(int Leg, float* angOff, float* Lin) {
 		if(calState == 1) pio_set(LED3);
 		else pio_clear(LED3);
 		
-		switch (Leg) {
-			
-			case 0:
-			WriteServo(L0_S0,ang);
-			break;
-			
-			case 1:
-			WriteServo(L1_S0,ang);
-			break;
-
-			case 2:
-			WriteServo(L2_S0,ang);
-			break;
-
-			case 3:
-			WriteServo(L3_S0,ang);
-			break;
-
-			case 4:
-			WriteServo(L4_S0,ang);
-			break;
-
-			case 5:
-			WriteServo(L5_S0,ang);
-			break;
-		}
+		WriteServo(Leg,2,ang);
 	}
 	But_Up = 1;
 	*Lin = (*angOff+ang)/90.00;
@@ -1343,14 +1278,23 @@ void calibServos(float* calData) {
 	sendDebugString("Started servo cal\n");
 	for(int i =0; i<6; i++) {
 		byteToLEDs(i>>4,0xF0);
+		cmdServoMan(6,0,90.00);
+		cmdServoMan(6,1,90.00);
+		cmdServoMan(6,2,180.00);
 		getS0cal(i,&calData[i*2],&calData[i*2+1]);
 	}
 	for(int i =0; i<6; i++) {
 		byteToLEDs(i>>4,0xF0);
+		cmdServoMan(6,0,90.00);
+		cmdServoMan(6,1,90.00);
+		cmdServoMan(6,2,180.00);
 		getS1cal(i,&calData[i*2+12],&calData[i*2+13]);
 	}
 	for(int i =0; i<6; i++) {
 		byteToLEDs(i>>4,0xF0);
+		cmdServoMan(6,0,90.00);
+		cmdServoMan(6,1,90.00);
+		cmdServoMan(6,2,180.00);
 		getS2cal(i,&calData[i*2+24],&calData[i*2+25]);
 	}
 	sendDebugString("Finished servo cal data Follows:\n");
