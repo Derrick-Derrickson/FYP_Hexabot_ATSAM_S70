@@ -209,7 +209,6 @@ xQueueRegistry      0x40              src/ASF/thirdparty/freertos/freertos-8.2.3
 pio_capture_enable_flag
                     0x4               src/ASF/sam/drivers/pio/pio.o
 sleepmgr_locks      0x6               src/ASF/common/services/sleepmgr/sam/sleepmgr.o
-SvoCal              0x4               src/main.o
 buf                 0x14              src/main.o
 DW1000__syscfg      0x4               src/ASF/common/boards/user_board/init.o
 afec_callback_pointer
@@ -11003,6 +11002,8 @@ Discarded input sections
  .text.setupcameraLinuxDriver
                 0x00000000       0x6c src/Hexabot/Hexabot.o
  .text.sign     0x00000000       0x18 src/Hexabot/Hexabot.o
+ .text.getS2cal
+                0x00000000      0x180 src/Hexabot/Hexabot.o
  .rodata        0x00000000       0x79 src/Hexabot/Hexabot.o
  .bss.cpu_irq_critical_section_counter
                 0x00000000        0x4 src/Hexabot/Hexabot.o
@@ -12463,7 +12464,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
                 0x2045fffc                __ram_end__ = ((ORIGIN (ram) + 0x60000) - 0x4)
                 0x00000200                HEAP_SIZE = DEFINED (HEAP_SIZE)?HEAP_SIZE:0x200
 
-.text           0x00400000    0x10734
+.text           0x00400000    0x105e4
                 0x00400000                . = ALIGN (0x4)
                 0x00400000                _sfixed = .
  *(.vectors .vectors.*)
@@ -12915,600 +12916,602 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
  .text.legGetI2Caddr
                 0x00403ba8      0x100 src/Hexabot/Hexabot.o
                 0x00403ba8                legGetI2Caddr
+ .text.relaxServo
+                0x00403ca8       0x50 src/Hexabot/Hexabot.o
+                0x00403ca8                relaxServo
  .text.WriteServo
-                0x00403ca8      0x130 src/Hexabot/Hexabot.o
-                0x00403ca8                WriteServo
+                0x00403cf8       0xe8 src/Hexabot/Hexabot.o
+                0x00403cf8                WriteServo
  .text.SetupCameraYUVVGA_OV7670
-                0x00403dd8      0x554 src/Hexabot/Hexabot.o
-                0x00403dd8                SetupCameraYUVVGA_OV7670
- *fill*         0x0040432c        0x4 
+                0x00403de0      0x554 src/Hexabot/Hexabot.o
+                0x00403de0                SetupCameraYUVVGA_OV7670
+ *fill*         0x00404334        0x4 
  .text.getBatVoltage
-                0x00404330       0x7c src/Hexabot/Hexabot.o
-                0x00404330                getBatVoltage
+                0x00404338       0x7c src/Hexabot/Hexabot.o
+                0x00404338                getBatVoltage
  .text.dumpFrame
-                0x004043ac       0x64 src/Hexabot/Hexabot.o
-                0x004043ac                dumpFrame
+                0x004043b4       0x64 src/Hexabot/Hexabot.o
+                0x004043b4                dumpFrame
  .text.calcRotation
-                0x00404410      0x218 src/Hexabot/Hexabot.o
-                0x00404410                calcRotation
+                0x00404418      0x218 src/Hexabot/Hexabot.o
+                0x00404418                calcRotation
  .text.legAngCalc
-                0x00404628      0x1d8 src/Hexabot/Hexabot.o
-                0x00404628                legAngCalc
+                0x00404630      0x1d8 src/Hexabot/Hexabot.o
+                0x00404630                legAngCalc
  .text.writeLegOut
-                0x00404800       0xc4 src/Hexabot/Hexabot.o
-                0x00404800                writeLegOut
- *fill*         0x004048c4        0x4 
+                0x00404808       0xc4 src/Hexabot/Hexabot.o
+                0x00404808                writeLegOut
+ *fill*         0x004048cc        0x4 
  .text.getS0cal
-                0x004048c8      0x180 src/Hexabot/Hexabot.o
-                0x004048c8                getS0cal
+                0x004048d0      0x180 src/Hexabot/Hexabot.o
+                0x004048d0                getS0cal
  .text.getS1cal
-                0x00404a48      0x180 src/Hexabot/Hexabot.o
-                0x00404a48                getS1cal
- .text.getS2cal
-                0x00404bc8      0x180 src/Hexabot/Hexabot.o
-                0x00404bc8                getS2cal
+                0x00404a50      0x180 src/Hexabot/Hexabot.o
+                0x00404a50                getS1cal
  .text.byteToLEDs
-                0x00404d48      0x120 src/Hexabot/Hexabot.o
-                0x00404d48                byteToLEDs
+                0x00404bd0      0x120 src/Hexabot/Hexabot.o
+                0x00404bd0                byteToLEDs
  .text.calibServos
-                0x00404e68      0x138 src/Hexabot/Hexabot.o
-                0x00404e68                calibServos
- .text.cmdLED   0x00404fa0      0x1a4 src/Hexabot/Hexabot_Cmd.o
-                0x00404fa0                cmdLED
+                0x00404cf0      0x104 src/Hexabot/Hexabot.o
+                0x00404cf0                calibServos
+ .text.cmdLED   0x00404df4      0x1a4 src/Hexabot/Hexabot_Cmd.o
+                0x00404df4                cmdLED
  .text.cmdServoMan
-                0x00405144      0x108 src/Hexabot/Hexabot_Cmd.o
-                0x00405144                cmdServoMan
+                0x00404f98      0x108 src/Hexabot/Hexabot_Cmd.o
+                0x00404f98                cmdServoMan
  .text.cmdBatVolt
-                0x0040524c       0x38 src/Hexabot/Hexabot_Cmd.o
-                0x0040524c                cmdBatVolt
- .text.cmdWalk  0x00405284       0x14 src/Hexabot/Hexabot_Cmd.o
-                0x00405284                cmdWalk
+                0x004050a0       0x38 src/Hexabot/Hexabot_Cmd.o
+                0x004050a0                cmdBatVolt
+ .text.cmdWalk  0x004050d8       0x14 src/Hexabot/Hexabot_Cmd.o
+                0x004050d8                cmdWalk
  .text.cmdTestDW1000
-                0x00405298       0x88 src/Hexabot/Hexabot_Cmd.o
-                0x00405298                cmdTestDW1000
+                0x004050ec       0x88 src/Hexabot/Hexabot_Cmd.o
+                0x004050ec                cmdTestDW1000
  .text.cmdDWMsend
-                0x00405320       0x38 src/Hexabot/Hexabot_Cmd.o
-                0x00405320                cmdDWMsend
+                0x00405174       0x38 src/Hexabot/Hexabot_Cmd.o
+                0x00405174                cmdDWMsend
  .text.cmdOverrideLEDDWM1000
-                0x00405358       0x44 src/Hexabot/Hexabot_Cmd.o
-                0x00405358                cmdOverrideLEDDWM1000
+                0x004051ac       0x44 src/Hexabot/Hexabot_Cmd.o
+                0x004051ac                cmdOverrideLEDDWM1000
  .text.cmdWriteTestDW1000
-                0x0040539c       0x4c src/Hexabot/Hexabot_Cmd.o
-                0x0040539c                cmdWriteTestDW1000
- .text.vTask1   0x004053e8       0x64 src/main.o
-                0x004053e8                vTask1
- *fill*         0x0040544c        0x4 
+                0x004051f0       0x4c src/Hexabot/Hexabot_Cmd.o
+                0x004051f0                cmdWriteTestDW1000
+ .text.cmdRelaxSvo
+                0x0040523c       0x5c src/Hexabot/Hexabot_Cmd.o
+                0x0040523c                cmdRelaxSvo
+ .text.vTask1   0x00405298       0x64 src/main.o
+                0x00405298                vTask1
+ *fill*         0x004052fc        0x4 
  .text.LegControlTask
-                0x00405450      0xaec src/main.o
-                0x00405450                LegControlTask
- .text.CLItask  0x00405f3c      0x420 src/main.o
-                0x00405f3c                CLItask
- *fill*         0x0040635c        0x4 
+                0x00405300      0xaec src/main.o
+                0x00405300                LegControlTask
+ .text.CLItask  0x00405dec      0x44c src/main.o
+                0x00405dec                CLItask
  .text.ImageProTask
-                0x00406360      0x1d4 src/main.o
-                0x00406360                ImageProTask
- .text.main     0x00406534       0xfc src/main.o
-                0x00406534                main
+                0x00406238      0x1d4 src/main.o
+                0x00406238                ImageProTask
+ .text.main     0x0040640c       0xf4 src/main.o
+                0x0040640c                main
  .text.ISI_Handler
-                0x00406630       0x38 src/main.o
-                0x00406630                ISI_Handler
+                0x00406500       0x38 src/main.o
+                0x00406500                ISI_Handler
  .text.UART4_Handler
-                0x00406668       0x5c src/main.o
-                0x00406668                UART4_Handler
- .text.cos      0x004066c4       0x88 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_cos.o)
-                0x004066c4                cos
- .text.sin      0x0040674c       0x94 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_sin.o)
-                0x0040674c                sin
- .text.lroundf  0x004067e0       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-sf_lround.o)
-                0x004067e0                lroundf
- .text.acos     0x00406838       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_acos.o)
-                0x00406838                acos
- .text.asin     0x004068e0       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_asin.o)
-                0x004068e0                asin
- .text.atan2    0x00406988        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_atan2.o)
-                0x00406988                atan2
- .text.sqrt     0x0040698c       0xb4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_sqrt.o)
-                0x0040698c                sqrt
+                0x00406538       0x5c src/main.o
+                0x00406538                UART4_Handler
+ .text.cos      0x00406594       0x88 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_cos.o)
+                0x00406594                cos
+ .text.sin      0x0040661c       0x94 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_sin.o)
+                0x0040661c                sin
+ .text.lroundf  0x004066b0       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-sf_lround.o)
+                0x004066b0                lroundf
+ .text.acos     0x00406708       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_acos.o)
+                0x00406708                acos
+ .text.asin     0x004067b0       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_asin.o)
+                0x004067b0                asin
+ .text.atan2    0x00406858        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_atan2.o)
+                0x00406858                atan2
+ .text.sqrt     0x0040685c       0xb4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_sqrt.o)
+                0x0040685c                sqrt
  .text.__ieee754_acos
-                0x00406a40      0x4b8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_acos.o)
-                0x00406a40                __ieee754_acos
+                0x00406910      0x4b8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_acos.o)
+                0x00406910                __ieee754_acos
  .text.__ieee754_asin
-                0x00406ef8      0x45c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_asin.o)
-                0x00406ef8                __ieee754_asin
- *fill*         0x00407354        0x4 
+                0x00406dc8      0x45c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_asin.o)
+                0x00406dc8                __ieee754_asin
+ *fill*         0x00407224        0x4 
  .text.__ieee754_atan2
-                0x00407358      0x1b0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_atan2.o)
-                0x00407358                __ieee754_atan2
+                0x00407228      0x1b0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_atan2.o)
+                0x00407228                __ieee754_atan2
  .text.__ieee754_rem_pio2
-                0x00407508      0x43c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
-                0x00407508                __ieee754_rem_pio2
+                0x004073d8      0x43c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
+                0x004073d8                __ieee754_rem_pio2
  .text.__ieee754_sqrt
-                0x00407944      0x15c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_sqrt.o)
-                0x00407944                __ieee754_sqrt
+                0x00407814      0x15c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_sqrt.o)
+                0x00407814                __ieee754_sqrt
  .text.__kernel_cos
-                0x00407aa0      0x248 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_cos.o)
-                0x00407aa0                __kernel_cos
+                0x00407970      0x248 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_cos.o)
+                0x00407970                __kernel_cos
  .text.__kernel_rem_pio2
-                0x00407ce8      0x800 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
-                0x00407ce8                __kernel_rem_pio2
+                0x00407bb8      0x800 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
+                0x00407bb8                __kernel_rem_pio2
  .text.__kernel_sin
-                0x004084e8      0x16c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_sin.o)
-                0x004084e8                __kernel_sin
- *fill*         0x00408654        0x4 
- .text.atan     0x00408658      0x304 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
-                0x00408658                atan
- .text.fabs     0x0040895c        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fabs.o)
-                0x0040895c                fabs
- *fill*         0x00408964        0x4 
- .text.floor    0x00408968      0x110 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_floor.o)
-                0x00408968                floor
+                0x004083b8      0x16c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_sin.o)
+                0x004083b8                __kernel_sin
+ *fill*         0x00408524        0x4 
+ .text.atan     0x00408528      0x304 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
+                0x00408528                atan
+ .text.fabs     0x0040882c        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fabs.o)
+                0x0040882c                fabs
+ *fill*         0x00408834        0x4 
+ .text.floor    0x00408838      0x110 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_floor.o)
+                0x00408838                floor
  .text.__fpclassifyd
-                0x00408a78       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fpclassify.o)
-                0x00408a78                __fpclassifyd
- .text.matherr  0x00408abc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_matherr.o)
-                0x00408abc                matherr
- .text.nan      0x00408ac0        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_nan.o)
-                0x00408ac0                nan
- *fill*         0x00408acc        0x4 
- .text.scalbn   0x00408ad0      0x100 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_scalbn.o)
-                0x00408ad0                scalbn
+                0x00408948       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fpclassify.o)
+                0x00408948                __fpclassifyd
+ .text.matherr  0x0040898c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_matherr.o)
+                0x0040898c                matherr
+ .text.nan      0x00408990        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_nan.o)
+                0x00408990                nan
+ *fill*         0x0040899c        0x4 
+ .text.scalbn   0x004089a0      0x100 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_scalbn.o)
+                0x004089a0                scalbn
  .text.copysign
-                0x00408bd0       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_copysign.o)
-                0x00408bd0                copysign
- .text          0x00408be0      0x370 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_addsubdf3.o)
-                0x00408be0                __aeabi_drsub
-                0x00408be8                __aeabi_dsub
-                0x00408be8                __subdf3
-                0x00408bec                __aeabi_dadd
-                0x00408bec                __adddf3
-                0x00408e64                __floatunsidf
-                0x00408e64                __aeabi_ui2d
-                0x00408e84                __floatsidf
-                0x00408e84                __aeabi_i2d
-                0x00408ea8                __aeabi_f2d
-                0x00408ea8                __extendsfdf2
-                0x00408ee4                __floatundidf
-                0x00408ee4                __aeabi_ul2d
-                0x00408ef4                __floatdidf
-                0x00408ef4                __aeabi_l2d
- .text          0x00408f50      0x424 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_muldivdf3.o)
-                0x00408f50                __aeabi_dmul
-                0x00408f50                __muldf3
-                0x004091a4                __divdf3
-                0x004091a4                __aeabi_ddiv
- .text          0x00409374      0x110 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_cmpdf2.o)
-                0x00409374                __gtdf2
-                0x00409374                __gedf2
-                0x0040937c                __ltdf2
-                0x0040937c                __ledf2
-                0x00409384                __nedf2
-                0x00409384                __eqdf2
-                0x00409384                __cmpdf2
-                0x00409400                __aeabi_cdrcmple
-                0x00409410                __aeabi_cdcmpeq
-                0x00409410                __aeabi_cdcmple
-                0x00409420                __aeabi_dcmpeq
-                0x00409434                __aeabi_dcmplt
-                0x00409448                __aeabi_dcmple
-                0x0040945c                __aeabi_dcmpge
-                0x00409470                __aeabi_dcmpgt
- .text          0x00409484       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_fixdfsi.o)
-                0x00409484                __aeabi_d2iz
-                0x00409484                __fixdfsi
- .text          0x004094d4       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_truncdfsf2.o)
-                0x004094d4                __truncdfsf2
-                0x004094d4                __aeabi_d2f
- .text          0x00409574       0x4c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_fixsfsi.o)
-                0x00409574                __aeabi_f2iz
-                0x00409574                __fixsfsi
+                0x00408aa0       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_copysign.o)
+                0x00408aa0                copysign
+ .text          0x00408ab0      0x370 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_addsubdf3.o)
+                0x00408ab0                __aeabi_drsub
+                0x00408ab8                __aeabi_dsub
+                0x00408ab8                __subdf3
+                0x00408abc                __aeabi_dadd
+                0x00408abc                __adddf3
+                0x00408d34                __floatunsidf
+                0x00408d34                __aeabi_ui2d
+                0x00408d54                __floatsidf
+                0x00408d54                __aeabi_i2d
+                0x00408d78                __aeabi_f2d
+                0x00408d78                __extendsfdf2
+                0x00408db4                __floatundidf
+                0x00408db4                __aeabi_ul2d
+                0x00408dc4                __floatdidf
+                0x00408dc4                __aeabi_l2d
+ .text          0x00408e20      0x424 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_muldivdf3.o)
+                0x00408e20                __aeabi_dmul
+                0x00408e20                __muldf3
+                0x00409074                __divdf3
+                0x00409074                __aeabi_ddiv
+ .text          0x00409244      0x110 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_cmpdf2.o)
+                0x00409244                __gtdf2
+                0x00409244                __gedf2
+                0x0040924c                __ltdf2
+                0x0040924c                __ledf2
+                0x00409254                __nedf2
+                0x00409254                __eqdf2
+                0x00409254                __cmpdf2
+                0x004092d0                __aeabi_cdrcmple
+                0x004092e0                __aeabi_cdcmpeq
+                0x004092e0                __aeabi_cdcmple
+                0x004092f0                __aeabi_dcmpeq
+                0x00409304                __aeabi_dcmplt
+                0x00409318                __aeabi_dcmple
+                0x0040932c                __aeabi_dcmpge
+                0x00409340                __aeabi_dcmpgt
+ .text          0x00409354       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_fixdfsi.o)
+                0x00409354                __aeabi_d2iz
+                0x00409354                __fixdfsi
+ .text          0x004093a4       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_truncdfsf2.o)
+                0x004093a4                __truncdfsf2
+                0x004093a4                __aeabi_d2f
+ .text          0x00409444       0x4c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_arm_fixsfsi.o)
+                0x00409444                __aeabi_f2iz
+                0x00409444                __fixsfsi
  .text.__assert_func
-                0x004095c0       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-assert.o)
-                0x004095c0                __assert_func
- .text.atoi     0x004095fc        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atoi.o)
-                0x004095fc                atoi
- .text.__errno  0x00409604        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-errno.o)
-                0x00409604                __errno
+                0x00409490       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-assert.o)
+                0x00409490                __assert_func
+ .text.atoi     0x004094cc        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atoi.o)
+                0x004094cc                atoi
+ .text.__errno  0x004094d4        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-errno.o)
+                0x004094d4                __errno
  .text.fiprintf
-                0x00409610       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fiprintf.o)
-                0x00409610                fiprintf
+                0x004094e0       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fiprintf.o)
+                0x004094e0                fiprintf
  .text.__libc_init_array
-                0x00409638       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-init.o)
-                0x00409638                __libc_init_array
- .text.iprintf  0x00409688       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-iprintf.o)
-                0x00409688                iprintf
- .text.malloc   0x004096b0       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-malloc.o)
-                0x004096b0                malloc
+                0x00409508       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-init.o)
+                0x00409508                __libc_init_array
+ .text.iprintf  0x00409558       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-iprintf.o)
+                0x00409558                iprintf
+ .text.malloc   0x00409580       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-malloc.o)
+                0x00409580                malloc
  .text._malloc_r
-                0x004096c0      0x558 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x004096c0                _malloc_r
- .text          0x00409c18      0x134 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memcpy.o)
-                0x00409c18                memcpy
- .text.memset   0x00409d4c       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memset.o)
-                0x00409d4c                memset
+                0x00409590      0x558 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x00409590                _malloc_r
+ .text          0x00409ae8      0x134 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memcpy.o)
+                0x00409ae8                memcpy
+ .text.memset   0x00409c1c       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memset.o)
+                0x00409c1c                memset
  .text.__malloc_lock
-                0x00409dec        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mlock.o)
-                0x00409dec                __malloc_lock
+                0x00409cbc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mlock.o)
+                0x00409cbc                __malloc_lock
  .text.__malloc_unlock
-                0x00409df0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mlock.o)
-                0x00409df0                __malloc_unlock
- .text._sbrk_r  0x00409df4       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sbrkr.o)
-                0x00409df4                _sbrk_r
- .text.sprintf  0x00409e18       0x4c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sprintf.o)
-                0x00409e18                sprintf
- *fill*         0x00409e64       0x1c 
- .text          0x00409e80      0x2dc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strcmp.o)
-                0x00409e88                strcmp
- .text.strlen   0x0040a15c       0x5c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strlen.o)
-                0x0040a15c                strlen
- .text.strtok   0x0040a1b8       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok.o)
-                0x0040a1b8                strtok
+                0x00409cc0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mlock.o)
+                0x00409cc0                __malloc_unlock
+ .text._sbrk_r  0x00409cc4       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sbrkr.o)
+                0x00409cc4                _sbrk_r
+ .text.sprintf  0x00409ce8       0x4c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sprintf.o)
+                0x00409ce8                sprintf
+ *fill*         0x00409d34        0xc 
+ .text          0x00409d40      0x2dc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strcmp.o)
+                0x00409d48                strcmp
+ .text.strlen   0x0040a01c       0x5c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strlen.o)
+                0x0040a01c                strlen
+ .text.strtok   0x0040a078       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok.o)
+                0x0040a078                strtok
  .text.__strtok_r
-                0x0040a1c8       0x64 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok_r.o)
-                0x0040a1c8                __strtok_r
+                0x0040a088       0x64 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok_r.o)
+                0x0040a088                __strtok_r
  .text._strtol_r
-                0x0040a22c      0x11c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtol.o)
-                0x0040a22c                _strtol_r
- .text.strtol   0x0040a348       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtol.o)
-                0x0040a348                strtol
+                0x0040a0ec      0x11c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtol.o)
+                0x0040a0ec                _strtol_r
+ .text.strtol   0x0040a208       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtol.o)
+                0x0040a208                strtol
  .text._svfprintf_r
-                0x0040a360     0x1510 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
-                0x0040a360                _svfprintf_r
+                0x0040a220     0x1510 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
+                0x0040a220                _svfprintf_r
  .text.__sprint_r.part.0
-                0x0040b870       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
+                0x0040b730       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
  .text._vfiprintf_r
-                0x0040b8e8      0xbf4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
-                0x0040b8e8                _vfiprintf_r
+                0x0040b7a8      0xbf4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
+                0x0040b7a8                _vfiprintf_r
  .text.__sbprintf
-                0x0040c4dc       0x80 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
+                0x0040c39c       0x80 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
  .text.__swsetup_r
-                0x0040c55c       0xc4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wsetup.o)
-                0x0040c55c                __swsetup_r
+                0x0040c41c       0xc4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wsetup.o)
+                0x0040c41c                __swsetup_r
  .text.startup.register_fini
-                0x0040c620       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__call_atexit.o)
- .text.abort    0x0040c634       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-abort.o)
-                0x0040c634                abort
- .text.atexit   0x0040c644        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atexit.o)
-                0x0040c644                atexit
- .text.quorem   0x0040c650      0x140 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
- .text._dtoa_r  0x0040c790      0xee8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
-                0x0040c790                _dtoa_r
+                0x0040c4e0       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__call_atexit.o)
+ .text.abort    0x0040c4f4       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-abort.o)
+                0x0040c4f4                abort
+ .text.atexit   0x0040c504        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atexit.o)
+                0x0040c504                atexit
+ .text.quorem   0x0040c510      0x140 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
+ .text._dtoa_r  0x0040c650      0xee8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
+                0x0040c650                _dtoa_r
  .text.__sflush_r
-                0x0040d678      0x148 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fflush.o)
-                0x0040d678                __sflush_r
+                0x0040d538      0x148 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fflush.o)
+                0x0040d538                __sflush_r
  .text._fflush_r
-                0x0040d7c0       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fflush.o)
-                0x0040d7c0                _fflush_r
+                0x0040d680       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fflush.o)
+                0x0040d680                _fflush_r
  .text._cleanup_r
-                0x0040d7ec        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
-                0x0040d7ec                _cleanup_r
+                0x0040d6ac        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
+                0x0040d6ac                _cleanup_r
  .text.__sinit.part.1
-                0x0040d7f8       0xfc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
- .text.__sinit  0x0040d8f4        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
-                0x0040d8f4                __sinit
+                0x0040d6b8       0xfc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
+ .text.__sinit  0x0040d7b4        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
+                0x0040d7b4                __sinit
  .text.__sfp_lock_acquire
-                0x0040d900        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
-                0x0040d900                __sfp_lock_acquire
+                0x0040d7c0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
+                0x0040d7c0                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x0040d904        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
-                0x0040d904                __sfp_lock_release
+                0x0040d7c4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
+                0x0040d7c4                __sfp_lock_release
  .text.__libc_fini_array
-                0x0040d908       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fini.o)
-                0x0040d908                __libc_fini_array
+                0x0040d7c8       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fini.o)
+                0x0040d7c8                __libc_fini_array
  .text.__fputwc
-                0x0040d934       0xb0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fputwc.o)
-                0x0040d934                __fputwc
+                0x0040d7f4       0xb0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fputwc.o)
+                0x0040d7f4                __fputwc
  .text._fputwc_r
-                0x0040d9e4       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fputwc.o)
-                0x0040d9e4                _fputwc_r
+                0x0040d8a4       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fputwc.o)
+                0x0040d8a4                _fputwc_r
  .text._malloc_trim_r
-                0x0040da08       0x9c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-freer.o)
-                0x0040da08                _malloc_trim_r
- .text._free_r  0x0040daa4      0x1b0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-freer.o)
-                0x0040daa4                _free_r
+                0x0040d8c8       0x9c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-freer.o)
+                0x0040d8c8                _malloc_trim_r
+ .text._free_r  0x0040d964      0x1b0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-freer.o)
+                0x0040d964                _free_r
  .text.__sfvwrite_r
-                0x0040dc54      0x324 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fvwrite.o)
-                0x0040dc54                __sfvwrite_r
+                0x0040db14      0x324 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fvwrite.o)
+                0x0040db14                __sfvwrite_r
  .text._fwalk_reent
-                0x0040df78       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fwalk.o)
-                0x0040df78                _fwalk_reent
+                0x0040de38       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fwalk.o)
+                0x0040de38                _fwalk_reent
  .text.__locale_charset
-                0x0040dfc8        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
-                0x0040dfc8                __locale_charset
+                0x0040de88        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x0040de88                __locale_charset
  .text.__locale_mb_cur_max
-                0x0040dfd0        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
-                0x0040dfd0                __locale_mb_cur_max
+                0x0040de90        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x0040de90                __locale_mb_cur_max
  .text._localeconv_r
-                0x0040dfdc        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
-                0x0040dfdc                _localeconv_r
+                0x0040de9c        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x0040de9c                _localeconv_r
  .text.__smakebuf_r
-                0x0040dfe4       0xe4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-makebuf.o)
-                0x0040dfe4                __smakebuf_r
- .text.memchr   0x0040e0c8       0x90 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memchr.o)
-                0x0040e0c8                memchr
- .text.memmove  0x0040e158       0xc4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memmove.o)
-                0x0040e158                memmove
- .text._Balloc  0x0040e21c       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e21c                _Balloc
- .text._Bfree   0x0040e26c       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e26c                _Bfree
+                0x0040dea4       0xe4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-makebuf.o)
+                0x0040dea4                __smakebuf_r
+ .text.memchr   0x0040df88       0x90 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memchr.o)
+                0x0040df88                memchr
+ .text.memmove  0x0040e018       0xc4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memmove.o)
+                0x0040e018                memmove
+ .text._Balloc  0x0040e0dc       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e0dc                _Balloc
+ .text._Bfree   0x0040e12c       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e12c                _Bfree
  .text.__multadd
-                0x0040e280       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e280                __multadd
+                0x0040e140       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e140                __multadd
  .text.__hi0bits
-                0x0040e304       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e304                __hi0bits
+                0x0040e1c4       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e1c4                __hi0bits
  .text.__lo0bits
-                0x0040e348       0x64 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e348                __lo0bits
- .text.__i2b    0x0040e3ac       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e3ac                __i2b
+                0x0040e208       0x64 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e208                __lo0bits
+ .text.__i2b    0x0040e26c       0x14 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e26c                __i2b
  .text.__multiply
-                0x0040e3c0      0x144 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e3c0                __multiply
+                0x0040e280      0x144 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e280                __multiply
  .text.__pow5mult
-                0x0040e504       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e504                __pow5mult
+                0x0040e3c4       0xa0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e3c4                __pow5mult
  .text.__lshift
-                0x0040e5a4       0xb4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e5a4                __lshift
- .text.__mcmp   0x0040e658       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e658                __mcmp
- .text.__mdiff  0x0040e6a0       0xe4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e6a0                __mdiff
- .text.__d2b    0x0040e784       0xb0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x0040e784                __d2b
+                0x0040e464       0xb4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e464                __lshift
+ .text.__mcmp   0x0040e518       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e518                __mcmp
+ .text.__mdiff  0x0040e560       0xe4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e560                __mdiff
+ .text.__d2b    0x0040e644       0xb0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x0040e644                __d2b
  .text._realloc_r
-                0x0040e834      0x3f0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reallocr.o)
-                0x0040e834                _realloc_r
+                0x0040e6f4      0x3f0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reallocr.o)
+                0x0040e6f4                _realloc_r
  .text._raise_r
-                0x0040ec24       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signal.o)
-                0x0040ec24                _raise_r
- .text.raise    0x0040ec7c       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signal.o)
-                0x0040ec7c                raise
- .text._kill_r  0x0040ec8c       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signalr.o)
-                0x0040ec8c                _kill_r
+                0x0040eae4       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signal.o)
+                0x0040eae4                _raise_r
+ .text.raise    0x0040eb3c       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signal.o)
+                0x0040eb3c                raise
+ .text._kill_r  0x0040eb4c       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signalr.o)
+                0x0040eb4c                _kill_r
  .text._getpid_r
-                0x0040ecb4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signalr.o)
-                0x0040ecb4                _getpid_r
- .text.__sread  0x0040ecb8       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
-                0x0040ecb8                __sread
+                0x0040eb74        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signalr.o)
+                0x0040eb74                _getpid_r
+ .text.__sread  0x0040eb78       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
+                0x0040eb78                __sread
  .text.__swrite
-                0x0040ecdc       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
-                0x0040ecdc                __swrite
- .text.__sseek  0x0040ed14       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
-                0x0040ed14                __sseek
+                0x0040eb9c       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
+                0x0040eb9c                __swrite
+ .text.__sseek  0x0040ebd4       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
+                0x0040ebd4                __sseek
  .text.__sclose
-                0x0040ed38        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
-                0x0040ed38                __sclose
+                0x0040ebf8        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
+                0x0040ebf8                __sclose
  .text.__ssprint_r
-                0x0040ed40      0x110 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfiprintf.o)
-                0x0040ed40                __ssprint_r
+                0x0040ec00      0x110 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfiprintf.o)
+                0x0040ec00                __ssprint_r
  .text.__swbuf_r
-                0x0040ee50       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wbuf.o)
-                0x0040ee50                __swbuf_r
+                0x0040ed10       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wbuf.o)
+                0x0040ed10                __swbuf_r
  .text._wcrtomb_r
-                0x0040eef8       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wcrtomb.o)
-                0x0040eef8                _wcrtomb_r
+                0x0040edb8       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wcrtomb.o)
+                0x0040edb8                _wcrtomb_r
  .text.__ascii_wctomb
-                0x0040ef4c       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wctomb_r.o)
-                0x0040ef4c                __ascii_wctomb
+                0x0040ee0c       0x18 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wctomb_r.o)
+                0x0040ee0c                __ascii_wctomb
  .text._write_r
-                0x0040ef64       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-writer.o)
-                0x0040ef64                _write_r
+                0x0040ee24       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-writer.o)
+                0x0040ee24                _write_r
  .text.__register_exitproc
-                0x0040ef8c       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__atexit.o)
-                0x0040ef8c                __register_exitproc
+                0x0040ee4c       0xa8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__atexit.o)
+                0x0040ee4c                __register_exitproc
  .text._calloc_r
-                0x0040f034       0x60 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-callocr.o)
-                0x0040f034                _calloc_r
+                0x0040eef4       0x60 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-callocr.o)
+                0x0040eef4                _calloc_r
  .text._close_r
-                0x0040f094       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-closer.o)
-                0x0040f094                _close_r
+                0x0040ef54       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-closer.o)
+                0x0040ef54                _close_r
  .text._fclose_r
-                0x0040f0b8       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fclose.o)
-                0x0040f0b8                _fclose_r
+                0x0040ef78       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fclose.o)
+                0x0040ef78                _fclose_r
  .text._fstat_r
-                0x0040f13c       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fstatr.o)
-                0x0040f13c                _fstat_r
+                0x0040effc       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fstatr.o)
+                0x0040effc                _fstat_r
  .text._isatty_r
-                0x0040f164       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-isattyr.o)
-                0x0040f164                _isatty_r
+                0x0040f024       0x24 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-isattyr.o)
+                0x0040f024                _isatty_r
  .text._lseek_r
-                0x0040f188       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-lseekr.o)
-                0x0040f188                _lseek_r
- .text._read_r  0x0040f1b0       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-readr.o)
-                0x0040f1b0                _read_r
- .text          0x0040f1d8       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_aeabi_uldivmod.o)
-                0x0040f1d8                __aeabi_uldivmod
- .text          0x0040f208       0x60 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(bpabi.o)
-                0x0040f208                __gnu_ldivmod_helper
-                0x0040f238                __gnu_uldivmod_helper
- .text          0x0040f268        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_dvmd_tls.o)
-                0x0040f268                __aeabi_idiv0
-                0x0040f268                __aeabi_ldiv0
- .text          0x0040f26c      0x284 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_divdi3.o)
-                0x0040f26c                __divdi3
- .text          0x0040f4f0      0x248 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_udivdi3.o)
-                0x0040f4f0                __udivdi3
+                0x0040f048       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-lseekr.o)
+                0x0040f048                _lseek_r
+ .text._read_r  0x0040f070       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-readr.o)
+                0x0040f070                _read_r
+ .text          0x0040f098       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_aeabi_uldivmod.o)
+                0x0040f098                __aeabi_uldivmod
+ .text          0x0040f0c8       0x60 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(bpabi.o)
+                0x0040f0c8                __gnu_ldivmod_helper
+                0x0040f0f8                __gnu_uldivmod_helper
+ .text          0x0040f128        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_dvmd_tls.o)
+                0x0040f128                __aeabi_idiv0
+                0x0040f128                __aeabi_ldiv0
+ .text          0x0040f12c      0x284 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_divdi3.o)
+                0x0040f12c                __divdi3
+ .text          0x0040f3b0      0x248 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_udivdi3.o)
+                0x0040f3b0                __udivdi3
  *(.glue_7t)
  .glue_7t       0x00000000        0x0 linker stubs
  *(.glue_7)
  .glue_7        0x00000000        0x0 linker stubs
  *(.rodata .rodata* .gnu.linkonce.r.*)
  .rodata.__func__.8182
-                0x0040f738        0xd src/ASF/sam/drivers/qspi/qspi.o
- *fill*         0x0040f745        0x3 
+                0x0040f5f8        0xd src/ASF/sam/drivers/qspi/qspi.o
+ *fill*         0x0040f605        0x3 
  .rodata.str1.4
-                0x0040f748       0xcc src/ASF/sam/drivers/qspi/qspi.o
+                0x0040f608       0xcc src/ASF/sam/drivers/qspi/qspi.o
  .rodata.__func__.8348
-                0x0040f814        0xa src/ASF/sam/drivers/qspi/qspi.o
- *fill*         0x0040f81e        0x2 
+                0x0040f6d4        0xa src/ASF/sam/drivers/qspi/qspi.o
+ *fill*         0x0040f6de        0x2 
  .rodata.__func__.8364
-                0x0040f820        0xb src/ASF/sam/drivers/qspi/qspi.o
- *fill*         0x0040f82b        0x1 
+                0x0040f6e0        0xb src/ASF/sam/drivers/qspi/qspi.o
+ *fill*         0x0040f6eb        0x1 
  .rodata.str1.4
-                0x0040f82c       0x17 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
- *fill*         0x0040f843        0x1 
+                0x0040f6ec       0x17 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+ *fill*         0x0040f703        0x1 
  .rodata.str1.4
-                0x0040f844       0x10 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x0040f704       0x10 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .rodata.str1.4
-                0x0040f854       0x48 src/ASF/sam/drivers/twihs/twihs.o
- .rodata        0x0040f89c       0x18 src/ASF/common/boards/user_board/init.o
+                0x0040f714       0x48 src/ASF/sam/drivers/twihs/twihs.o
+ .rodata        0x0040f75c       0x18 src/ASF/common/boards/user_board/init.o
  .rodata.str1.4
-                0x0040f8b4      0x3d9 src/ASF/common/boards/user_board/init.o
- *fill*         0x0040fc8d        0x3 
+                0x0040f774      0x3d9 src/ASF/common/boards/user_board/init.o
+ *fill*         0x0040fb4d        0x3 
  .rodata.str1.4
-                0x0040fc90       0x19 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- *fill*         0x0040fca9        0x3 
+                0x0040fb50       0x19 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ *fill*         0x0040fb69        0x3 
  .rodata.str1.4
-                0x0040fcac       0xf2 src/Hexabot/Hexabot.o
- *fill*         0x0040fd9e        0x2 
+                0x0040fb6c       0xd7 src/Hexabot/Hexabot.o
+ *fill*         0x0040fc43        0x1 
  .rodata.str1.4
-                0x0040fda0       0x90 src/Hexabot/Hexabot_Cmd.o
+                0x0040fc44       0x90 src/Hexabot/Hexabot_Cmd.o
                                  0x94 (size before relaxing)
  .rodata.str1.4
-                0x0040fe30      0x3bb src/main.o
-                                0x3bf (size before relaxing)
- *fill*         0x004101eb        0x1 
+                0x0040fcd4      0x3c7 src/main.o
+                                0x3cb (size before relaxing)
+ *fill*         0x0041009b        0x1 
  .rodata.str1.4
-                0x004101ec        0x5 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_acos.o)
+                0x0041009c        0x5 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_acos.o)
                                   0x9 (size before relaxing)
- *fill*         0x004101f1        0x3 
+ *fill*         0x004100a1        0x3 
  .rodata.str1.4
-                0x004101f4        0x5 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_asin.o)
+                0x004100a4        0x5 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_asin.o)
                                   0x9 (size before relaxing)
- *fill*         0x004101f9        0x3 
+ *fill*         0x004100a9        0x3 
  .rodata.str1.4
-                0x004101fc        0x5 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_sqrt.o)
- *fill*         0x00410201        0x3 
+                0x004100ac        0x5 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_sqrt.o)
+ *fill*         0x004100b1        0x3 
  .rodata.npio2_hw
-                0x00410204       0x80 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
+                0x004100b4       0x80 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
  .rodata.two_over_pi
-                0x00410284      0x108 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
+                0x00410134      0x108 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
  .rodata.init_jk
-                0x0041038c       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
- *fill*         0x0041039c        0x4 
- .rodata.PIo2   0x004103a0       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
+                0x0041023c       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
+ *fill*         0x0041024c        0x4 
+ .rodata.PIo2   0x00410250       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
  .rodata.atanlo
-                0x004103e0       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
+                0x00410290       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
  .rodata.atanhi
-                0x00410400       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
+                0x004102b0       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
  .rodata.str1.4
-                0x00410420       0x3f c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-assert.o)
+                0x004102d0       0x3f c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-assert.o)
                                  0x43 (size before relaxing)
- *fill*         0x0041045f        0x1 
+ *fill*         0x0041030f        0x1 
  .rodata.str1.4
-                0x00410460        0x2 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
- *fill*         0x00410462        0x2 
+                0x00410310        0x2 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
+ *fill*         0x00410312        0x2 
  .rodata._global_impure_ptr
-                0x00410464        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
-                0x00410464                _global_impure_ptr
+                0x00410314        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
+                0x00410314                _global_impure_ptr
  .rodata.zeroes.6911
-                0x00410468       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
+                0x00410318       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
  .rodata.blanks.6910
-                0x00410478       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
+                0x00410328       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
  .rodata.str1.4
-                0x00410488       0x42 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
- *fill*         0x004104ca        0x2 
+                0x00410338       0x42 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
+ *fill*         0x0041037a        0x2 
  .rodata.zeroes.6869
-                0x004104cc       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
+                0x0041037c       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
  .rodata.str1.4
                 0x00000000       0x2f c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
  .rodata.blanks.6868
-                0x004104dc       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
+                0x0041038c       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
  .rodata._ctype_
-                0x004104ec      0x101 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-ctype_.o)
-                0x004104ec                _ctype_
- *fill*         0x004105ed        0x3 
+                0x0041039c      0x101 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-ctype_.o)
+                0x0041039c                _ctype_
+ *fill*         0x0041049d        0x3 
  .rodata.str1.4
-                0x004105f0       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
+                0x004104a0       0x10 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
                                  0x12 (size before relaxing)
  .rodata.str1.4
-                0x00410600        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x004104b0        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
                                  0x12 (size before relaxing)
- *fill*         0x0041060c        0x4 
+ *fill*         0x004104bc        0x4 
  .rodata.__mprec_tens
-                0x00410610       0xc8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x00410610                __mprec_tens
+                0x004104c0       0xc8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x004104c0                __mprec_tens
  .rodata.p05.5302
-                0x004106d8        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
- *fill*         0x004106e4        0x4 
+                0x00410588        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+ *fill*         0x00410594        0x4 
  .rodata.__mprec_bigtens
-                0x004106e8       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
-                0x004106e8                __mprec_bigtens
+                0x00410598       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+                0x00410598                __mprec_bigtens
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x00410710                . = ALIGN (0x4)
+                0x004105c0                . = ALIGN (0x4)
  *(.init)
- .init          0x00410710        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crti.o
-                0x00410710                _init
- .init          0x00410714        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtn.o
-                0x0041071c                . = ALIGN (0x4)
-                0x0041071c                __preinit_array_start = .
+ .init          0x004105c0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crti.o
+                0x004105c0                _init
+ .init          0x004105c4        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtn.o
+                0x004105cc                . = ALIGN (0x4)
+                0x004105cc                __preinit_array_start = .
  *(.preinit_array)
-                0x0041071c                __preinit_array_end = .
-                0x0041071c                . = ALIGN (0x4)
-                0x0041071c                __init_array_start = .
+                0x004105cc                __preinit_array_end = .
+                0x004105cc                . = ALIGN (0x4)
+                0x004105cc                __init_array_start = .
  *(SORT(.init_array.*))
  .init_array.00000
-                0x0041071c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__call_atexit.o)
+                0x004105cc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__call_atexit.o)
  *(.init_array)
- .init_array    0x00410720        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
-                0x00410724                __init_array_end = .
-                0x00410724                . = ALIGN (0x4)
+ .init_array    0x004105d0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
+                0x004105d4                __init_array_end = .
+                0x004105d4                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x00410724                . = ALIGN (0x4)
+                0x004105d4                . = ALIGN (0x4)
  *(.fini)
- .fini          0x00410724        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crti.o
-                0x00410724                _fini
- .fini          0x00410728        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtn.o
-                0x00410730                . = ALIGN (0x4)
-                0x00410730                __fini_array_start = .
+ .fini          0x004105d4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crti.o
+                0x004105d4                _fini
+ .fini          0x004105d8        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtn.o
+                0x004105e0                . = ALIGN (0x4)
+                0x004105e0                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x00410730        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
+ .fini_array    0x004105e0        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
  *(SORT(.fini_array.*))
-                0x00410734                __fini_array_end = .
+                0x004105e4                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x00410734                . = ALIGN (0x4)
-                0x00410734                _efixed = .
-                0x00410734                PROVIDE (__exidx_start, .)
+                0x004105e4                . = ALIGN (0x4)
+                0x004105e4                _efixed = .
+                0x004105e4                PROVIDE (__exidx_start, .)
 
-.vfp11_veneer   0x00410734        0x0
+.vfp11_veneer   0x004105e4        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x00410734        0x0
+.v4_bx          0x004105e4        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x00410734        0x0
+.iplt           0x004105e4        0x0
  .iplt          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
 
-.ARM.exidx      0x00410734        0x8
+.ARM.exidx      0x004105e4        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
- .ARM.exidx     0x00410734        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_divdi3.o)
- .ARM.exidx     0x0041073c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_udivdi3.o)
+ .ARM.exidx     0x004105e4        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_divdi3.o)
+ .ARM.exidx     0x004105ec        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
-                0x0041073c                PROVIDE (__exidx_end, .)
+                0x004105ec                PROVIDE (__exidx_end, .)
 
-.eh_frame       0x0041073c        0x0
- .eh_frame      0x0041073c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
+.eh_frame       0x004105ec        0x0
+ .eh_frame      0x004105ec        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
 
-.rel.dyn        0x0041073c        0x0
+.rel.dyn        0x004105ec        0x0
  .rel.iplt      0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
 
-.jcr            0x0041073c        0x0
- .jcr           0x0041073c        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
+.jcr            0x004105ec        0x0
+ .jcr           0x004105ec        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
 
-.igot.plt       0x0041073c        0x0
+.igot.plt       0x004105ec        0x0
  .igot.plt      0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
-                0x0041073c                . = ALIGN (0x4)
-                0x0041073c                _etext = .
+                0x004105ec                . = ALIGN (0x4)
+                0x004105ec                _etext = .
 
-.relocate       0x20400000      0x8c0 load address 0x0041073c
+.relocate       0x20400000      0x950 load address 0x004105ec
                 0x20400000                . = ALIGN (0x4)
                 0x20400000                _srelocate = .
  *(.ramfunc .ramfunc.*)
@@ -13524,188 +13527,190 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
  .data.SystemCoreClock
                 0x20400014        0x4 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o
                 0x20400014                SystemCoreClock
+ .data.SvoCal   0x20400018       0x90 src/main.o
+                0x20400018                SvoCal
  .data.cam_dif_tsh
-                0x20400018        0x4 src/main.o
-                0x20400018                cam_dif_tsh
+                0x204000a8        0x4 src/main.o
+                0x204000a8                cam_dif_tsh
  .data.__fdlib_version
-                0x2040001c        0x1 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_lib_ver.o)
-                0x2040001c                __fdlib_version
- *fill*         0x2040001d        0x3 
+                0x204000ac        0x1 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_lib_ver.o)
+                0x204000ac                __fdlib_version
+ *fill*         0x204000ad        0x3 
  .data.impure_data
-                0x20400020      0x428 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
+                0x204000b0      0x428 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
  .data._impure_ptr
-                0x20400448        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
-                0x20400448                _impure_ptr
+                0x204004d8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-impure.o)
+                0x204004d8                _impure_ptr
  .data.__malloc_av_
-                0x2040044c      0x408 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x2040044c                __malloc_av_
+                0x204004dc      0x408 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x204004dc                __malloc_av_
  .data.__malloc_trim_threshold
-                0x20400854        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x20400854                __malloc_trim_threshold
+                0x204008e4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x204008e4                __malloc_trim_threshold
  .data.__malloc_sbrk_base
-                0x20400858        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x20400858                __malloc_sbrk_base
+                0x204008e8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x204008e8                __malloc_sbrk_base
  .data.__ctype_ptr__
-                0x2040085c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-ctype_.o)
-                0x2040085c                __ctype_ptr__
- .data.lconv    0x20400860       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x204008ec        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-ctype_.o)
+                0x204008ec                __ctype_ptr__
+ .data.lconv    0x204008f0       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
  .data.lc_ctype_charset
-                0x20400898       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x20400928       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
  .data.__mb_cur_max
-                0x204008b8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
-                0x204008b8                __mb_cur_max
+                0x20400948        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+                0x20400948                __mb_cur_max
  .data.__wctomb
-                0x204008bc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wctomb_r.o)
-                0x204008bc                __wctomb
-                0x204008c0                . = ALIGN (0x4)
-                0x204008c0                _erelocate = .
+                0x2040094c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wctomb_r.o)
+                0x2040094c                __wctomb
+                0x20400950                . = ALIGN (0x4)
+                0x20400950                _erelocate = .
 
-.bss            0x204008c0     0xbd48 load address 0x00410ffc
-                0x204008c0                . = ALIGN (0x4)
-                0x204008c0                _sbss = .
-                0x204008c0                _szero = .
+.bss            0x20400950     0xbd44 load address 0x00410f3c
+                0x20400950                . = ALIGN (0x4)
+                0x20400950                _sbss = .
+                0x20400950                _szero = .
  *(.bss .bss.*)
- .bss           0x204008c0       0x1c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
+ .bss           0x20400950       0x1c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7/crtbegin.o
  .bss.gs_interrupt_sources
-                0x204008dc       0x70 src/ASF/sam/drivers/pio/pio_handler.o
+                0x2040096c       0x70 src/ASF/sam/drivers/pio/pio_handler.o
  .bss.ucMaxSysCallPriority
-                0x2040094c        0x1 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/port.o
- *fill*         0x2040094d        0x3 
+                0x204009dc        0x1 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/port.o
+ *fill*         0x204009dd        0x3 
  .bss.ulMaxPRIGROUPValue
-                0x20400950        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/port.o
+                0x204009e0        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/GCC/ARM_CM7/r0p1/port.o
  .bss.xNextFreeByte
-                0x20400954        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.o
- .bss.ucHeap    0x20400958     0xb800 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.o
+                0x204009e4        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.o
+ .bss.ucHeap    0x204009e8     0xb800 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.o
  .bss.pucAlignedHeap.7885
-                0x2040c158        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.o
+                0x2040c1e8        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/portable/MemMang/heap_1.o
  .bss.xNumOfOverflows
-                0x2040c15c        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c1ec        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.pxDelayedTaskList
-                0x2040c160        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c1f0        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xSchedulerRunning
-                0x2040c164        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c1f4        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.uxTasksDeleted
-                0x2040c168        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c1f8        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xDelayedTaskList1
-                0x2040c16c       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c1fc       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.pxOverflowDelayedTaskList
-                0x2040c180        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c210        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.uxPendedTicks
-                0x2040c184        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c214        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.pxReadyTasksLists
-                0x2040c188      0x1f4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c218      0x1f4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xTasksWaitingTermination
-                0x2040c37c       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c40c       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.pxCurrentTCB
-                0x2040c390        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
-                0x2040c390                pxCurrentTCB
+                0x2040c420        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c420                pxCurrentTCB
  .bss.xPendingReadyList
-                0x2040c394       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c424       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.uxSchedulerSuspended
-                0x2040c3a8        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c438        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xTickCount
-                0x2040c3ac        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c43c        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xNextTaskUnblockTime
-                0x2040c3b0        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c440        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.uxTaskNumber
-                0x2040c3b4        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c444        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.uxCurrentNumberOfTasks
-                0x2040c3b8        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c448        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xDelayedTaskList2
-                0x2040c3bc       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c44c       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xSuspendedTaskList
-                0x2040c3d0       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c460       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.uxTopReadyPriority
-                0x2040c3e4        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c474        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.xYieldPending
-                0x2040c3e8        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
+                0x2040c478        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .bss.pxCurrentTimerList
-                0x2040c3ec        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x2040c47c        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .bss.xActiveTimerList1
-                0x2040c3f0       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x2040c480       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .bss.xActiveTimerList2
-                0x2040c404       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x2040c494       0x14 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .bss.xLastTime.8144
-                0x2040c418        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x2040c4a8        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .bss.xTimerQueue
-                0x2040c41c        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x2040c4ac        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .bss.pxOverflowTimerList
-                0x2040c420        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
+                0x2040c4b0        0x4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .bss.heap.5212
-                0x2040c424        0x4 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .bss.But_Up    0x2040c428        0x4 src/main.o
-                0x2040c428                But_Up
- .bss.ISIsem    0x2040c42c        0x4 src/main.o
-                0x2040c42c                ISIsem
+                0x2040c4b4        0x4 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .bss.But_Up    0x2040c4b8        0x4 src/main.o
+                0x2040c4b8                But_Up
+ .bss.ISIsem    0x2040c4bc        0x4 src/main.o
+                0x2040c4bc                ISIsem
  .bss.VerboseMode
-                0x2040c430        0x4 src/main.o
-                0x2040c430                VerboseMode
+                0x2040c4c0        0x4 src/main.o
+                0x2040c4c0                VerboseMode
  .bss.CLIbufIndex
-                0x2040c434        0x4 src/main.o
-                0x2040c434                CLIbufIndex
- .bss.diffPix   0x2040c438        0x4 src/main.o
-                0x2040c438                diffPix
+                0x2040c4c4        0x4 src/main.o
+                0x2040c4c4                CLIbufIndex
+ .bss.diffPix   0x2040c4c8        0x4 src/main.o
+                0x2040c4c8                diffPix
  .bss.isi_frames_done
-                0x2040c43c        0x4 src/main.o
-                0x2040c43c                isi_frames_done
- .bss.UARTsem   0x2040c440        0x4 src/main.o
-                0x2040c440                UARTsem
+                0x2040c4cc        0x4 src/main.o
+                0x2040c4cc                isi_frames_done
+ .bss.UARTsem   0x2040c4d0        0x4 src/main.o
+                0x2040c4d0                UARTsem
  .bss.__malloc_max_total_mem
-                0x2040c444        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x2040c444                __malloc_max_total_mem
+                0x2040c4d4        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x2040c4d4                __malloc_max_total_mem
  .bss.__malloc_max_sbrked_mem
-                0x2040c448        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x2040c448                __malloc_max_sbrked_mem
+                0x2040c4d8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x2040c4d8                __malloc_max_sbrked_mem
  .bss.__malloc_top_pad
-                0x2040c44c        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x2040c44c                __malloc_top_pad
+                0x2040c4dc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x2040c4dc                __malloc_top_pad
  .bss.__malloc_current_mallinfo
-                0x2040c450       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
-                0x2040c450                __malloc_current_mallinfo
+                0x2040c4e0       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+                0x2040c4e0                __malloc_current_mallinfo
  *(COMMON)
- COMMON         0x2040c478        0x6 src/ASF/common/services/sleepmgr/sam/sleepmgr.o
-                0x2040c478                sleepmgr_locks
- *fill*         0x2040c47e        0x2 
- COMMON         0x2040c480       0x80 src/ASF/sam/drivers/afec/afec.o
-                0x2040c480                afec_callback_pointer
- COMMON         0x2040c500       0x40 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/queue.o
-                0x2040c500                xQueueRegistry
- COMMON         0x2040c540       0x18 src/ASF/common/boards/user_board/init.o
-                0x2040c540                DW1000__rst
-                0x2040c544                DW1000__sysstat
-                0x2040c548                DW1000(short, short)
-                0x2040c54c                DW1000__syscfg
-                0x2040c550                DW1000__ICtemp
-                0x2040c554                DW1000__ICvoltage
- COMMON         0x2040c558       0xac src/main.o
-                0x2040c558                hexabot_walk
-                0x2040c584                CLIbuf
-                0x2040c5e8                SvoCal
-                0x2040c5ec                buf
-                0x2040c600                intl_frame
- COMMON         0x2040c604        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reent.o)
-                0x2040c604                errno
-                0x2040c608                . = ALIGN (0x4)
-                0x2040c608                _ebss = .
-                0x2040c608                _ezero = .
+ COMMON         0x2040c508        0x6 src/ASF/common/services/sleepmgr/sam/sleepmgr.o
+                0x2040c508                sleepmgr_locks
+ *fill*         0x2040c50e        0x2 
+ COMMON         0x2040c510       0x80 src/ASF/sam/drivers/afec/afec.o
+                0x2040c510                afec_callback_pointer
+ COMMON         0x2040c590       0x40 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/queue.o
+                0x2040c590                xQueueRegistry
+ COMMON         0x2040c5d0       0x18 src/ASF/common/boards/user_board/init.o
+                0x2040c5d0                DW1000__rst
+                0x2040c5d4                DW1000__sysstat
+                0x2040c5d8                DW1000(short, short)
+                0x2040c5dc                DW1000__syscfg
+                0x2040c5e0                DW1000__ICtemp
+                0x2040c5e4                DW1000__ICvoltage
+ COMMON         0x2040c5e8       0xa8 src/main.o
+                0x2040c5e8                hexabot_walk
+                0x2040c614                CLIbuf
+                0x2040c678                buf
+                0x2040c68c                intl_frame
+ COMMON         0x2040c690        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reent.o)
+                0x2040c690                errno
+                0x2040c694                . = ALIGN (0x4)
+                0x2040c694                _ebss = .
+                0x2040c694                _ezero = .
 
-.stack          0x2040c608     0x2000 load address 0x0041cd44
-                0x2040c608                . = ALIGN (0x8)
-                0x2040c608                _sstack = .
-                0x2040e608                . = (. + STACK_SIZE)
- *fill*         0x2040c608     0x2000 
-                0x2040e608                . = ALIGN (0x8)
-                0x2040e608                _estack = .
+.stack          0x2040c694     0x2004 load address 0x0041cc80
+                0x2040c698                . = ALIGN (0x8)
+ *fill*         0x2040c694        0x4 
+                0x2040c698                _sstack = .
+                0x2040e698                . = (. + STACK_SIZE)
+ *fill*         0x2040c698     0x2000 
+                0x2040e698                . = ALIGN (0x8)
+                0x2040e698                _estack = .
 
-.heap           0x2040e608      0x200 load address 0x0041ed44
-                0x2040e608                . = ALIGN (0x8)
-                0x2040e608                _sheap = .
-                0x2040e808                . = (. + HEAP_SIZE)
- *fill*         0x2040e608      0x200 
-                0x2040e808                . = ALIGN (0x8)
-                0x2040e808                _eheap = .
-                0x2040e808                . = ALIGN (0x4)
-                0x2040e808                _end = .
+.heap           0x2040e698      0x200 load address 0x0041ec84
+                0x2040e698                . = ALIGN (0x8)
+                0x2040e698                _sheap = .
+                0x2040e898                . = (. + HEAP_SIZE)
+ *fill*         0x2040e698      0x200 
+                0x2040e898                . = ALIGN (0x8)
+                0x2040e898                _eheap = .
+                0x2040e898                . = ALIGN (0x4)
+                0x2040e898                _end = .
                 0x2045ffff                _ram_end_ = ((ORIGIN (ram) + 0x60000) - 0x1)
 OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
 
@@ -13995,7 +14000,7 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .comment       0x00000000       0x5c src/Hexabot/Hexabot_Cmd.o
  .comment       0x00000000       0x5c src/main.o
 
-.debug_info     0x00000000    0x22169
+.debug_info     0x00000000    0x222d4
  .debug_info    0x00000000      0x290 Debug.o
  .debug_info    0x00000290      0x134 src/ASF/common/services/delay/sam/cycle_counter.o
  .debug_info    0x000003c4      0x172 src/ASF/common/services/sleepmgr/sam/sleepmgr.o
@@ -14023,9 +14028,9 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_info    0x00015786      0x56c src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o
  .debug_info    0x00015cf2      0x499 src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .debug_info    0x0001618b     0x1758 src/DW1000.o
- .debug_info    0x000178e3     0x6aa4 src/Hexabot/Hexabot.o
- .debug_info    0x0001e387     0x11d7 src/Hexabot/Hexabot_Cmd.o
- .debug_info    0x0001f55e     0x2c0b src/main.o
+ .debug_info    0x000178e3     0x6a71 src/Hexabot/Hexabot.o
+ .debug_info    0x0001e354     0x1309 src/Hexabot/Hexabot_Cmd.o
+ .debug_info    0x0001f65d     0x2c77 src/main.o
 
 .debug_abbrev   0x00000000     0x4375
  .debug_abbrev  0x00000000      0x118 Debug.o
@@ -14059,7 +14064,7 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_abbrev  0x00003ddf      0x225 src/Hexabot/Hexabot_Cmd.o
  .debug_abbrev  0x00004004      0x371 src/main.o
 
-.debug_loc      0x00000000     0xe352
+.debug_loc      0x00000000     0xe420
  .debug_loc     0x00000000       0x6b Debug.o
  .debug_loc     0x0000006b      0xa50 src/ASF/sam/drivers/afec/afec.o
  .debug_loc     0x00000abb      0x602 src/ASF/sam/drivers/isi/isi.o
@@ -14084,11 +14089,11 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_loc     0x0000a8ab       0x5e src/ASF/sam/utils/cmsis/sams70/source/templates/gcc/startup_sams70.o
  .debug_loc     0x0000a909      0x16d src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .debug_loc     0x0000aa76      0xeeb src/DW1000.o
- .debug_loc     0x0000b961     0x18a4 src/Hexabot/Hexabot.o
- .debug_loc     0x0000d205      0x798 src/Hexabot/Hexabot_Cmd.o
- .debug_loc     0x0000d99d      0x9b5 src/main.o
+ .debug_loc     0x0000b961     0x18cb src/Hexabot/Hexabot.o
+ .debug_loc     0x0000d22c      0x834 src/Hexabot/Hexabot_Cmd.o
+ .debug_loc     0x0000da60      0x9c0 src/main.o
 
-.debug_aranges  0x00000000     0x11d0
+.debug_aranges  0x00000000     0x11e0
  .debug_aranges
                 0x00000000       0x20 Debug.o
  .debug_aranges
@@ -14144,13 +14149,13 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_aranges
                 0x00000f20      0x128 src/DW1000.o
  .debug_aranges
-                0x00001048       0xd8 src/Hexabot/Hexabot.o
+                0x00001048       0xe0 src/Hexabot/Hexabot.o
  .debug_aranges
-                0x00001120       0x60 src/Hexabot/Hexabot_Cmd.o
+                0x00001128       0x68 src/Hexabot/Hexabot_Cmd.o
  .debug_aranges
-                0x00001180       0x50 src/main.o
+                0x00001190       0x50 src/main.o
 
-.debug_ranges   0x00000000     0x1310
+.debug_ranges   0x00000000     0x1320
  .debug_ranges  0x00000000       0x10 Debug.o
  .debug_ranges  0x00000010       0x10 src/ASF/common/services/delay/sam/cycle_counter.o
  .debug_ranges  0x00000020       0xc0 src/ASF/sam/drivers/afec/afec.o
@@ -14177,9 +14182,9 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_ranges  0x00000fd8       0x20 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o
  .debug_ranges  0x00000ff8       0x60 src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .debug_ranges  0x00001058      0x130 src/DW1000.o
- .debug_ranges  0x00001188       0xe0 src/Hexabot/Hexabot.o
- .debug_ranges  0x00001268       0x50 src/Hexabot/Hexabot_Cmd.o
- .debug_ranges  0x000012b8       0x58 src/main.o
+ .debug_ranges  0x00001188       0xe8 src/Hexabot/Hexabot.o
+ .debug_ranges  0x00001270       0x58 src/Hexabot/Hexabot_Cmd.o
+ .debug_ranges  0x000012c8       0x58 src/main.o
 
 .debug_macro    0x00000000    0x24a18
  .debug_macro   0x00000000      0x879 Debug.o
@@ -14396,7 +14401,7 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_macro   0x00024147       0x10 src/Hexabot/Hexabot_Cmd.o
  .debug_macro   0x00024157      0x8c1 src/main.o
 
-.debug_line     0x00000000    0x188cc
+.debug_line     0x00000000    0x188dc
  .debug_line    0x00000000      0xf9f Debug.o
  .debug_line    0x00000f9f      0x934 src/ASF/common/services/delay/sam/cycle_counter.o
  .debug_line    0x000018d3      0x996 src/ASF/common/services/sleepmgr/sam/sleepmgr.o
@@ -14424,11 +14429,11 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_line    0x00013027      0x78b src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o
  .debug_line    0x000137b2      0x3bb src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .debug_line    0x00013b6d     0x1294 src/DW1000.o
- .debug_line    0x00014e01     0x16b8 src/Hexabot/Hexabot.o
- .debug_line    0x000164b9     0x10e6 src/Hexabot/Hexabot_Cmd.o
- .debug_line    0x0001759f     0x132d src/main.o
+ .debug_line    0x00014e01     0x16aa src/Hexabot/Hexabot.o
+ .debug_line    0x000164ab     0x1103 src/Hexabot/Hexabot_Cmd.o
+ .debug_line    0x000175ae     0x132e src/main.o
 
-.debug_str      0x00000000    0x85f2f
+.debug_str      0x00000000    0x85f46
  .debug_str     0x00000000    0x7787c Debug.o
                               0x77eb9 (size before relaxing)
  .debug_str     0x0007787c       0x35 src/ASF/common/services/delay/sam/cycle_counter.o
@@ -14483,14 +14488,14 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
                                0x6174 (size before relaxing)
  .debug_str     0x00084dc7      0x2da src/DW1000.o
                               0x7d9ba (size before relaxing)
- .debug_str     0x000850a1      0xc19 src/Hexabot/Hexabot.o
-                              0x79e9c (size before relaxing)
- .debug_str     0x00085cba      0x11f src/Hexabot/Hexabot_Cmd.o
-                              0x7db22 (size before relaxing)
- .debug_str     0x00085dd9      0x156 src/main.o
+ .debug_str     0x000850a1      0xc24 src/Hexabot/Hexabot.o
+                              0x79ea7 (size before relaxing)
+ .debug_str     0x00085cc5      0x12b src/Hexabot/Hexabot_Cmd.o
+                              0x7db2e (size before relaxing)
+ .debug_str     0x00085df0      0x156 src/main.o
                               0x7e1fc (size before relaxing)
 
-.debug_frame    0x00000000     0x4598
+.debug_frame    0x00000000     0x45cc
  .debug_frame   0x00000000       0x34 Debug.o
  .debug_frame   0x00000034       0x20 src/ASF/common/services/delay/sam/cycle_counter.o
  .debug_frame   0x00000054      0x1f0 src/ASF/sam/drivers/afec/afec.o
@@ -14517,89 +14522,89 @@ OUTPUT(FYP_Hexabot_ATSAM_S70.elf elf32-littlearm)
  .debug_frame   0x000021d8       0x40 src/ASF/sam/utils/cmsis/sams70/source/templates/system_sams70.o
  .debug_frame   0x00002218       0xc8 src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .debug_frame   0x000022e0      0x3e4 src/DW1000.o
- .debug_frame   0x000026c4      0x38c src/Hexabot/Hexabot.o
- .debug_frame   0x00002a50      0x12c src/Hexabot/Hexabot_Cmd.o
- .debug_frame   0x00002b7c      0x144 src/main.o
- .debug_frame   0x00002cc0       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_cos.o)
- .debug_frame   0x00002cf8       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_sin.o)
- .debug_frame   0x00002d30       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-sf_lround.o)
- .debug_frame   0x00002d58       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_acos.o)
- .debug_frame   0x00002d98       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_asin.o)
- .debug_frame   0x00002dd8       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_atan2.o)
- .debug_frame   0x00002df8       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_sqrt.o)
- .debug_frame   0x00002e38       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_acos.o)
- .debug_frame   0x00002e70       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_asin.o)
- .debug_frame   0x00002ec0       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_atan2.o)
- .debug_frame   0x00002f08       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
- .debug_frame   0x00002f50       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_sqrt.o)
- .debug_frame   0x00002f80       0x4c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_cos.o)
- .debug_frame   0x00002fcc       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
- .debug_frame   0x00003020       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_sin.o)
- .debug_frame   0x00003068       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
- .debug_frame   0x000030a0       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fabs.o)
- .debug_frame   0x000030c0       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_floor.o)
- .debug_frame   0x000030f4       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fpclassify.o)
- .debug_frame   0x00003114       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_matherr.o)
- .debug_frame   0x00003134       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_nan.o)
- .debug_frame   0x00003154       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_scalbn.o)
- .debug_frame   0x00003184       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_copysign.o)
- .debug_frame   0x000031a4       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-assert.o)
- .debug_frame   0x000031e4       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atoi.o)
- .debug_frame   0x00003214       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-errno.o)
- .debug_frame   0x00003234       0x74 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fiprintf.o)
- .debug_frame   0x000032a8       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-init.o)
- .debug_frame   0x000032d4       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-iprintf.o)
- .debug_frame   0x0000334c       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-malloc.o)
- .debug_frame   0x0000337c       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
- .debug_frame   0x000033d4       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memset.o)
- .debug_frame   0x00003408       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mlock.o)
- .debug_frame   0x00003438       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sbrkr.o)
- .debug_frame   0x00003464       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sprintf.o)
- .debug_frame   0x000034e8       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strlen.o)
- .debug_frame   0x00003508       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok.o)
- .debug_frame   0x00003528       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok_r.o)
- .debug_frame   0x00003570       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtol.o)
- .debug_frame   0x000035c4       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
- .debug_frame   0x00003604       0xdc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
- .debug_frame   0x000036e0       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wsetup.o)
- .debug_frame   0x0000370c       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__call_atexit.o)
- .debug_frame   0x0000375c       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-abort.o)
- .debug_frame   0x00003784       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atexit.o)
- .debug_frame   0x000037a4       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
- .debug_frame   0x00003828       0x6c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fflush.o)
- .debug_frame   0x00003894      0x120 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
- .debug_frame   0x000039b4       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fini.o)
- .debug_frame   0x000039e8       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fputwc.o)
- .debug_frame   0x00003a6c       0x74 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-freer.o)
- .debug_frame   0x00003ae0       0x68 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fvwrite.o)
- .debug_frame   0x00003b48       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fwalk.o)
- .debug_frame   0x00003b9c       0x9c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
- .debug_frame   0x00003c38       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-makebuf.o)
- .debug_frame   0x00003c80       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memchr.o)
- .debug_frame   0x00003cbc       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memmove.o)
- .debug_frame   0x00003cec      0x26c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
- .debug_frame   0x00003f58       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reallocr.o)
- .debug_frame   0x00003fac       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reent.o)
- .debug_frame   0x00004004       0xe4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signal.o)
- .debug_frame   0x000040e8       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signalr.o)
- .debug_frame   0x00004124       0x88 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
- .debug_frame   0x000041ac       0x7c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfiprintf.o)
- .debug_frame   0x00004228       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wbuf.o)
- .debug_frame   0x00004264       0x60 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wcrtomb.o)
- .debug_frame   0x000042c4       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wctomb_r.o)
- .debug_frame   0x0000430c       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-writer.o)
- .debug_frame   0x00004338       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__atexit.o)
- .debug_frame   0x0000436c       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-callocr.o)
- .debug_frame   0x00004394       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-closer.o)
- .debug_frame   0x000043c0       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fclose.o)
- .debug_frame   0x00004404       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fstatr.o)
- .debug_frame   0x00004430       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-isattyr.o)
- .debug_frame   0x0000445c       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-lseekr.o)
- .debug_frame   0x00004488       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-readr.o)
- .debug_frame   0x000044b4       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x000044dc       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(bpabi.o)
- .debug_frame   0x00004530       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_divdi3.o)
- .debug_frame   0x00004564       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_udivdi3.o)
+ .debug_frame   0x000026c4      0x3a4 src/Hexabot/Hexabot.o
+ .debug_frame   0x00002a68      0x148 src/Hexabot/Hexabot_Cmd.o
+ .debug_frame   0x00002bb0      0x144 src/main.o
+ .debug_frame   0x00002cf4       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_cos.o)
+ .debug_frame   0x00002d2c       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_sin.o)
+ .debug_frame   0x00002d64       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-sf_lround.o)
+ .debug_frame   0x00002d8c       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_acos.o)
+ .debug_frame   0x00002dcc       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_asin.o)
+ .debug_frame   0x00002e0c       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_atan2.o)
+ .debug_frame   0x00002e2c       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-w_sqrt.o)
+ .debug_frame   0x00002e6c       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_acos.o)
+ .debug_frame   0x00002ea4       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_asin.o)
+ .debug_frame   0x00002ef4       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_atan2.o)
+ .debug_frame   0x00002f3c       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_rem_pio2.o)
+ .debug_frame   0x00002f84       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-e_sqrt.o)
+ .debug_frame   0x00002fb4       0x4c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_cos.o)
+ .debug_frame   0x00003000       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_rem_pio2.o)
+ .debug_frame   0x00003054       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-k_sin.o)
+ .debug_frame   0x0000309c       0x38 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_atan.o)
+ .debug_frame   0x000030d4       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fabs.o)
+ .debug_frame   0x000030f4       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_floor.o)
+ .debug_frame   0x00003128       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_fpclassify.o)
+ .debug_frame   0x00003148       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_matherr.o)
+ .debug_frame   0x00003168       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_nan.o)
+ .debug_frame   0x00003188       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_scalbn.o)
+ .debug_frame   0x000031b8       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_copysign.o)
+ .debug_frame   0x000031d8       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-assert.o)
+ .debug_frame   0x00003218       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atoi.o)
+ .debug_frame   0x00003248       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-errno.o)
+ .debug_frame   0x00003268       0x74 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fiprintf.o)
+ .debug_frame   0x000032dc       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-init.o)
+ .debug_frame   0x00003308       0x78 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-iprintf.o)
+ .debug_frame   0x00003380       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-malloc.o)
+ .debug_frame   0x000033b0       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mallocr.o)
+ .debug_frame   0x00003408       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memset.o)
+ .debug_frame   0x0000343c       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mlock.o)
+ .debug_frame   0x0000346c       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sbrkr.o)
+ .debug_frame   0x00003498       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-sprintf.o)
+ .debug_frame   0x0000351c       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strlen.o)
+ .debug_frame   0x0000353c       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok.o)
+ .debug_frame   0x0000355c       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtok_r.o)
+ .debug_frame   0x000035a4       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-strtol.o)
+ .debug_frame   0x000035f8       0x40 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfprintf.o)
+ .debug_frame   0x00003638       0xdc c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-vfiprintf.o)
+ .debug_frame   0x00003714       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wsetup.o)
+ .debug_frame   0x00003740       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__call_atexit.o)
+ .debug_frame   0x00003790       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-abort.o)
+ .debug_frame   0x000037b8       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-atexit.o)
+ .debug_frame   0x000037d8       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-dtoa.o)
+ .debug_frame   0x0000385c       0x6c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fflush.o)
+ .debug_frame   0x000038c8      0x120 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-findfp.o)
+ .debug_frame   0x000039e8       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fini.o)
+ .debug_frame   0x00003a1c       0x84 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fputwc.o)
+ .debug_frame   0x00003aa0       0x74 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-freer.o)
+ .debug_frame   0x00003b14       0x68 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fvwrite.o)
+ .debug_frame   0x00003b7c       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fwalk.o)
+ .debug_frame   0x00003bd0       0x9c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-locale.o)
+ .debug_frame   0x00003c6c       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-makebuf.o)
+ .debug_frame   0x00003cb4       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memchr.o)
+ .debug_frame   0x00003cf0       0x30 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-memmove.o)
+ .debug_frame   0x00003d20      0x26c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-mprec.o)
+ .debug_frame   0x00003f8c       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reallocr.o)
+ .debug_frame   0x00003fe0       0x58 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-reent.o)
+ .debug_frame   0x00004038       0xe4 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signal.o)
+ .debug_frame   0x0000411c       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-signalr.o)
+ .debug_frame   0x00004158       0x88 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-stdio.o)
+ .debug_frame   0x000041e0       0x7c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-svfiprintf.o)
+ .debug_frame   0x0000425c       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wbuf.o)
+ .debug_frame   0x00004298       0x60 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wcrtomb.o)
+ .debug_frame   0x000042f8       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-wctomb_r.o)
+ .debug_frame   0x00004340       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-writer.o)
+ .debug_frame   0x0000436c       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-__atexit.o)
+ .debug_frame   0x000043a0       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-callocr.o)
+ .debug_frame   0x000043c8       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-closer.o)
+ .debug_frame   0x000043f4       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fclose.o)
+ .debug_frame   0x00004438       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-fstatr.o)
+ .debug_frame   0x00004464       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-isattyr.o)
+ .debug_frame   0x00004490       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-lseekr.o)
+ .debug_frame   0x000044bc       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libc.a(lib_a-readr.o)
+ .debug_frame   0x000044e8       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00004510       0x54 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(bpabi.o)
+ .debug_frame   0x00004564       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_divdi3.o)
+ .debug_frame   0x00004598       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/cortex-m7\libgcc.a(_udivdi3.o)
 
 Cross Reference Table
 
@@ -15353,6 +15358,8 @@ cmdLED                                            src/Hexabot/Hexabot_Cmd.o
                                                   src/main.o
 cmdOverrideLEDDWM1000                             src/Hexabot/Hexabot_Cmd.o
                                                   src/main.o
+cmdRelaxSvo                                       src/Hexabot/Hexabot_Cmd.o
+                                                  src/main.o
 cmdServoMan                                       src/Hexabot/Hexabot_Cmd.o
                                                   src/main.o
                                                   src/Hexabot/Hexabot.o
@@ -15841,6 +15848,8 @@ range25cm16PRFwb                                  src/Decawave/deca_range_tables
 range25cm64PRFnb                                  src/Decawave/deca_range_tables.o
 range25cm64PRFwb                                  src/Decawave/deca_range_tables.o
 readfromspi                                       src/Decawave/deca_device.o
+relaxServo                                        src/Hexabot/Hexabot.o
+                                                  src/Hexabot/Hexabot_Cmd.o
 rx_config                                         src/Decawave/deca_params_init.o
                                                   src/Decawave/deca_device.o
 scalbn                                            c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/cortex-m7\libm.a(lib_a-s_scalbn.o)
