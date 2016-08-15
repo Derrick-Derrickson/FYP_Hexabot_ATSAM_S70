@@ -287,13 +287,9 @@ void WriteServo(int Leg,int svo,float angle)
 	legGetI2Caddr(Leg,svo,addrData);
 	extern float* SvoCal;
 	 //uint16_t stop = (int)((1.00+((angle)/180.00))*(4095.00/(20.00)));
-	sprintf(buf,"Old ANG: %f\n",angle);
-	sendDebugString(buf);
 	
 	angle = angle - SvoCal[svo*12+2*Leg];
 	
-	sprintf(buf,"New ANG: %f\n",angle);
-	sendDebugString(buf);	
 	
 	uint16_t stop = (int)lroundf( (4095.00/(20.00)) * ((0.56) + (2.4-0.56)*(angle/180.00))  );	
 		
