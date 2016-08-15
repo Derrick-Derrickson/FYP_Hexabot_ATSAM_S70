@@ -183,3 +183,21 @@ void cmdWriteTestDW1000(uint64_t toRW) {
 	sprintf(buf,"ID WRITTEN\nREAD BACK: 0x%x\n",DW1000_readReg(PANADR_ID,DW1000_NO_SUB,DW1000_NO_OFFSET,PANADR_LEN));
 	sendDebugString(buf);	
 }
+
+void cmdRelaxSvo(int Leg,int Svo) {
+	if(Leg == 6) {
+		relaxServo(0,Svo);
+		delay_ms(1);
+		relaxServo(1,Svo);
+		delay_ms(1);
+		relaxServo(2,Svo);
+		delay_ms(1);
+		relaxServo(3,Svo);
+		delay_ms(1);
+		relaxServo(4,Svo);
+		delay_ms(1);
+		relaxServo(5,Svo);
+	}
+	else relaxServo(Leg,Svo);
+}
+

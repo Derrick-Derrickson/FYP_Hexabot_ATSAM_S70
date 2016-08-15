@@ -45,15 +45,27 @@ void CLItask(void*);
 void ImageProTask(void*);
 uint16_t* intl_frame;
 //global variables
+
+
+//frame pointer
 int isi_frames_done = 0;
+//pixel difference
 int diffPix = 0;
+//CLI buffer
 char CLIbuf[100];
+//CLIbuffer indes
 int CLIbufIndex = 0;
+//gait and walk settings and status
 walk_data hexabot_walk;
+//debug spitout mode
 int VerboseMode = 0;
+//pixel difference requiremet
 int cam_dif_tsh = 25;
+//button up varuable
 int But_Up = 0;
-float* SvoCal;
+//Servo calibration array
+float SvoCal[] = {-16.199753,0.640005,8.099876,1.179997,5.899910,1.131109,-14.999771,0.666672,-1.899971,0.957778,-42.599701,0.053340,-2.599960,0.942223,-23.099648,0.486674,-11.599823,0.742226,-7.299889,0.837780,-20.099693,0.553340,15.099770,1.335550,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000};
+
 //semaphores!
 SemaphoreHandle_t ISIsem = NULL;
 SemaphoreHandle_t UARTsem = NULL;
@@ -65,9 +77,9 @@ int main (void)
 	board_init();
 	sendDebugString("BOARD INITIALIZATION - FINISHED\n");
 	intl_frame = (uint16_t*)malloc(240*320*2); //assign
-	SvoCal = (float*)malloc(sizeof(float)*2*18);
+	//SvoCal = (float*)malloc(sizeof(float)*2*18);
 	
-	for(int i = 0;i<36;i++) SvoCal[i] = 0;
+	//for(int i = 0;i<36;i++) SvoCal[i] = 0;
 	
 	sendDebugString("RTOS TASK INITIALIZATION - STARTED\n");
 	
@@ -113,26 +125,9 @@ void vTask1 (void* pvParameters) {
 void LegControlTask (void* pvParameters) {
 	sendDebugString("LEG CONTROL TASK INITIALIZATION - STARTED\n");
 	
-	float	ofst0;
-	float	ofst1;
-	float	ofst2;
-	float	ofst3;
-	float	ofst4;
-	float	ofst5;
-	
-	XZ		xzS0;
-	XZ		xzS1;
-	XZ		xzS2;
-	XZ		xzS3;
-	XZ		xzS4;
-	XZ		xzS5;
-	
-	angles	Ang0;
-	angles	Ang1;
-	angles	Ang2;
-	angles	Ang3;
-	angles	Ang4;
-	angles	Ang5;
+	float	ofst[6];
+	XZ		xzS[6];
+	angles	Ang[6];
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
@@ -143,40 +138,28 @@ void LegControlTask (void* pvParameters) {
 	hexabot_walk.Walk_EN = 0;
 	hexabot_walk.Hexabot_leg_cycle_t = 20;
 	hexabot_walk.ret = 0;
-	
+	hexabot_walk.gaitIndex = 0;
+		
 	sendDebugString("LEG CONTROL TASK INITIALIZATION - FINISHED | ENTERING INFINITE LOOP\n");
 	
 	for(;;) {
 		pio_set(LED7);
 		if(hexabot_walk.Walk_EN) {
 			
-		  ofst0 = ((float)hexabot_walk.i+(0*(hexabot_walk.Hexabot_leg_cycle_t/6)))/(hexabot_walk.Hexabot_leg_cycle_t)*2.0*M_PI;
-		  ofst1 = ((float)hexabot_walk.i+(1*(hexabot_walk.Hexabot_leg_cycle_t/6)))/(hexabot_walk.Hexabot_leg_cycle_t)*2.0*M_PI;
-		  ofst2 = ((float)hexabot_walk.i+(2*(hexabot_walk.Hexabot_leg_cycle_t/6)))/(hexabot_walk.Hexabot_leg_cycle_t)*2.0*M_PI;
-		  ofst3 = ((float)hexabot_walk.i+(3*(hexabot_walk.Hexabot_leg_cycle_t/6)))/(hexabot_walk.Hexabot_leg_cycle_t)*2.0*M_PI;
-		  ofst4 = ((float)hexabot_walk.i+(4*(hexabot_walk.Hexabot_leg_cycle_t/6)))/(hexabot_walk.Hexabot_leg_cycle_t)*2.0*M_PI;
-		  ofst5 = ((float)hexabot_walk.i+(5*(hexabot_walk.Hexabot_leg_cycle_t/6)))/(hexabot_walk.Hexabot_leg_cycle_t)*2.0*M_PI;
+		switch(hexabot_walk.gaitIndex) {
+			
+			case 0:	
+			void Gait0(ofst,xzS,Ang,&hexabot_walk)
+			break;
+			
+		}
 		  
-		  xzS0 = calcRotation(hexabot_walk.stance, hexabot_walk.stride*cos(ofst0), hexabot_walk.stance, 0, hexabot_walk.movDir,1,hexabot_walk.movTurn);
-		  xzS1 = calcRotation(hexabot_walk.stance, hexabot_walk.stride*cos(ofst1), hexabot_walk.stance, 0, hexabot_walk.movDir,0,hexabot_walk.movTurn);
-		  xzS2 = calcRotation(hexabot_walk.stance, hexabot_walk.stride*cos(ofst2), hexabot_walk.stance, 0, hexabot_walk.movDir,1,hexabot_walk.movTurn);
-		  xzS3 = calcRotation(hexabot_walk.stance, hexabot_walk.stride*cos(ofst3), hexabot_walk.stance, 0, hexabot_walk.movDir,0,hexabot_walk.movTurn);
-		  xzS4 = calcRotation(hexabot_walk.stance, hexabot_walk.stride*cos(ofst4), hexabot_walk.stance, 0, hexabot_walk.movDir,1,hexabot_walk.movTurn);
-		  xzS5 = calcRotation(hexabot_walk.stance, hexabot_walk.stride*cos(ofst5), hexabot_walk.stance, 0, hexabot_walk.movDir,0,hexabot_walk.movTurn);
-
-		  Ang0 = legAngCalc(xzS0.X,  (sin(ofst0) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst0)-hexabot_walk.hgt)  ,xzS0.Z);
-		  Ang1 = legAngCalc(xzS1.X,  (sin(ofst1) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst1)-hexabot_walk.hgt)  ,xzS1.Z);
-		  Ang2 = legAngCalc(xzS2.X,  (sin(ofst2) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst2)-hexabot_walk.hgt)  ,xzS2.Z);
-		  Ang3 = legAngCalc(xzS3.X,  (sin(ofst3) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst3)-hexabot_walk.hgt)  ,xzS3.Z);
-		  Ang4 = legAngCalc(xzS4.X,  (sin(ofst4) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst4)-hexabot_walk.hgt)  ,xzS4.Z);
-		  Ang5 = legAngCalc(xzS5.X,  (sin(ofst5) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst5)-hexabot_walk.hgt)  ,xzS5.Z);
-		  
-		  writeLegOut(0,Ang0.S1,Ang0.S2,Ang0.S3);
-		  writeLegOut(1,Ang1.S1,Ang1.S2,Ang1.S3);
-		  writeLegOut(2,Ang2.S1,Ang2.S2,Ang2.S3);
-		  writeLegOut(3,Ang3.S1,Ang3.S2,Ang3.S3);
-		  writeLegOut(4,Ang4.S1,Ang4.S2,Ang4.S3);
-		  writeLegOut(5,Ang5.S1,Ang5.S2,Ang5.S3);
+		  writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
+		  writeLegOut(1,Ang[1].S1,Ang[1].S2,Ang[1].S3);
+		  writeLegOut(2,Ang[2].S1,Ang[2].S2,Ang[2].S3);
+		  writeLegOut(3,Ang[3].S1,Ang[3].S2,Ang[3].S3);
+		  writeLegOut(4,Ang[4].S1,Ang[4].S2,Ang[4].S3);
+		  writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
 		  hexabot_walk.i++;
 		 hexabot_walk. ret = 1;
 		  if(hexabot_walk.i > hexabot_walk.max_i) hexabot_walk.Walk_EN = 0;
@@ -184,33 +167,33 @@ void LegControlTask (void* pvParameters) {
 		}
 		else {
 			if(hexabot_walk.ret){
-		  xzS0 = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
-		  xzS1 = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
-		  xzS2 = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
-		  xzS3 = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
-		  xzS4 = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
-		  xzS5 = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
+		  xzS[0] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
+		  xzS[1] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
+		  xzS[2] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
+		  xzS[3] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
+		  xzS[4] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
+		  xzS[5] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
 
-		  Ang0 = legAngCalc(xzS0.X,  (sin(ofst0) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst0)-hexabot_walk.hgt)  ,xzS0.Z);
-		  Ang1 = legAngCalc(xzS1.X,  (sin(ofst1) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst1)-hexabot_walk.hgt)  ,xzS1.Z);
-		  Ang2 = legAngCalc(xzS2.X,  (sin(ofst2) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst2)-hexabot_walk.hgt)  ,xzS2.Z);
-		  Ang3 = legAngCalc(xzS3.X,  (sin(ofst3) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst3)-hexabot_walk.hgt)  ,xzS3.Z);
-		  Ang4 = legAngCalc(xzS4.X,  (sin(ofst4) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst4)-hexabot_walk.hgt)  ,xzS4.Z);
-		  Ang5 = legAngCalc(xzS5.X,  (sin(ofst5) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst5)-hexabot_walk.hgt)  ,xzS5.Z);
+		  Ang[0] = legAngCalc(xzS[0].X,  (sin(ofst[0]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[0])-hexabot_walk.hgt)  ,xzS[0].Z);
+		  Ang[1] = legAngCalc(xzS[1].X,  (sin(ofst[1]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[1])-hexabot_walk.hgt)  ,xzS[1].Z);
+		  Ang[2] = legAngCalc(xzS[2].X,  (sin(ofst[2]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[2])-hexabot_walk.hgt)  ,xzS[2].Z);
+		  Ang[3] = legAngCalc(xzS[3].X,  (sin(ofst[3]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[3])-hexabot_walk.hgt)  ,xzS[3].Z);
+		  Ang[4] = legAngCalc(xzS[4].X,  (sin(ofst[4]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[4])-hexabot_walk.hgt)  ,xzS[4].Z);
+		  Ang[5] = legAngCalc(xzS[5].X,  (sin(ofst[5]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[5])-hexabot_walk.hgt)  ,xzS[5].Z);
 		  
-		  writeLegOut(0,Ang0.S1,Ang0.S2,Ang0.S3);
-		  writeLegOut(1,Ang1.S1,Ang1.S2,Ang1.S3);
-		  writeLegOut(2,Ang2.S1,Ang2.S2,Ang2.S3);
-		  writeLegOut(3,Ang3.S1,Ang3.S2,Ang3.S3);
-		  writeLegOut(4,Ang4.S1,Ang4.S2,Ang4.S3);
-		  writeLegOut(5,Ang5.S1,Ang5.S2,Ang5.S3);
+		  writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
+		  writeLegOut(1,Ang[1].S1,Ang[1].S2,Ang[1].S3);
+		  writeLegOut(2,Ang[2].S1,Ang[2].S2,Ang[2].S3);
+		  writeLegOut(3,Ang[3].S1,Ang[3].S2,Ang[3].S3);
+		  writeLegOut(4,Ang[4].S1,Ang[4].S2,Ang[4].S3);
+		  writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
 		  hexabot_walk.ret = 0;
 		}
 			hexabot_walk.i = 0;
 			//return to idle state (legs in middle) 
 		}
 		pio_clear(LED7);
-		  vTaskDelay(20);
+		  vTaskDelay(30);
 	}
 }
 
@@ -262,6 +245,8 @@ void CLItask(void* pvParameters) {
 			
 			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
 			//walk patern settings
+			
+			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
 			
 			else if(!strcmp(BaseCmd,"gaitTurn")){
 				hexabot_walk.movTurn = atoi(strtok(NULL," "));

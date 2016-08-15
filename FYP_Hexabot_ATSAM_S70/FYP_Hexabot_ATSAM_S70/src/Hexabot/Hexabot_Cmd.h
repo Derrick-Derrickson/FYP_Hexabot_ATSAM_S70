@@ -30,4 +30,5 @@ void cmdOverrideLEDDWM1000();
 
 void cmdWriteTestDW1000(uint64_t toRW);
 
+void cmdRelaxSvo(int,int);
 #endif /* HEXABOT_CMD_H_ */

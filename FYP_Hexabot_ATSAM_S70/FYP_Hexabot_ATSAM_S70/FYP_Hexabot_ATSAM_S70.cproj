@@ -1387,6 +1387,12 @@
     <Compile Include="src\DW1000.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Hexabot\Gait.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Hexabot\Gait.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Hexabot\Hexabot.c">
       <SubType>compile</SubType>
     </Compile>

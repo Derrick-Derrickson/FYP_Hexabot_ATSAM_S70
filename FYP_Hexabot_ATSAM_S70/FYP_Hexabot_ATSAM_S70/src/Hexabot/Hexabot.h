@@ -36,6 +36,7 @@ typedef struct walk_data_s {
 	int max_i;
 	int i;
 	int ret;
+	int gaitIndex;
 } walk_data;
 
 //typedefs
@@ -67,6 +68,7 @@ int i2cReadReg(uint8_t,uint8_t);
 void i2cWriteReg(uint8_t,uint8_t,uint8_t);
 void ServoDriverInit(int);
 void WriteServo(int,int,float);
+void relaxServo(int,int);
 
 //batteryManagement
 float getBatVoltage();
@@ -80,4 +82,6 @@ void writeLegOut(int leg, float S0, float S1, float S2);
 //
 void byteToLEDs(uint8_t disp,uint8_t mask);
 void calibServos(float*);
+
+//
 #endif /* HEXABOT_H_ */
