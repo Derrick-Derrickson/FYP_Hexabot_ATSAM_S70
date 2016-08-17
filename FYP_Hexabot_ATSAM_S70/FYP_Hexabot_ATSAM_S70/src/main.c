@@ -272,6 +272,10 @@ void CLItask(void* pvParameters) {
 				hexabot_walk.stride = atoi(strtok(NULL," "));
 				hexabot_walk.ret = 1;
 			}
+			else if(!strcmp(BaseCmd,"gaitStyle")){
+				hexabot_walk.gaitIndex = atoi(strtok(NULL," "));
+				hexabot_walk.ret = 1;
+			}
 			
 			else if(!strcmp(BaseCmd,"svoinhib")) {
 				if(atoi(strtok(NULL," "))) pio_set(PIOA,PIO_PA26);

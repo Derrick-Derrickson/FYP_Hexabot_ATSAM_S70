@@ -30,3 +30,5 @@ void Gait0( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 	Ang[5] = legAngCalc(xzS[5].X,  (sin(ofst[5]) < 0)?-hexabot_walk.hgt:(hexabot_walk.pup*sin(ofst[5])-hexabot_walk.hgt)  ,xzS[5].Z);
 	
 }
+
+void standUp()
