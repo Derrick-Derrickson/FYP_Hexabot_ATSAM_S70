@@ -76,6 +76,8 @@ src\Decawave\deca_range_tables.c
 
 src\DW1000.c
 
+src\Hexabot\Gait.c
+
 src\Hexabot\Hexabot.c
 
 src\Hexabot\Hexabot_Cmd.c

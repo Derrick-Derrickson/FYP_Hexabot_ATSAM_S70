@@ -1,6 +1,6 @@
-src/main.d src/main.o: ../src/main.c ../src/Hexabot/Hexabot.h \
- ../src/asf.h ../src/ASF/sam/drivers/acc/acc.h \
- ../src/ASF/sam/utils/compiler.h \
+src/Hexabot/Gait.d src/Hexabot/Gait.o: ../src/Hexabot/Gait.c \
+ ../src/Hexabot/Gait.h ../src/Hexabot/Hexabot.h ../src/asf.h \
+ ../src/ASF/sam/drivers/acc/acc.h ../src/ASF/sam/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\4.9.3\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
  ../src/ASF/sam/utils/preprocessor/preprocessor.h \
@@ -184,8 +184,9 @@ src/main.d src/main.o: ../src/main.c ../src/Hexabot/Hexabot.h \
  ../src/ASF/sam/drivers/wdt/wdt.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
- ../src/../Debug.h ../src/../Debug.h ../src/DW1000.h \
- ../src/Hexabot/Hexabot_Cmd.h ../src/Hexabot/Gait.h
+ ../src/../Debug.h ../src/Hexabot/Hexabot_Cmd.h
+
+../src/Hexabot/Gait.h:
 
 ../src/Hexabot/Hexabot.h:
 
@@ -581,10 +582,4 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/../Debug.h:
 
-../src/../Debug.h:
-
-../src/DW1000.h:
-
 ../src/Hexabot/Hexabot_Cmd.h:
-
-../src/Hexabot/Gait.h:

@@ -33,6 +33,7 @@
 #include "../Debug.h"
 #include "DW1000.h"
 #include <Hexabot/Hexabot_Cmd.h>
+#include <Hexabot/Gait.h>
 
 #define CAM_DIF_TSH cam_dif_tsh
 
@@ -64,7 +65,8 @@ int cam_dif_tsh = 25;
 //button up varuable
 int But_Up = 0;
 //Servo calibration array
-float SvoCal[] = {-16.199753,0.640005,8.099876,1.179997,5.899910,1.131109,-14.999771,0.666672,-1.899971,0.957778,-42.599701,0.053340,-2.599960,0.942223,-23.099648,0.486674,-11.599823,0.742226,-7.299889,0.837780,-20.099693,0.553340,15.099770,1.335550,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000};
+float SvoCal[] = {-42.999725,0.044451,0.999985,1.022222,-14.399780,0.680005,11.099831,1.246663,9.799850,1.217775,-13.299797,0.704449,15.799759,1.351106,-11.599823,0.742226,-9.199860,0.795559,-3.399948,0.924446,-23.599640,0.475564,7.199890,1.159998,-6.800415,0.924440,1.200073,1.013334,31.501923,1.350021,1.600098,1.017779,-30.401855,0.662202,2.000122,1.022224};
+;
 
 //semaphores!
 SemaphoreHandle_t ISIsem = NULL;
@@ -125,9 +127,9 @@ void vTask1 (void* pvParameters) {
 void LegControlTask (void* pvParameters) {
 	sendDebugString("LEG CONTROL TASK INITIALIZATION - STARTED\n");
 	
-	float	ofst[6];
-	XZ		xzS[6];
-	angles	Ang[6];
+	float	ofst[7];
+	XZ		xzS[7];
+	angles	Ang[7];
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
@@ -149,7 +151,7 @@ void LegControlTask (void* pvParameters) {
 		switch(hexabot_walk.gaitIndex) {
 			
 			case 0:	
-			void Gait0(ofst,xzS,Ang,&hexabot_walk)
+			Gait0(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
 			break;
 			
 		}
@@ -244,6 +246,8 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"DWM-clrStatus\n")) DW1000_writeReg(SYS_STATUS_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0xFFFFFFFF, SYS_STATUS_LEN);
 			
 			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
+			
+			else if(!strcmp(BaseCmd,"svoCalSpec")) calibServoSpec(SvoCal,atoi(strtok(NULL," ")),atoi(strtok(NULL," ")));
 			//walk patern settings
 			
 			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));

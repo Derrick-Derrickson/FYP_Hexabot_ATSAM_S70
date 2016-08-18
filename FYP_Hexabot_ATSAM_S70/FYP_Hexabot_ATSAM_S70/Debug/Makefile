@@ -147,6 +147,7 @@ C_SRCS +=  \
 ../src/Decawave/deca_params_init.c \
 ../src/Decawave/deca_range_tables.c \
 ../src/DW1000.c \
+../src/Hexabot/Gait.c \
 ../src/Hexabot/Hexabot.c \
 ../src/Hexabot/Hexabot_Cmd.c \
 ../src/libjpeg/libjpeg.c \
@@ -197,6 +198,7 @@ src/Decawave/deca_device.o \
 src/Decawave/deca_params_init.o \
 src/Decawave/deca_range_tables.o \
 src/DW1000.o \
+src/Hexabot/Gait.o \
 src/Hexabot/Hexabot.o \
 src/Hexabot/Hexabot_Cmd.o \
 src/libjpeg/libjpeg.o \
@@ -240,6 +242,7 @@ src/Decawave/deca_device.o \
 src/Decawave/deca_params_init.o \
 src/Decawave/deca_range_tables.o \
 src/DW1000.o \
+src/Hexabot/Gait.o \
 src/Hexabot/Hexabot.o \
 src/Hexabot/Hexabot_Cmd.o \
 src/libjpeg/libjpeg.o \
@@ -283,6 +286,7 @@ src/Decawave/deca_device.d \
 src/Decawave/deca_params_init.d \
 src/Decawave/deca_range_tables.d \
 src/DW1000.d \
+src/Hexabot/Gait.d \
 src/Hexabot/Hexabot.d \
 src/Hexabot/Hexabot_Cmd.d \
 src/libjpeg/libjpeg.d \
@@ -326,6 +330,7 @@ src/Decawave/deca_device.d \
 src/Decawave/deca_params_init.d \
 src/Decawave/deca_range_tables.d \
 src/DW1000.d \
+src/Hexabot/Gait.d \
 src/Hexabot/Hexabot.d \
 src/Hexabot/Hexabot_Cmd.d \
 src/libjpeg/libjpeg.d \
@@ -346,6 +351,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

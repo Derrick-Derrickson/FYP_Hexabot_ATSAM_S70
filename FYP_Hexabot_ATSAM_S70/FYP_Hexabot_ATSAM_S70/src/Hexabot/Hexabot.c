@@ -304,30 +304,11 @@ void WriteServo(int Leg,int svo,float angle)
 	int addrData[2];
 	legGetI2Caddr(Leg,svo,addrData);
 	extern float SvoCal[];
-<<<<<<< HEAD
-	//uint16_t stop = (int)((1.00+((angle)/180.00))*(4095.00/(20.00)));
-=======
-	 //uint16_t stop = (int)((1.00+((angle)/180.00))*(4095.00/(20.00)));
-<<<<<<< HEAD
 	
 	angle = angle - SvoCal[svo*12+2*Leg];
-	
-=======
->>>>>>> origin/master
-	//sprintf(buf,"Old ANG: %f\n",angle);
-	//sendDebugString(buf);
-	
-	angle = angle - SvoCal[svo*12+2*Leg];
-	
-	//sprintf(buf,"New ANG: %f\n",angle);
-<<<<<<< HEAD
-	//sendDebugString(buf);
 	
 	uint16_t stop = (int)lroundf( (4095.00/(20.00)) * ((0.56) + (2.4-0.56)*(angle/180.00))  );
-=======
 	//sendDebugString(buf);	
->>>>>>> origin/master
->>>>>>> origin/master
 	
 	i2cWriteReg(addrData[0],addrData[1],0x01);
 	i2cWriteReg(addrData[0],addrData[1]+1,0x00);
@@ -1278,7 +1259,7 @@ void getS2cal(int Leg, float* angOff, float* Lin) {
 		
 		if(!pio_get(SW4)&& !But_Up) {
 			if(calState == 0){
-				*angOff = 90 - ang;
+				*angOff = 180 - ang;
 			}
 			calState++;
 			ang = 90;
@@ -1307,8 +1288,39 @@ void getS2cal(int Leg, float* angOff, float* Lin) {
 	cmdServoMan(6,2,180.00);
 }
 
+void calibServoSpec(float* calData,int Leg,int Svo) {
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,90.00);
+	cmdServoMan(6,2,180.00);
+		if(Svo == 0) {
+			calData[Leg*2] = 0;
+			calData[Leg*2+1] = 0;
+			getS0cal(Leg,&calData[Leg*2],&calData[Leg*2+1]);
+		}
+		else if(Svo == 1) {
+			calData[Leg*2+12] = 0;
+			calData[Leg*2+13] = 0;
+			getS1cal(Leg,&calData[Leg*2+12],&calData[Leg*2+13]);
+		}
+		else if(Svo == 2) {
+			calData[Leg*2+24] = 0;
+			calData[Leg*2+25] = 0;
+			getS2cal(Leg,&calData[Leg*2+24],&calData[Leg*2+25]);
+		}
+		
+		sendDebugString("Finished servo cal data Follows:\n");
+		char buf[100];
+		sendDebugString("{");
+			for(int i =0; i<18; i++) {
+				sprintf(buf,"%f,%f,",calData[i*2],calData[i*2+1]);
+				sendDebugString(buf);
+			}
+		sendDebugString("}\n");
+}
+
 void calibServos(float* calData) {
 	sendDebugString("Started servo cal\n");
+	for(int i = 0;i<36;i++) calData[i] = 0;
 	for(int i =0; i<6; i++) {
 		byteToLEDs(i>>4,0xF0);
 		cmdServoMan(6,0,90.00);
@@ -1323,13 +1335,13 @@ void calibServos(float* calData) {
 		cmdServoMan(6,2,180.00);
 		getS1cal(i,&calData[i*2+12],&calData[i*2+13]);
 	}
-	//for(int i =0; i<6; i++) {
-	//byteToLEDs(i>>4,0xF0);
-	//cmdServoMan(6,0,90.00);
-	//cmdServoMan(6,1,90.00);
-	//cmdServoMan(6,2,180.00);
-	//getS2cal(i,&calData[i*2+24],&calData[i*2+25]);
-	//}
+	for(int i =0; i<6; i++) {
+	byteToLEDs(i>>4,0xF0);
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,90.00);
+	cmdServoMan(6,2,180.00);
+	getS2cal(i,&calData[i*2+24],&calData[i*2+25]);
+	}
 	sendDebugString("Finished servo cal data Follows:\n");
 	char buf[100];
 	sendDebugString("{");

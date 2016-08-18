@@ -82,6 +82,7 @@ void writeLegOut(int leg, float S0, float S1, float S2);
 //
 void byteToLEDs(uint8_t disp,uint8_t mask);
 void calibServos(float*);
+void calibServoSpec(float* calData,int Leg,int Svo);
 
 //
 #endif /* HEXABOT_H_ */
