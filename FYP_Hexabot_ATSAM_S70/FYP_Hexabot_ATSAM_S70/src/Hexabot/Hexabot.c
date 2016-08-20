@@ -1213,7 +1213,6 @@ void getS0cal(int Leg, float* angOff, float* Lin) {
 	cmdServoMan(6,2,180.00);
 }
 
-
 void getS1cal(int Leg, float* angOff, float* Lin) {
 	int calState = 0;
 	float ang = 90;
