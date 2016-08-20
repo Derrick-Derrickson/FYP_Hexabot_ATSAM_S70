@@ -1077,10 +1077,10 @@ void SetupCameraRAW() {
 	while(!(afec_get_interrupt_status(AFEC1) & (1<<AFEC_CHANNEL_0)));
 
 	uint16_t convRes = afec_channel_get_value(AFEC1,AFEC_CHANNEL_0) - 0x7f0;
-	return (3.3*convRes/4095.00)*((140.00+960.00)/105.00);}//frame dump (Mem dump)void dumpFrame(int dumpLoc) {	isi_dma_channel_disable(ISI,1);
+	return (3.3*convRes/4095.00)*((140.00+960.00)/105.00);}//frame dump (Mem dump)void dumpFrame(int dumpLoc) {	isi_dma_channel_disable(ISI,1);
 	sendDebugString("IMG:");
 	volatile uint8_t* imgData = (uint8_t*)(dumpLoc);
-	for(int i=0;i<320*240*2;i++){
+	for(int i=0;i<320*240*2;i++) {
 		while(!uart_is_tx_ready(UART4));
 		uart_write(UART4,imgData[i]);
 	}

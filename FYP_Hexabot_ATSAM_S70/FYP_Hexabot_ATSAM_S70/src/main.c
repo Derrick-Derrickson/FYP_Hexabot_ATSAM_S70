@@ -154,6 +154,11 @@ void LegControlTask (void* pvParameters) {
 			Gait0(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
 			break;
 			
+			case 1:
+			Gait1(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
+			break;
+			
+			
 		}
 		  
 		  writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
