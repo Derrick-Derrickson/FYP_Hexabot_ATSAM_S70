@@ -31,16 +31,21 @@ void Gait0( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 	
 }
 
+//Second gait function
+//Shannon its pretty
+
 void Gait1( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 	float grad = 2.00 * 6.00/5.00 * hexabot_walk->stride;
 	float grad2 = 2.00 * 6.00/1.00 * hexabot_walk->stride;
-	//calculate the cycling offset
+	
 	for(int i = 0; i < 6 i++) {
+		//calculate the cycling offset
 		ofst[i] = (float)((hexabot_walk->i + i*hexabot_walk->Hexabot_leg_cycle_t/6) % hexabot_walk->Hexabot_leg_cycle_t);
+		//Calculate X and Z locations
 		xzS[i] = (ofst[i] < ((hexabot_walk->Hexabot_leg_cycle_t)5.00/6.00)) ? 
 		calcRotation(hexabot_walk->stance,( -(hexabot_walk->stride) + grad*ofst[i] ) , hexabot_walk->stance, 0, hexabot_walk->movDir,!(i%2),hexabot_walk->movTurn) :
-		calcRotation(hexabot_walk->stance,( (hexabot_walk->stride) - grad2*ofst[i] ) , hexabot_walk->stance, 0, hexabot_walk->movDir,!(i%2),hexabot_walk->movTurn);
+		calcRotation(hexabot_walk->stance,( (hexabot_walk->stride) - grad2*(ofst[i) - 5.00/6.00*hexabot_walk->Hexabot_leg_cycle_t) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,!(i%2),hexabot_walk->movTurn);
+		//Calcuate the required angles for XZ posistions!
 		Ang[i] = legAngCalc(xzS[i].X,  (ofst[i] < ((hexabot_walk->Hexabot_leg_cycle_t)5.00/6.00))?hexabot_walk->hgt:(hexabot_walk->hgt-hexabot_walk->pup),xzS[i].Z);
 	}
-	
 }
