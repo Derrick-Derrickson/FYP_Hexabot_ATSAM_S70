@@ -13,5 +13,6 @@
 
 void Gait0( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk);
 
+void Gait1( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk);
 
 #endif /* GAIT_H_ */
