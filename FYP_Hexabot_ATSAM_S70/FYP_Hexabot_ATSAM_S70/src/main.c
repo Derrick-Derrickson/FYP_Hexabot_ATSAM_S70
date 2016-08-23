@@ -158,7 +158,9 @@ void LegControlTask (void* pvParameters) {
 			Gait1(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
 			break;
 			
-			
+			case 99:
+			standUp(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
+			break;
 		}
 		  
 		  writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
@@ -195,6 +197,7 @@ void LegControlTask (void* pvParameters) {
 		  writeLegOut(4,Ang[4].S1,Ang[4].S2,Ang[4].S3);
 		  writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
 		  hexabot_walk.ret = 0;
+		  hexabot_walk.gaitIndex = 0;
 		}
 			hexabot_walk.i = 0;
 			//return to idle state (legs in middle) 
@@ -253,9 +256,16 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
 			
 			else if(!strcmp(BaseCmd,"svoCalSpec")) calibServoSpec(SvoCal,atoi(strtok(NULL," ")),atoi(strtok(NULL," ")));
+			
 			//walk patern settings
 			
 			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
+			
+			else if(!strcmp(BaseCmd,"StandUp\n")) {
+				hexabot_walk.gaitIndex = 99;
+				hexabot_walk.i =0;
+				hexabot_walk.max_i = 250;
+			}
 			
 			else if(!strcmp(BaseCmd,"gaitTurn")){
 				hexabot_walk.movTurn = atoi(strtok(NULL," "));

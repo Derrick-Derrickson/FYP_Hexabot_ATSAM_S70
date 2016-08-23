@@ -5,7 +5,34 @@
 *  Author: to300
 */
 #include "Gait.h"
+#define STAND_UP_START_HGT -75
+#define STAND_UP_TIME 250.00
+//Stand up
+void standUp( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
+	xzS[0] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,1,0);
+	xzS[1] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,0,0);
+	xzS[2] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,1,0);
+	xzS[3] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,0,0);
+	xzS[4] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,1,0);
+	xzS[5] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,0,0);
 
+	Ang[0] = legAngCalc(xzS[0].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[0].Z);
+	Ang[1] = legAngCalc(xzS[1].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[1].Z);
+	Ang[2] = legAngCalc(xzS[2].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[2].Z);
+	Ang[3] = legAngCalc(xzS[3].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[3].Z);
+	Ang[4] = legAngCalc(xzS[4].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[4].Z);
+	Ang[5] = legAngCalc(xzS[5].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[5].Z);
+	
+	writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
+	writeLegOut(1,Ang[1].S1,Ang[1].S2,Ang[1].S3);
+	writeLegOut(2,Ang[2].S1,Ang[2].S2,Ang[2].S3);
+	writeLegOut(3,Ang[3].S1,Ang[3].S2,Ang[3].S3);
+	writeLegOut(4,Ang[4].S1,Ang[4].S2,Ang[4].S3);
+	writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
+}
+
+
+//default, sinusoid based paten
 void Gait0( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 
 	ofst[0] = ((float)hexabot_walk->i+(0*(hexabot_walk->Hexabot_leg_cycle_t/6)))/(hexabot_walk->Hexabot_leg_cycle_t)*2.0*M_PI;
@@ -38,14 +65,150 @@ void Gait1( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 	float grad = 2.00 * 6.00/5.00 * hexabot_walk->stride;
 	float grad2 = 2.00 * 6.00/1.00 * hexabot_walk->stride;
 	
-	for(int i = 0; i < 6 i++) {
+	for(int i = 0; i < 6; i++) {
 		//calculate the cycling offset
 		ofst[i] = (float)((hexabot_walk->i + i*hexabot_walk->Hexabot_leg_cycle_t/6) % hexabot_walk->Hexabot_leg_cycle_t);
 		//Calculate X and Z locations
-		xzS[i] = (ofst[i] < ((hexabot_walk->Hexabot_leg_cycle_t)5.00/6.00)) ? 
+		xzS[i] = (ofst[i] < ((hexabot_walk->Hexabot_leg_cycle_t)*5.00/6.00)) ? 
 		calcRotation(hexabot_walk->stance,( -(hexabot_walk->stride) + grad*ofst[i] ) , hexabot_walk->stance, 0, hexabot_walk->movDir,!(i%2),hexabot_walk->movTurn) :
-		calcRotation(hexabot_walk->stance,( (hexabot_walk->stride) - grad2*(ofst[i) - 5.00/6.00*hexabot_walk->Hexabot_leg_cycle_t) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,!(i%2),hexabot_walk->movTurn);
+		calcRotation(hexabot_walk->stance,( ((hexabot_walk->stride) - grad2*(ofst[i]) - 5.00/6.00*hexabot_walk->Hexabot_leg_cycle_t) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,!(i%2),hexabot_walk->movTurn);
 		//Calcuate the required angles for XZ posistions!
-		Ang[i] = legAngCalc(xzS[i].X,  (ofst[i] < ((hexabot_walk->Hexabot_leg_cycle_t)5.00/6.00))?hexabot_walk->hgt:(hexabot_walk->hgt-hexabot_walk->pup),xzS[i].Z);
+		Ang[i] = legAngCalc(xzS[i].X,  (ofst[i] < ((hexabot_walk->Hexabot_leg_cycle_t)*5.00/6.00))?hexabot_walk->hgt:(hexabot_walk->hgt-hexabot_walk->pup),xzS[i].Z);
 	}
 }
+
+/* Naked lady because why not?
+                             . ...
+                         .''.' .    '.
+                    . '' ".'.:I:.'..  '.
+                  .'.:.:..,,:II:'.'.'.. '.
+                .':.'.:.:I:.:II:'.'.'.'.. '.
+              .'.'.'.'::.:.:.:I:'.'.'.'. .  '
+             ..'.'.'.:.:I::.:II:.'..'.'..    .
+            ..'.'':.:.::.:.::II::.'.'.'.'..   .
+           ..'.'.'.:.::. .:::II:..'.'.'.'.'.   .
+          .':.''.':'.'.'.:.:I:'.'.'.'.'.. '..  ..
+          ':. '.':'. ..:.::.::.:.'..'  ':.'.'.. ..
+         .:.:.':'.   '.:':I:.:.. .'.'.  ': .'.. . ..
+         '..:.:'.   .:.II:.:..   . .:.'. '.. '. .  ..
+        .. :.:.'.  .:.:I:.:. .  . ..:..:. :..':. .  '.
+       .:. :.:.   .:.:I:.:. .    . ..:I::. :: ::  .. ..
+       .. :'.'.:. .:.:I:'.        ..:.:I:. :: ::.   . '.
+       '..:. .:.. .:II:'         ,,;IIIH.  ::. ':.      .
+      .:.::'.:::..:.AII;,      .::",,  :I .::. ':.       .
+      :..:'.:II:.:I:  ,,;'   ' .;:FBT"X:: ..:.. ':.    . .
+     .. :':III:. :.:A"PBF;.  . .P,IP;;":: :I:..'::. .    ..
+     . .:.:II: A.'.';,PP:" .  . ..'..' .: :.::. ':...  . ..
+     . .: .:IIIH:.   ' '.' .  ... .    .:. :.:.. :...    .'
+     . .I.::I:IIA.        ..   ...    ..::.'.'.'.: ..  . .
+      .:II.'.':IA:.      ..    ..:.  . .:.: .''.'  ..  . .
+     ..::I:,'.'::A:.  . .:'-, .-.:..  .:.::AA.. ..:.' .. .
+      ':II:I:.  ':A:. ..:'   ''.. . : ..:::AHI: ..:..'.'.
+     .':III.::.   'II:.:.,,;;;:::::". .:::AHV:: .::'' ..
+     ..":IIHI::. .  "I:..":;,,,,;;". . .:AII:: :.:'  . .
+     . . IIHHI:..'.'.'V::. ":;;;"   ...:AIIV:'.:.'  .. .
+      . . :IIHI:. .:.:.V:.   ' ' . ...:HI:' .:: :. .  ..
+      . .  ':IHII:: ::.IA..      .. .A .,,:::' .:.    .
+      :.  ...'I:I:.: .,AHHA, . .'..AHIV::' . .  :     ..
+      :. '.::::II:.I:.HIHHIHHHHHIHHIHV:'..:. .I.':. ..  '.
+   . . .. '':::I:'.::IHHHHHHHHMHMHIHI. '.'.:IHI..  '  '  '.
+    ':... .  ''" .::'.HMHI:HHHHMHHIHI. :IIHHII:. . . .    .
+     :.:.. . ..::.' .IV".:I:IIIHIHHIH. .:IHI::'.': '..  .  .
+   . .:.:: .. ::'.'.'..':.::I:I:IHHHIA.'.II.:...:' .' ... . '..
+  '..::::' ...::'.IIHII:: .:.:..:..:III:.'::' .'    .    ..  . .
+  '::.:' .''     .. :IIHI:.:.. ..: . .:I:"' ...:.:.  ..    .. ..
+     .:..::I:.  . . . .IHII:.:'   .. ..".::.:II:.:. .  ...   . ..
+  .. . .::.:.,,...-::II:.:'    . ...... . .. .:II:.::  ...  .. ..
+   ..:.::.I .    . . .. .:. .... ...:.. . . ..:.::.   :..   . ..
+    .'.::I:.      . .. ..:.... . ..... .. . ..::. .. .I:. ..' .
+  .'':.: I.       . .. ..:.. .  . .. ..... .:. .:.. .:I.'.''..
+  . .:::I:.       . . .. .:. .    .. ..  . ... .:.'.'I'  .  ...
+  . ::.:I:..     . . . ....:. . .   .... ..   .:...:.:.:. ''.''
+  '.'::'I:.       . .. ....:. .     .. . ..  ..'  .'.:..:..    '
+        :. .     . .. .. .:.... .  .  .... ...   .  .:.:.:..    '.
+        :.      .  . . .. .:.... . . ........       .:.:.::. .    .
+        :. .     . . . . .. .::..:  . ..:.. .        ::.:.:.. .    .
+        :.. .    . . .  . .. ..:.:  .. .. .:. ..     ':::.::.:. .   .
+        ':.. .  . . . .. .. ...::' .. ..  . .:. .     V:I:::::.. .   :.
+         ::. .  . .. .. ... .:.::  .. .  . .. .. .     VI:I:::::..   ''B
+          :.. .   . .. ..:.. ..I:... . .  . .. ... .    VII:I:I:::. .'::
+          ':.. . . . .. ..:..:.:I:.:. .  . .. . .:. .    VHIII:I::.:..':
+           ::..   . . .. ..:..:.HI:. .      . . .... .   :HHIHIII:I::..:
+           ':. .  . .. .. ..:.:.:HI:.    . . .. ..... .   HHHHIHII:I::.'
+            :.. .  . . .. .:.:.:.HI:.      . . .. ... .   IHHHHIHHIHI:'
+             :..  .  . . .. ..:..IH:.     . . .. .. ,,, . 'HHHHHHHHI:'
+             ':..   . . .. ..:.:.:HI..   .  . .. . :::::.  MIH:"""'
+              :. . .  . .. ..::.:.VI:.     . . .. .:::'::. HIH
+               :..  .  . .. .:.:.:.V:.    . . . ...::I"A:. HHV
+                :. .  .  . .. ..:.:.V:.     . . ....::I::'.HV:
+                 :. .  . . . .. .:..II:.  . . . ....':::' AV.'
+                  :.. . . .. ... .:..VI:. . . .. .:. ..:.AV'.
+                  ':.. . .  .. ..:.:.:HAI:.:...:.:.:.:.AII:.
+                   I:. .  .. ... .:.:.VHHII:..:.:..:A:'.:..
+                   IA..  . . .. ..:.:.:VHHHHIHIHHIHI:'.::.
+                   'HA:.  . . .. ..:.:.:HHHIHIHHHIHI:..:.
+                    HIA: .  . . .. ...:.VHHHIHIIHI::.:...
+                    HIHI:. .  .. ... .::.HHHIIHIIHI:::..
+                    HII:.:.  .  .. ... .::VHHIHI:I::.:..
+                    AI:..:..  .  . .. ..:.VHIII:I::.:. .
+                   AI:. ..:..  .  . .. ..' VHIII:I;... .
+                  AI:. .  .:.. .  .  . ...  VHIII::... .
+                .A:. .      :.. .  . .. .:.. VHII::..  .
+               A:. . .       ::. .. .. . .:.. "VHI::.. .
+             .:.. .  .        :.. .:..... .::.. VHI:..
+            ... . .  .     . . :.:. ..:. . .::.. VI:..  .
+           .. .. .  .    . . ...:... . .. . .:::. V:..  .
+          '.. ..  .   .  .. ..:::.... .:. . ..::.. V..  .
+        . . .. . .   . . .. ..:::A. ..:. . . .::.. :..
+       . .. .. .. . .  . ... ..::IA.. .. . .  ..::. :..  .
+      .. .. ... . .  .. .... .:.::IA. . .. . ..:.::. :.  .
+     . . . .. .   . . .. ..:..:.::IIA. . .  .. .:.::. :. .
+    .. . .  .   . . .. ... ..:.::I:IHA. .  . . ..:.::. . .
+   .: ..  .  .   . . ... .:.. .:I:IIHHA. .  . .. .::I:. .
+  .::.  .     . . .. ..:. .::.:IIHIIHHHA.  .  .. ..:I:. . .
+  A::..      .  .  ...:..:.::I:IHIHIHHHHA.  .  . ..::I:. .
+ :HI:.. .       . .. .:.:.::I:IHIHIIHIHHHA. .   .. .::I:. ..
+ AI:.. .. .    . .. .:.:.::II:IHIIIHIHIHHHA.  .  . ..::I:. ..
+:HI:.. . .   .  . .. .::.:I:IHIHIIIHIHIIHHHA..  . .. .::I:. ..
+AI:.:.. .  .  .  ... .::.::I:IHIIHIHIHIHIHIHHA. .  . ..::I:. .
+HI:. .. . .  .  . .. .:..::IIHIHIHIIIIWHIIHHMWA.  . . .:::I:. . .
+HI:.. . .  .   . .. ..:.::I:IIHHIIHIHIHIHHMMW"  '.. . ..:::II: . .
+HI::.. .  .   .  .. .:..:::IIHIHIIWIWIIWMWW" .    .. . ..::III: .  .
+HI::... . . .  . ... ..:.:::IIHIWIWIWMWMWW. .  .   . .. .:.:III. .   .
+II::.:.. . .  .  .. ......:..IHWHIWWMWMW".. . . . . '... .:.:IHI:..    .
+II:I::.. .  .   .  . .....::.:IHWMWWWMW:.. .  .  . .  .:..:::IIHII..
+:II:.:.:.. .  .   . ......:.:.:IWWMWWW:.:.. .  .  .  . :...:.:IHHI:..
+ HI::.:. . . .  .  . ...:.::.::.VWMWW::.:.:.. .  . .. . :.. ..:IHHI::.'-
+ HII::.:.. .  .  . .. .:..:.'.  'WWWI::.::.:.. . .  . .. ':...:II:IIII::
+ III::.:... .  .  . ...:.:... .   WII:I::.:.. .  .  .. . . :.:::...::.::
+  VII::.:.. . . . .. ...:....      VHI:I::.:.. .  . ... .. .::.:..:.:..:
+   VII::.:.. . .  . ..:.::.. .     :HHII:I::.:.. . . .. ..  .'::':......
+   III:I::.. .. . . .. .:.:.. .    :VHIHI:I::.:... . . .. .. .':. .. .AH
+  AA:II:I::.. . . .  .. ..:.. . .  ::HHIHII:I::.:... .. .. ... .:.::AHHH
+ AHH:I:I::.:.. .  . .. ..:.:.. .   ::VHHHVHI:I::.:.:.. ..:. .::.A:.AHHHM
+ HHHAII:I::.:.. . . . .. ..:.. . . :::HIHIHIHII:I::.:.. .. .:. ..AHHMMM:
+AHHHH:II:I::.:.. . . .. ..:.:.. . .:I:MMIHHHIHII:I:::.:. ..:.:.AHHHMMM:M
+HHHHHA:II:I::.. .. . . .. .:... . .:IIVMMMHIHHHIHII:I::. . .. AHHMMMM:MH
+HHHHHHA:I:I:::.. . . . ... ..:.. ..:IHIVMMHHHHIHHHIHI:I::. . AHMMMMM:HHH
+HHHHHMM:I::.:.. . . . .. ...:.:...:IIHHIMMHHHII:.:IHII::.  AHMMMMMM:HHHH
+HHHHHMMA:I:.:.:.. . . . .. ..:.:..:IIHHIMMMHHII:...:::.:.AHMMMMMMM:HHHHH
+HHHHHMMMA:I::... . . . . .. ..:.::.:IHHHIMMMHI:.:.. .::AHMMMMMMM:HHHHHHH
+VHHHHMMMMA:I::.. . .  . . .. .:.::I:IHHHIMMMMHI:.. . AHMMMMMMMM:HHHHHHHH
+ HHHMMMMMM:I:.:.. . .  . . ...:.:IIHIHHHIMMMMMHI:.AHMMMMMMMMM:HHHHHHHHHH
+ HHHHMMMMMA:I:.:.. .  .  . .. .:IIHIHHHHIMMMMMH:AMMMMMMMMMMM:HHHHHHHHHHH
+ VHHHMMMMMMA:I:::.:. . . . .. .:IHIHHHHHIMMMV"AMMMMMMMMMMMM:HHHHHHHHHHHH
+  HHHHHMMMMMA:I::.. .. .  . ...:.:IHHHHHHIM"AMMMMMMMMMMMM:HHHHHHHHHHHHHH
+  VHHHHHMMMMMA:I:.:.. . . .  .. .:IHIHHHHI:AMMMMMMMMMMMIHHHHHHHHHHHHHHHH
+   VHHHHHMMMMMA:I::.:. . .  .. .:.:IHHHV:MMMMMIMMMMMMMMMMMMMHHHHHHHHV::.
+    VHHHHMMMMMMA:::.:..:.. . .. .:::AMMMMMMMM:IIIIIHHHHHHHHHHHHHHHV:::..
+     HHHHHMMMIIIA:I::.:.:..:... AMMMMMMMMMM:IIIIIIHHHHHHHHHHHHHHHV::::::
+     VHHHHMMIIIIMA:I::::.::..AMMMMMMMMMMM:IIIIIIIHHHHHHHHHHHHHHV::::::::
+      HHHHMIIIIMMMA:II:I::AIIIMMMMMMMMMM:IIIIIIIHHHHHHHHHHHHHHV:::::::::
+      VHHHHIIIMMMMMMA:I:AIIIIIIMMMMMM:IIIIIIIIHHHHHHHHHHHHHHV::::::::"'
+       HHHHHIIMMMMMMIMAAIIIIIIIIMMM:IIIIIIIIHHHHHHHHHHHHHHHV:::::""'
+       VHHHIIIIMMMMIIIIIIIIIIIIII:IIIIIIIIHHHHHHHHHHHHHHHV::""'
+        VHHIIIMMMMMIIIIIIIIIIIIIIIIIIIIIHHHHHHHHHHHHHHHV
+         VHHIMMMMMMMIIIIIIIIIIIIIIIIIHHHHHHHHHHHHHV
+          VHHHMMMMMMMMIIIIIIIIIIIHHHHHHHHHHHV
+           VHHHMMMMMMMMMMMMMHHHHHHHHHHHHHV
+*/
