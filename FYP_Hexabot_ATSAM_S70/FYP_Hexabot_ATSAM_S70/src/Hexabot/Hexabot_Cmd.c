@@ -201,6 +201,29 @@ void cmdRelaxSvo(int Leg,int Svo) {
 	else relaxServo(Leg,Svo);
 }
 
+void cmdRelaxAll() {
+			//SvoA
+			relaxServo(0,0);
+			relaxServo(1,0);
+			relaxServo(2,0);
+			relaxServo(3,0);
+			relaxServo(4,0);
+			relaxServo(5,0);
+			//SvoB
+			relaxServo(0,1);
+			relaxServo(1,1);
+			relaxServo(2,1);
+			relaxServo(3,1);
+			relaxServo(4,1);
+			relaxServo(5,1);
+			//SvoC
+			relaxServo(0,2);
+			relaxServo(1,2);
+			relaxServo(2,2);
+			relaxServo(3,2);
+			relaxServo(4,2);
+			relaxServo(5,2);
+}
 
 
 

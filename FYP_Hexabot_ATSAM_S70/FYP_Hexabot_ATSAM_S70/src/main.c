@@ -256,6 +256,7 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
 			
 			else if(!strcmp(BaseCmd,"svoCalSpec")) calibServoSpec(SvoCal,atoi(strtok(NULL," ")),atoi(strtok(NULL," ")));
+<<<<<<< HEAD
 			
 			//walk patern settings
 			
@@ -267,6 +268,13 @@ void CLItask(void* pvParameters) {
 				hexabot_walk.max_i = 250;
 			}
 			
+=======
+			
+			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
+			
+			else if(!strcmp(BaseCmd,"relaxAll\n")) cmdRelaxAll();
+			//walk patern settings
+>>>>>>> origin/master
 			else if(!strcmp(BaseCmd,"gaitTurn")){
 				hexabot_walk.movTurn = atoi(strtok(NULL," "));
 				hexabot_walk.ret = 1;
@@ -301,7 +309,7 @@ void CLItask(void* pvParameters) {
 				else pio_clear(PIOA,PIO_PA26);
 			}
 			
-			
+			else sendDebugString("ERROR: Command not found\n");
 			
 			sendDebugString("FYP_Hexabot_ATSAMS70_MELLATRON9000>");
 			memset(CLIbuf,0,100);
