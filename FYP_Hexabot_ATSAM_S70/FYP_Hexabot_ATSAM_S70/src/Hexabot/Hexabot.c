@@ -307,6 +307,8 @@ void WriteServo(int Leg,int svo,float angle)
 	
 	angle = angle - SvoCal[svo*12+2*Leg];
 	
+	if(svo == 2) angle = 180-angle;
+	
 	uint16_t stop = (int)lroundf( (4095.00/(20.00))*(1 + (angle/180.00)) );
 	//sendDebugString(buf);	
 	

@@ -256,7 +256,6 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
 			
 			else if(!strcmp(BaseCmd,"svoCalSpec")) calibServoSpec(SvoCal,atoi(strtok(NULL," ")),atoi(strtok(NULL," ")));
-<<<<<<< HEAD
 			
 			//walk patern settings
 			
@@ -266,15 +265,13 @@ void CLItask(void* pvParameters) {
 				hexabot_walk.gaitIndex = 99;
 				hexabot_walk.i =0;
 				hexabot_walk.max_i = 250;
+				hexabot_walk.Walk_EN = 1;
 			}
-			
-=======
 			
 			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
 			
 			else if(!strcmp(BaseCmd,"relaxAll\n")) cmdRelaxAll();
 			//walk patern settings
->>>>>>> origin/master
 			else if(!strcmp(BaseCmd,"gaitTurn")){
 				hexabot_walk.movTurn = atoi(strtok(NULL," "));
 				hexabot_walk.ret = 1;
@@ -301,7 +298,7 @@ void CLItask(void* pvParameters) {
 			}
 			else if(!strcmp(BaseCmd,"gaitStyle")){
 				hexabot_walk.gaitIndex = atoi(strtok(NULL," "));
-				hexabot_walk.ret = 1;
+				//hexabot_walk.ret = 1;
 			}
 			
 			else if(!strcmp(BaseCmd,"svoinhib")) {
