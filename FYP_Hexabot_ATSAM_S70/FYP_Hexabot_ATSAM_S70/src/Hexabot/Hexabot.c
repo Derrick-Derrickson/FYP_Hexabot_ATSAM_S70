@@ -307,7 +307,9 @@ void WriteServo(int Leg,int svo,float angle)
 	
 	angle = angle - SvoCal[svo*12+2*Leg];
 	
-	uint16_t stop = (uint16_t)lroundf( (4095.00/(20.00))*(0.550 + 1.900(angle/180.00)) );
+	if(svo == 2) angle = 180-angle;
+	
+	uint16_t stop = (uint16_t)lroundf( (4095.00/(20.00))*(0.550 + 1.900*(angle/180.00)) );
 	//sendDebugString(buf);	
 	
 	i2cWriteReg(addrData[0],addrData[1],0x00);
@@ -1095,8 +1097,9 @@ void SetupCameraRAW() {
 	out.Z = inX*sin((opside==1)?-rotAng:rotAng) + inZ*cos((opside==1)?-rotAng:rotAng);
 	
 	out.X = out.X + cenX;
-	if(opside ==0 && turn != 0) out.Z = cenZ + (  out.Z*(1-abs(turn)) + (turn)*(inZ+cenZ)  );
-	if(opside ==1 && turn != 0) out.Z = cenZ + (  out.Z*(1-abs(turn)) - (turn)*(inZ+cenZ)  );
+	if(opside == 0 && turn != 0) out.Z = cenZ + (  out.Z*(1-abs(turn)) + (turn)*(inZ+cenZ)  );
+	if(opside == 1 && turn != 0) out.Z = cenZ + (  out.Z*(1-abs(turn)) - (turn)*(inZ+cenZ)  );
+	if(opside == 1) out.Z = -out.Z;
 	return out;
 }
 
@@ -1179,6 +1182,11 @@ void getS0cal(int Leg, float* angOff, float* Lin) {
 	int calState = 0;
 	float ang = 90;
 	extern int But_Up;
+	
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,0.00);
+	cmdServoMan(6,2,90.00);
+	
 	while(!(!pio_get(SW4) &&  calState >= 1 && !But_Up)) {
 		
 		if(!pio_get(SW4)&& !But_Up) {
@@ -1186,7 +1194,7 @@ void getS0cal(int Leg, float* angOff, float* Lin) {
 				*angOff = 90 - ang;
 			}
 			calState++;
-			ang = 45;
+			ang = 90;
 			But_Up = 1;
 		}
 		
@@ -1216,16 +1224,21 @@ void getS0cal(int Leg, float* angOff, float* Lin) {
 
 void getS1cal(int Leg, float* angOff, float* Lin) {
 	int calState = 0;
-	float ang = 90;
+	float ang = 0;
 	extern int But_Up;
+	
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,0.00);
+	cmdServoMan(6,2,90.00);
+	
 	while(!(!pio_get(SW4) &&  calState >= 1 && !But_Up)) {
 		
 		if(!pio_get(SW4)&& !But_Up) {
 			if(calState == 0){
-				*angOff = 90 - ang;
+				*angOff = 0 - ang;
 			}
 			calState++;
-			ang = 45;
+			ang = 0;
 			But_Up = 1;
 		}
 		
@@ -1247,19 +1260,24 @@ void getS1cal(int Leg, float* angOff, float* Lin) {
 	But_Up = 1;
 	*Lin = (*angOff+ang)/45.00;
 	cmdServoMan(6,0,90.00);
-	cmdServoMan(6,1,90.00);
-	cmdServoMan(6,2,180.00);
+	cmdServoMan(6,1,0.00);
+	cmdServoMan(6,2,90.00);
 }
 
 void getS2cal(int Leg, float* angOff, float* Lin) {
 	int calState = 0;
-	float ang = 180;
+	float ang = 90;
 	extern int But_Up;
+	
+	cmdServoMan(6,0,90.00);
+	cmdServoMan(6,1,0.00);
+	cmdServoMan(6,2,90.00);
+	
 	while(!(!pio_get(SW4) &&  calState >= 1 && !But_Up)) {
 		
 		if(!pio_get(SW4)&& !But_Up) {
 			if(calState == 0){
-				*angOff = 180 - ang;
+				*angOff = 90 - ang;
 			}
 			calState++;
 			ang = 90;
@@ -1284,14 +1302,12 @@ void getS2cal(int Leg, float* angOff, float* Lin) {
 	But_Up = 1;
 	*Lin = (*angOff+ang)/90.00;
 	cmdServoMan(6,0,90.00);
-	cmdServoMan(6,1,90.00);
-	cmdServoMan(6,2,180.00);
+	cmdServoMan(6,1,0.00);
+	cmdServoMan(6,2,90.00);
 }
 
 void calibServoSpec(float* calData,int Leg,int Svo) {
-	cmdServoMan(6,0,90.00);
-	cmdServoMan(6,1,90.00);
-	cmdServoMan(6,2,180.00);
+
 		if(Svo == 0) {
 			calData[Leg*2] = 0;
 			calData[Leg*2+1] = 0;
