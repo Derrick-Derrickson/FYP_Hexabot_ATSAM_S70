@@ -65,7 +65,6 @@ int cam_dif_tsh = 25;
 //button up varuable
 int But_Up = 0;
 //Servo calibration array
-float SvoCal[] = {-42.999725,0.044451,0.999985,1.022222,-14.399780,0.680005,11.099831,1.246663,9.799850,1.217775,-13.299797,0.704449,15.799759,1.351106,-11.599823,0.742226,-9.199860,0.795559,-3.399948,0.924446,-23.599640,0.475564,7.199890,1.159998,-6.800415,0.924440,1.200073,1.013334,31.501923,1.350021,1.600098,1.017779,-30.401855,0.662202,2.000122,1.022224};
 ;
 
 //semaphores!
@@ -82,6 +81,7 @@ int main (void)
 	//SvoCal = (float*)malloc(sizeof(float)*2*18);
 	
 	//for(int i = 0;i<36;i++) SvoCal[i] = 0;
+	for(int i = 0;i<36;i++) SvoCal[i] = 0;
 	
 	sendDebugString("RTOS TASK INITIALIZATION - STARTED\n");
 	
@@ -267,14 +267,14 @@ void CLItask(void* pvParameters) {
 				hexabot_walk.i =0;
 				hexabot_walk.max_i = 250;
 			}
-			
 =======
-			
+	
 			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
 			
 			else if(!strcmp(BaseCmd,"relaxAll\n")) cmdRelaxAll();
 			//walk patern settings
 >>>>>>> origin/master
+			
 			else if(!strcmp(BaseCmd,"gaitTurn")){
 				hexabot_walk.movTurn = atoi(strtok(NULL," "));
 				hexabot_walk.ret = 1;
