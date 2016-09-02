@@ -5,7 +5,7 @@
 *  Author: to300
 */
 #include "Gait.h"
-#define STAND_UP_START_HGT -75
+#define STAND_UP_START_HGT 75
 #define STAND_UP_TIME 250.00
 //Stand up
 void standUp( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
@@ -16,12 +16,12 @@ void standUp( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 	xzS[4] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,1,0);
 	xzS[5] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,0,0);
 
-	Ang[0] = legAngCalc(xzS[0].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[0].Z);
-	Ang[1] = legAngCalc(xzS[1].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[1].Z);
-	Ang[2] = legAngCalc(xzS[2].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[2].Z);
-	Ang[3] = legAngCalc(xzS[3].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[3].Z);
-	Ang[4] = legAngCalc(xzS[4].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[4].Z);
-	Ang[5] = legAngCalc(xzS[5].X, STAND_UP_START_HGT+(hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[5].Z);
+	Ang[0] = legAngCalc(xzS[0].X, STAND_UP_START_HGT+(-hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[0].Z);
+	Ang[1] = legAngCalc(xzS[1].X, STAND_UP_START_HGT+(-hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[1].Z);
+	Ang[2] = legAngCalc(xzS[2].X, STAND_UP_START_HGT+(-hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[2].Z);
+	Ang[3] = legAngCalc(xzS[3].X, STAND_UP_START_HGT+(-hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[3].Z);
+	Ang[4] = legAngCalc(xzS[4].X, STAND_UP_START_HGT+(-hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[4].Z);
+	Ang[5] = legAngCalc(xzS[5].X, STAND_UP_START_HGT+(-hexabot_walk->hgt-STAND_UP_START_HGT)*((float)hexabot_walk->i/STAND_UP_TIME) ,xzS[5].Z);
 	
 	writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
 	writeLegOut(1,Ang[1].S1,Ang[1].S2,Ang[1].S3);
