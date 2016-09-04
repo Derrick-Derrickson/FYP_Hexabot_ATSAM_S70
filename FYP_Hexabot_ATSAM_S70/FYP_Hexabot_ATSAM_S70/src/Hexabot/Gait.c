@@ -5,8 +5,7 @@
 *  Author: to300
 */
 #include "Gait.h"
-#define STAND_UP_START_HGT 75
-#define STAND_UP_TIME 30.00
+
 //Stand up
 void standUp( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 	xzS[0] = calcRotation(hexabot_walk->stance, 0, hexabot_walk->stance, 0, 0,1,0);
@@ -98,6 +97,27 @@ void Gait1( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 		}
 		else {
 			xzS[i] = calcRotation((float)hexabot_walk->stance,( ((float)(hexabot_walk->stride) - (float)(grad2*(ofst[i] - 5.00/6.00))) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,(i%2 == 0)?0:1,hexabot_walk->movTurn);
+			Ang[i] = legAngCalc(xzS[i].X,(-hexabot_walk->hgt+hexabot_walk->pup),xzS[i].Z);
+		}
+		//Calcuate the required angles for XZ posistions!
+	}
+}
+
+void Gait2( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
+	float grad = (float)(2.00 * 2.00 * (double)((*hexabot_walk).stride));
+	float grad2 = (float)(2.00 * 2.00 * (double)((*hexabot_walk).stride));
+	
+	for(int i = 0; i < 6; i++) {
+		//calculate the cycling offset
+		ofst[i] = fmod( (float)(hexabot_walk->i + ((i == 0 || i== 3 || i ==4)?((float)hexabot_walk->Hexabot_leg_cycle_t/2.00):0)), ((float)hexabot_walk->Hexabot_leg_cycle_t))/(float)hexabot_walk->Hexabot_leg_cycle_t;
+		//Calculate X and Z locations
+		
+		if( ofst[i] < (3.00/6.00) ) {
+			xzS[i] = calcRotation((float)hexabot_walk->stance,  ( -(float)(hexabot_walk->stride) + (float)(grad*ofst[i]) )  , hexabot_walk->stance, 0, hexabot_walk->movDir,(i%2 == 0)?0:1,hexabot_walk->movTurn);
+			Ang[i] = legAngCalc(xzS[i].X,-hexabot_walk->hgt,xzS[i].Z);
+		}
+		else {
+			xzS[i] = calcRotation((float)hexabot_walk->stance,( ((float)(hexabot_walk->stride) - (float)(grad2*(ofst[i] - 3.00/6.00))) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,(i%2 == 0)?0:1,hexabot_walk->movTurn);
 			Ang[i] = legAngCalc(xzS[i].X,(-hexabot_walk->hgt+hexabot_walk->pup),xzS[i].Z);
 		}
 		//Calcuate the required angles for XZ posistions!

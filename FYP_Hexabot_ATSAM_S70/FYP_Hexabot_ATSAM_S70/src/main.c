@@ -65,7 +65,8 @@ int cam_dif_tsh = 25;
 //button up varuable
 int But_Up = 0;
 //Servo calibration array
-float SvoCal[] = {-4.399933,1.902224,-6.699898,1.851113,4.299934,2.095554,7.499886,2.166664,-7.599884,1.831114,0.000000,2.000000,-2.400001,-0.053333,1.400000,0.031111,2.800001,0.062222,-1.700000,-0.037778,-2.200001,-0.048889,-2.800000,-0.062222,-8.999863,0.900002,1.599976,1.017778,-12.299812,0.863335,-17.199738,0.808892,-11.799820,0.868891,-10.599838,0.882224};
+float SvoCal[] = {-9.999847,1.777781,-6.699898,1.851113,4.299934,2.095554,7.499886,2.166664,-7.599884,1.831114,0.000000,2.000000,-2.400001,-0.053333,1.400000,0.031111,2.800001,0.062222,-1.700000,-0.037778,-2.200001,-0.048889,-2.800000,-0.062222,-8.999863,0.900002,1.599976,1.017778,-12.299812,0.863335,-17.199738,0.808892,-11.799820,0.868891,-10.599838,0.882224};
+
 
 
 //semaphores!
@@ -115,7 +116,7 @@ void vTask1 (void* pvParameters) {
 	for(;;) {
 				if(tg) {
 					pio_set(LED0);
-					if(getBatVoltage() < 6.05) {
+					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25) {
 						sendDebugString("********************\n");
 						sendDebugString("********************\n");
 						sendDebugString("WARNING: BAT VOLT AT CRITICAL LEVELS\n");
@@ -138,7 +139,7 @@ void vTask1 (void* pvParameters) {
 				}
 				else {
 					pio_clear(LED0);	
-					if(getBatVoltage() < 7.450) {
+					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25) {
 						pio_clear(LED0);
 						pio_clear(LED1);
 						pio_clear(LED2);
@@ -163,10 +164,10 @@ void LegControlTask (void* pvParameters) {
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
-	hexabot_walk.stance = 45;
-	hexabot_walk.hgt = 70;
+	hexabot_walk.stance = 180;
+	hexabot_walk.hgt = 75;
 	hexabot_walk.pup = 40;
-	hexabot_walk.stride = 12;
+	hexabot_walk.stride = 25;
 	hexabot_walk.Walk_EN = 0;
 	hexabot_walk.Hexabot_leg_cycle_t = 150;
 	hexabot_walk.ret = 0;
@@ -190,6 +191,10 @@ void LegControlTask (void* pvParameters) {
 			
 			case 1:
 			Gait1(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
+			break;
+			
+			case 2:
+			Gait2(ofst,xzS,Ang,(walk_data*) &hexabot_walk);
 			break;
 			
 			case 98:
@@ -222,12 +227,12 @@ void LegControlTask (void* pvParameters) {
 		  xzS[4] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,1,0);
 		  xzS[5] = calcRotation(hexabot_walk.stance, 0, hexabot_walk.stance, 0, 0,0,0);
 
-		  Ang[0] = legAngCalc(xzS[0].X,  hexabot_walk.hgt  ,xzS[0].Z);
-		  Ang[1] = legAngCalc(xzS[1].X,  hexabot_walk.hgt  ,xzS[1].Z);
-		  Ang[2] = legAngCalc(xzS[2].X,  hexabot_walk.hgt  ,xzS[2].Z);
-		  Ang[3] = legAngCalc(xzS[3].X,  hexabot_walk.hgt  ,xzS[3].Z);
-		  Ang[4] = legAngCalc(xzS[4].X,  hexabot_walk.hgt  ,xzS[4].Z);
-		  Ang[5] = legAngCalc(xzS[5].X,  hexabot_walk.hgt  ,xzS[5].Z);
+		  Ang[0] = legAngCalc(xzS[0].X,  -hexabot_walk.hgt  ,xzS[0].Z);
+		  Ang[1] = legAngCalc(xzS[1].X,  -hexabot_walk.hgt  ,xzS[1].Z);
+		  Ang[2] = legAngCalc(xzS[2].X,  -hexabot_walk.hgt  ,xzS[2].Z);
+		  Ang[3] = legAngCalc(xzS[3].X,  -hexabot_walk.hgt  ,xzS[3].Z);
+		  Ang[4] = legAngCalc(xzS[4].X,  -hexabot_walk.hgt  ,xzS[4].Z);
+		  Ang[5] = legAngCalc(xzS[5].X,  -hexabot_walk.hgt  ,xzS[5].Z);
 		  
 		  writeLegOut(0,Ang[0].S1,Ang[0].S2,Ang[0].S3);
 		  writeLegOut(1,Ang[1].S1,Ang[1].S2,Ang[1].S3);
@@ -243,7 +248,7 @@ void LegControlTask (void* pvParameters) {
 			//return to idle state (legs in middle) 
 		}
 		pio_clear(LED7);
-		  vTaskDelay(30);
+		  vTaskDelay(5);
 	}
 }
 
@@ -303,7 +308,7 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"StandUp\n")) {
 				hexabot_walk.gaitIndex = 99;
 				hexabot_walk.i =0;
-				hexabot_walk.max_i = 30;
+				hexabot_walk.max_i = STAND_UP_TIME;
 				hexabot_walk.Walk_EN = 1;
 				resting = 0;
 			}
@@ -311,7 +316,7 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"SitDown\n")) {
 				hexabot_walk.gaitIndex = 98;
 				hexabot_walk.i =0;
-				hexabot_walk.max_i = 30;
+				hexabot_walk.max_i = STAND_UP_TIME;
 				hexabot_walk.Walk_EN = 1;
 				resting = 1;
 				
@@ -321,11 +326,11 @@ void CLItask(void* pvParameters) {
 			//walk patern settings
 			
 			else if(!strcmp(BaseCmd,"gaitTurn")){
-				hexabot_walk.movTurn = atoi(strtok(NULL," "));
+				hexabot_walk.movTurn = atoff(strtok(NULL," "));
 				hexabot_walk.ret = 1;
 			}
 			else if(!strcmp(BaseCmd,"gaitDir")){
-				hexabot_walk.movDir = atoi(strtok(NULL," "));
+				hexabot_walk.movDir = atoff(strtok(NULL," "));
 				hexabot_walk.ret = 1;
 			}
 			else if(!strcmp(BaseCmd,"gaitStance")){

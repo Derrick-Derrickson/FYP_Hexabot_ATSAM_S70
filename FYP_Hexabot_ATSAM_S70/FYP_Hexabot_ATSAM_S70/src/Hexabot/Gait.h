@@ -10,10 +10,14 @@
 #define GAIT_H_
 #include "Hexabot/Hexabot.h"
 #include "Hexabot/Hexabot_Cmd.h"
+#define STAND_UP_START_HGT 75
+#define STAND_UP_TIME 100.00
 
 void Gait0( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk);
 
 void Gait1( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk);
+
+void Gait2( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk);
 
 void standUp( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk);
 

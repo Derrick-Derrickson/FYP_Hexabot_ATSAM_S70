@@ -225,7 +225,8 @@ void ServoDriverInit(int ServoAddr) {
 	delay_ms(1);
 	i2cWriteReg(ServoAddr,0x00,0x01<<4);
 	delay_ms(2);
-	i2cWriteReg(ServoAddr,0xFE,0x80);
+	//The following line was changed from a reg value of 0x80 to 0x1E, resulting in a longest pulse of 5ms from 20ms
+	i2cWriteReg(ServoAddr,0xFE,0x1E);
 	delay_ms(2);
 	i2cWriteReg(ServoAddr,0x00,0x00);
 	
@@ -309,7 +310,7 @@ void WriteServo(int Leg,int svo,float angle)
 	
 	if(svo == 2) angle = 180-angle;
 	
-	uint16_t stop = (uint16_t)lroundf( (4095.00/(20.00))*(0.550 + 1.900*(angle/180.00)) );
+	uint16_t stop = (uint16_t)lroundf( (4095.00/(5.00))*(0.550 + 1.900*(angle/180.00)) );
 	//sendDebugString(buf);	
 	
 	i2cWriteReg(addrData[0],addrData[1],0x00);
@@ -1109,7 +1110,29 @@ int sign(float in) {
 }
 
 angles legAngCalc(float x, float y, float z) {
-	float G = sqrt(x*x + z*z);
+	
+	/*
+	
+	angles Ang;
+	
+	float legLen = (sqrt(x*x+z*z));
+	float HF = sqrt(pow(legLen-C,2) + y*y);
+	float A1 = 180*atan2((legLen-C),y)/M_PI;
+	float A2 = 180*acos( (A*A - B*B - HF*HF)/(-2*B*A) )/M_PI;
+	Ang.S2 = 90.00 - (A1+A2);
+	float B1 = 180*acos( (HF*HF - B*B - A*A) / (-2*A*B)  )/M_PI;
+	Ang.S3 = 90.00 -B1;
+	Ang.S1 = 180*atan2(z,x)/M_PI;
+	
+	Ang.S1 = Ang.S1 + 90;
+	Ang.S2 = Ang.S2;
+	Ang.S3 = Ang.S3 + 90;
+	
+	*/
+	
+	//Begin old code
+	
+	float G = sqrt(x*x + z*z) - C;
 	float H = sqrt(y*y+G*G);
 	float b = acos((A*A + H*H - B*B)/(2*A*H));
 	

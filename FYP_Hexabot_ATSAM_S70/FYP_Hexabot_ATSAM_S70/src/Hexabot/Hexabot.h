@@ -20,8 +20,9 @@
 #define CAM_FRAME_DIF_ADDR  BOARD_SDRAM_ADDR+320*240*2*8
 
 
-#define A 65
-#define B 106
+#define A 120.00
+#define B 65.00
+#define C 70.00
 #define HEXABOT_LEG_CYCLE_T 50
 
 typedef struct walk_data_s {
