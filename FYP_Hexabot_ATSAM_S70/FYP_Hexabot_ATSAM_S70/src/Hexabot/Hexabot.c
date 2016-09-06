@@ -1418,3 +1418,15 @@ void byteToLEDs(uint8_t disp,uint8_t mask) {
 	else if(mask&(1<<7)) pio_clear(LED7);
 	
 }
+
+void surprise() {
+	WriteServo(2,0,120);
+	WriteServo(3,0,60);
+	WriteServo(4,0,60);
+	WriteServo(5,0,120);
+	WriteServo(0,1,30);
+	WriteServo(1,1,30);
+	WriteServo(0,0,170);
+	WriteServo(1,0,10);
+	
+}

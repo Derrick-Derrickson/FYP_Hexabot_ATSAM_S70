@@ -86,4 +86,5 @@ void calibServos(float*);
 void calibServoSpec(float* calData,int Leg,int Svo);
 
 //
+void surprise();
 #endif /* HEXABOT_H_ */

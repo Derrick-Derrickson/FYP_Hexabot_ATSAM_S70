@@ -164,8 +164,8 @@ void LegControlTask (void* pvParameters) {
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
-	hexabot_walk.stance = 180;
-	hexabot_walk.hgt = 75;
+	hexabot_walk.stance = 160;
+	hexabot_walk.hgt = 120;
 	hexabot_walk.pup = 40;
 	hexabot_walk.stride = 25;
 	hexabot_walk.Walk_EN = 0;
@@ -301,8 +301,10 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"svoCal\n")) calibServos(SvoCal);
 			
 			else if(!strcmp(BaseCmd,"svoCalSpec")) calibServoSpec(SvoCal,atoi(strtok(NULL," ")),atoi(strtok(NULL," ")));
-			//walk patern settings
 			
+			else if(!strcmp(BaseCmd,"surprise\n")) surprise();
+			
+			//walk patern settings
 			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
 			
 			else if(!strcmp(BaseCmd,"StandUp\n")) {
