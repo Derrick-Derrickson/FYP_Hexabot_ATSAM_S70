@@ -19535,8 +19535,8 @@ void LegControlTask (void* pvParameters) {
   406bec:	601a      	str	r2, [r3, #0]
 	hexabot_walk.movDir = 0;
   406bee:	605a      	str	r2, [r3, #4]
-	hexabot_walk.stance = 160;
-  406bf0:	22a0      	movs	r2, #160	; 0xa0
+	hexabot_walk.stance = 157;
+  406bf0:	229d      	movs	r2, #157	; 0x9d
   406bf2:	609a      	str	r2, [r3, #8]
 	hexabot_walk.hgt = 40;
   406bf4:	2228      	movs	r2, #40	; 0x28
@@ -19549,13 +19549,13 @@ void LegControlTask (void* pvParameters) {
 	hexabot_walk.Walk_EN = 0;
   406bfe:	2400      	movs	r4, #0
   406c00:	61dc      	str	r4, [r3, #28]
-	hexabot_walk.Hexabot_leg_cycle_t = 150;
-  406c02:	2296      	movs	r2, #150	; 0x96
+	hexabot_walk.Hexabot_leg_cycle_t = 60;
+  406c02:	223c      	movs	r2, #60	; 0x3c
   406c04:	619a      	str	r2, [r3, #24]
 	hexabot_walk.ret = 0;
   406c06:	629c      	str	r4, [r3, #40]	; 0x28
-	hexabot_walk.gaitIndex = 1;
-  406c08:	2701      	movs	r7, #1
+	hexabot_walk.gaitIndex = 2;
+  406c08:	2702      	movs	r7, #2
   406c0a:	62df      	str	r7, [r3, #44]	; 0x2c
 	
 	cmdServoMan(6,0,90.00);
@@ -19566,12 +19566,12 @@ void LegControlTask (void* pvParameters) {
   406c14:	47a8      	blx	r5
 	cmdServoMan(6,1,0.00);
   406c16:	2006      	movs	r0, #6
-  406c18:	4639      	mov	r1, r7
+  406c18:	2101      	movs	r1, #1
   406c1a:	4622      	mov	r2, r4
   406c1c:	47a8      	blx	r5
 	cmdServoMan(6,2,90.00);
   406c1e:	2006      	movs	r0, #6
-  406c20:	2102      	movs	r1, #2
+  406c20:	4639      	mov	r1, r7
   406c22:	225a      	movs	r2, #90	; 0x5a
   406c24:	47a8      	blx	r5
 		
@@ -19974,12 +19974,12 @@ void LegControlTask (void* pvParameters) {
   406f6a:	4b0a      	ldr	r3, [pc, #40]	; (406f94 <LegControlTask+0x3b8>)
   406f6c:	2200      	movs	r2, #0
   406f6e:	629a      	str	r2, [r3, #40]	; 0x28
-		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 1;
+		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 2;
   406f70:	6adb      	ldr	r3, [r3, #44]	; 0x2c
   406f72:	3b62      	subs	r3, #98	; 0x62
   406f74:	2b01      	cmp	r3, #1
   406f76:	d802      	bhi.n	406f7e <LegControlTask+0x3a2>
-  406f78:	2201      	movs	r2, #1
+  406f78:	2202      	movs	r2, #2
   406f7a:	4b06      	ldr	r3, [pc, #24]	; (406f94 <LegControlTask+0x3b8>)
   406f7c:	62da      	str	r2, [r3, #44]	; 0x2c
 		}

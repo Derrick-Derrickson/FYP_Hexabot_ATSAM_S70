@@ -164,14 +164,14 @@ void LegControlTask (void* pvParameters) {
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
-	hexabot_walk.stance = 160;
+	hexabot_walk.stance = 157;
 	hexabot_walk.hgt = 40;
 	hexabot_walk.pup = 40;
 	hexabot_walk.stride = 25;
 	hexabot_walk.Walk_EN = 0;
-	hexabot_walk.Hexabot_leg_cycle_t = 150;
+	hexabot_walk.Hexabot_leg_cycle_t = 60;
 	hexabot_walk.ret = 0;
-	hexabot_walk.gaitIndex = 1;
+	hexabot_walk.gaitIndex = 2;
 	
 	cmdServoMan(6,0,90.00);
 	cmdServoMan(6,1,0.00);
@@ -242,7 +242,7 @@ void LegControlTask (void* pvParameters) {
 		  writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
 				}
 		  hexabot_walk.ret = 0;
-		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 1;
+		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 2;
 		}
 			hexabot_walk.i = 0;
 			//return to idle state (legs in middle) 
