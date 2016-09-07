@@ -165,7 +165,7 @@ void LegControlTask (void* pvParameters) {
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
 	hexabot_walk.stance = 160;
-	hexabot_walk.hgt = 120;
+	hexabot_walk.hgt = 40;
 	hexabot_walk.pup = 40;
 	hexabot_walk.stride = 25;
 	hexabot_walk.Walk_EN = 0;
