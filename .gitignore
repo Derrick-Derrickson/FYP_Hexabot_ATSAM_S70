@@ -7,3 +7,8 @@ FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/FYP_Hexabot_ATSAM_S70.elf
 *.lss
 FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/FYP_Hexabot_ATSAM_S70.map
 *.srec
+FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/FYP_Hexabot_ATSAM_S70.lss
+*.lss
+FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/FYP_Hexabot_ATSAM_S70.map
+*.srec
+FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/src/main.o
