@@ -97,7 +97,7 @@ void Gait1( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 		}
 		else {
 			xzS[i] = calcRotation((float)hexabot_walk->stance,( ((float)(hexabot_walk->stride) - (float)(grad2*(ofst[i] - 5.00/6.00))) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,(i%2 == 0)?0:1,hexabot_walk->movTurn);
-			Ang[i] = legAngCalc(xzS[i].X, (-hexabot_walk->hgt+hexabot_walk->pup*sin((ofst[i] - 5.00/6.00)*6*M_PI)) ,xzS[i].Z);
+			Ang[i] = legAngCalc(xzS[i].X,(-hexabot_walk->hgt+hexabot_walk->pup),xzS[i].Z);
 		}
 		//Calcuate the required angles for XZ posistions!
 	}
@@ -118,7 +118,7 @@ void Gait2( float* ofst,XZ* xzS,angles* Ang, walk_data* hexabot_walk) {
 		}
 		else {
 			xzS[i] = calcRotation((float)hexabot_walk->stance,( ((float)(hexabot_walk->stride) - (float)(grad2*(ofst[i] - 3.00/6.00))) ) , hexabot_walk->stance, 0, hexabot_walk->movDir,(i%2 == 0)?0:1,hexabot_walk->movTurn);
-			Ang[i] = legAngCalc(xzS[i].X,(-hexabot_walk->hgt+hexabot_walk->pup*sin((ofst[i] - 3.00/6.00)*2*M_PI)),xzS[i].Z);
+			Ang[i] = legAngCalc(xzS[i].X,(-hexabot_walk->hgt+hexabot_walk->pup),xzS[i].Z);
 		}
 		//Calcuate the required angles for XZ posistions!
 	}

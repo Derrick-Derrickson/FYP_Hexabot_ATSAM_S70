@@ -65,7 +65,7 @@ int cam_dif_tsh = 25;
 //button up varuable
 int But_Up = 0;
 //Servo calibration array
-float SvoCal[] = {-10.399841,1.768892,-0.599991,1.986667,-13.799789,1.693338,-11.899818,1.735560,-0.599991,1.986667,4.199936,2.093332,0.400000,0.008889,-4.499998,-0.100000,-3.699999,-0.082222,-6.199996,-0.137778,-1.500000,-0.033333,-0.500000,-0.011111,11.999817,1.133331,-6.499901,0.927779,-1.999969,0.977778,-2.699959,0.970000,-8.999863,0.900002,-7.899879,0.912224};
+float SvoCal[] = {-9.999847,1.777781,-6.699898,1.851113,4.299934,2.095554,7.499886,2.166664,-7.599884,1.831114,0.000000,2.000000,-2.400001,-0.053333,1.400000,0.031111,2.800001,0.062222,-1.700000,-0.037778,-2.200001,-0.048889,-2.800000,-0.062222,-8.999863,0.900002,1.599976,1.017778,-12.299812,0.863335,-17.199738,0.808892,-11.799820,0.868891,-10.599838,0.882224};
 
 
 
@@ -164,14 +164,14 @@ void LegControlTask (void* pvParameters) {
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
-	hexabot_walk.stance = 157;
-	hexabot_walk.hgt = 40;
+	hexabot_walk.stance = 160;
+	hexabot_walk.hgt = 120;
 	hexabot_walk.pup = 40;
 	hexabot_walk.stride = 25;
 	hexabot_walk.Walk_EN = 0;
-	hexabot_walk.Hexabot_leg_cycle_t = 60;
+	hexabot_walk.Hexabot_leg_cycle_t = 150;
 	hexabot_walk.ret = 0;
-	hexabot_walk.gaitIndex = 2;
+	hexabot_walk.gaitIndex = 1;
 	
 	cmdServoMan(6,0,90.00);
 	cmdServoMan(6,1,0.00);
@@ -242,7 +242,7 @@ void LegControlTask (void* pvParameters) {
 		  writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
 				}
 		  hexabot_walk.ret = 0;
-		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 2;
+		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 1;
 		}
 			hexabot_walk.i = 0;
 			//return to idle state (legs in middle) 

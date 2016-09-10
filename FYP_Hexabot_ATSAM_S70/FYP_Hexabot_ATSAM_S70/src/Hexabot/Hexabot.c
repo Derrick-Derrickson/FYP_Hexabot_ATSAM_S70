@@ -1430,3 +1430,45 @@ void surprise() {
 	WriteServo(1,0,10);
 	
 }
+
+void cmdInterp(uint8_t* cmd,walk_data* hexabot_walk) {
+	//types of packets
+		// ID	Description
+		// 00	Reserved
+		// 01	Run console command on hexabot
+		// 02	update Full walking data set
+		// 03	update critical walking data set
+		
+	//walk data contains:
+		//float movTurn; - floating point number between -1 and 1 with 0 being "straight"					
+		//float movDir; - floaing point number, in radients, of the direction the hexabot should move in
+		//int stance; - distance from servo 0 axis, outwards in a perpendicular fassion
+		//int hgt; - the height the hexabot body is above the ground
+		//int pup; - the ammount the legs lift off the ground while walking
+		//int stride; - the distance the leg endpoints move backwards and forward
+		//int Hexabot_leg_cycle_t; - the period, in units of 5ms, that a full cycle is compleated
+		//int Walk_EN; - weather or not walking is enabled
+		//int max_i; - the maximum ammount that the i variable is allowed to reach
+		//int i; - the current value of i, dont change this unless starting a new walk
+		//int ret; - weather or not to return after compleation dont touch
+		//int gaitIndex; - the gait Index, recomended value of 2
+	
+	//packet structure (03):
+		// Byte Description
+		// 00	ID
+		// 01	movTurn float part 0
+		// 02	movTurn float part 1
+		// 03	movTurn float part 2
+		// 04	movDir  float part 0
+		// 05	movDir  float part 1
+		// 06	movDir  float part 2
+		// 07	hexabot_leg_cycle_t byte 0
+		// 08	hexabot_leg_cycle_t byte 1
+		// 09	hexabot_leg_cycle_t byte 2
+		// 10	hexabot_leg_cycle_t byte 3
+		// 11	max_i addition amount byte 0
+		// 12	max_i addition amount byte 1
+		// 13	max_i addition amount byte 2
+		// 14	max_i addition amount byte 3
+		
+}
