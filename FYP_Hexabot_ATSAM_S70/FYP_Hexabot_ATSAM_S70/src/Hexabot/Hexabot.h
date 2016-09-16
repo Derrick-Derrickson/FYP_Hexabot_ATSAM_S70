@@ -85,6 +85,8 @@ void byteToLEDs(uint8_t disp,uint8_t mask);
 void calibServos(float*);
 void calibServoSpec(float* calData,int Leg,int Svo);
 
+void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk);
+
 //
 void surprise();
 #endif /* HEXABOT_H_ */

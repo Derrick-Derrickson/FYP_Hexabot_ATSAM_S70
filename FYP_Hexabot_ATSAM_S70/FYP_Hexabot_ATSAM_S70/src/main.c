@@ -65,8 +65,11 @@ int cam_dif_tsh = 25;
 //button up varuable
 int But_Up = 0;
 //Servo calibration array
-float SvoCal[] = {-9.999847,1.777781,-6.699898,1.851113,4.299934,2.095554,7.499886,2.166664,-7.599884,1.831114,0.000000,2.000000,-2.400001,-0.053333,1.400000,0.031111,2.800001,0.062222,-1.700000,-0.037778,-2.200001,-0.048889,-2.800000,-0.062222,-8.999863,0.900002,1.599976,1.017778,-12.299812,0.863335,-17.199738,0.808892,-11.799820,0.868891,-10.599838,0.882224};
+float SvoCal[] = {-14.393074,1.680154,-4.851036,1.892199,-13.799789,1.693338,-11.899818,1.735560,-0.599991,1.986667,4.199936,2.093332,0.400000,0.008889,-4.499998,-0.100000,-3.699999,-0.082222,-6.199996,-0.137778,-1.500000,-0.033333,-0.500000,-0.011111,11.999817,1.133331,-1.580338,0.982441,-1.999969,0.977778,-0.860184,0.990442,-7.371574,0.918094,-7.899879,0.912224};
 
+int UART_Ctrl_EN = 0;
+int UART_Ctrl_Cnt = 0;
+int UART_Ctrl_Max = 0;
 
 
 //semaphores!
@@ -112,11 +115,16 @@ void vTask1 (void* pvParameters) {
 	char buf[20];
 	pio_set(LED0);
 	int testCountFail = 0;
+	
+	int batLowCount = 0;
+	
 	sendDebugString("TASK1 INITIALIZATION - FINISHED | ENTERING INFINITE LOOP\n");
 	for(;;) {
 				if(tg) {
 					pio_set(LED0);
-					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25) {
+					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25)  batLowCount++;
+					else batLowCount = 0;
+					if(batLowCount > 10) {
 						sendDebugString("********************\n");
 						sendDebugString("********************\n");
 						sendDebugString("WARNING: BAT VOLT AT CRITICAL LEVELS\n");
@@ -164,14 +172,14 @@ void LegControlTask (void* pvParameters) {
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
-	hexabot_walk.stance = 160;
-	hexabot_walk.hgt = 120;
-	hexabot_walk.pup = 40;
-	hexabot_walk.stride = 25;
+	hexabot_walk.stance = 185;
+	hexabot_walk.hgt = 100;
+	hexabot_walk.pup = 80;
+	hexabot_walk.stride = 65;
 	hexabot_walk.Walk_EN = 0;
 	hexabot_walk.Hexabot_leg_cycle_t = 150;
 	hexabot_walk.ret = 0;
-	hexabot_walk.gaitIndex = 1;
+	hexabot_walk.gaitIndex = 2;
 	
 	cmdServoMan(6,0,90.00);
 	cmdServoMan(6,1,0.00);
@@ -242,7 +250,7 @@ void LegControlTask (void* pvParameters) {
 		  writeLegOut(5,Ang[5].S1,Ang[5].S2,Ang[5].S3);
 				}
 		  hexabot_walk.ret = 0;
-		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 1;
+		  if(hexabot_walk.gaitIndex == 99 || hexabot_walk.gaitIndex == 98) hexabot_walk.gaitIndex = 2;
 		}
 			hexabot_walk.i = 0;
 			//return to idle state (legs in middle) 
@@ -270,6 +278,13 @@ void CLItask(void* pvParameters) {
 			//sendDebugString(CLIbuf);
 			BaseCmd = strtok(CLIbuf," ");
 			
+			if(UART_Ctrl_EN) {
+				UART_Ctrl_EN = 0;
+				UART_Ctrl_Cnt = 0;
+				pio_clear(LED6);
+				cmdInterp(CLIbuf,UART_Ctrl_Max,&hexabot_walk);
+			}
+			else { 
 			if(!strcmp(BaseCmd,"led")) cmdLED( atoi(strtok(NULL," "))  , atoi(strtok(NULL," ")) );
 			
 			else if(!strcmp(BaseCmd,"manusvo"))  cmdServoMan(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
@@ -361,9 +376,17 @@ void CLItask(void* pvParameters) {
 				else pio_clear(PIOA,PIO_PA26);
 			}
 			
+			//controller command
+			else if(!strcmp(BaseCmd,"ctrlCmd")) {
+				UART_Ctrl_EN = 1;
+				UART_Ctrl_Max = atoi(strtok(NULL," "));
+				pio_set(LED6);
+			}
+			
 			else sendDebugString("ERROR: Command not found\n");
 			
 			sendDebugString("FYP_Hexabot_ATSAMS70_MELLATRON9000>");
+			}
 			memset(CLIbuf,0,100);
 			//Figure out function, then commit;
 			}
@@ -436,11 +459,21 @@ void ISI_Handler(void) {
 	}
 }
 
+
 void UART4_Handler(void) {
 	uint32_t imr = ISI->ISI_IMR;
 	char temp;
 	uart_read(UART4,&temp);
 	CLIbuf[CLIbufIndex] = temp;
 	CLIbufIndex++;
+	
+	if(UART_Ctrl_EN) {
+		UART_Ctrl_Cnt++;
+		if(UART_Ctrl_Max <= UART_Ctrl_Cnt) {
+			xSemaphoreGiveFromISR(UARTsem,NULL);
+		}
+	}
+	else {
 	if(temp = "\n") xSemaphoreGiveFromISR(UARTsem,NULL);
+	}
 }

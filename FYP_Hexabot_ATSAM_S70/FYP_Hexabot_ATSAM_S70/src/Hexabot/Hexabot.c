@@ -1224,11 +1224,11 @@ void getS0cal(int Leg, float* angOff, float* Lin) {
 		if(pio_get(SW4)) But_Up = 0;
 		
 		if(!pio_get(SW3)) {
-			ang += 0.1;
+			ang += 0.01;
 		}
 		
 		if(!pio_get(SW2)) {
-			ang -= 0.1;
+			ang -= 0.01;
 		}
 		
 		if(calState == 1) pio_set(LED3);
@@ -1268,11 +1268,11 @@ void getS1cal(int Leg, float* angOff, float* Lin) {
 		if(pio_get(SW4)) But_Up = 0;
 		
 		if(!pio_get(SW3)) {
-			ang += 0.1;
+			ang += 0.01;
 		}
 		
 		if(!pio_get(SW2)) {
-			ang -= 0.1;
+			ang -= 0.01;
 		}
 		
 		if(calState == 1) pio_set(LED3);
@@ -1310,11 +1310,11 @@ void getS2cal(int Leg, float* angOff, float* Lin) {
 		if(pio_get(SW4)) But_Up = 0;
 		
 		if(!pio_get(SW3)) {
-			ang += 0.1;
+			ang += 0.01;
 		}
 		
 		if(!pio_get(SW2)) {
-			ang -= 0.1;
+			ang -= 0.01;
 		}
 		
 		if(calState == 1) pio_set(LED3);
@@ -1431,7 +1431,7 @@ void surprise() {
 	
 }
 
-void cmdInterp(uint8_t* cmd,walk_data* hexabot_walk) {
+void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 	//types of packets
 		// ID	Description
 		// 00	Reserved
@@ -1450,7 +1450,7 @@ void cmdInterp(uint8_t* cmd,walk_data* hexabot_walk) {
 		//int Walk_EN; - weather or not walking is enabled
 		//int max_i; - the maximum ammount that the i variable is allowed to reach
 		//int i; - the current value of i, dont change this unless starting a new walk
-		//int ret; - weather or not to return after compleation dont touch
+		//int ret; - weather or not to return after compleation - dont touch
 		//int gaitIndex; - the gait Index, recomended value of 2
 	
 	//packet structure (03):
@@ -1459,16 +1459,107 @@ void cmdInterp(uint8_t* cmd,walk_data* hexabot_walk) {
 		// 01	movTurn float part 0
 		// 02	movTurn float part 1
 		// 03	movTurn float part 2
-		// 04	movDir  float part 0
-		// 05	movDir  float part 1
-		// 06	movDir  float part 2
-		// 07	hexabot_leg_cycle_t byte 0
-		// 08	hexabot_leg_cycle_t byte 1
-		// 09	hexabot_leg_cycle_t byte 2
-		// 10	hexabot_leg_cycle_t byte 3
-		// 11	max_i addition amount byte 0
-		// 12	max_i addition amount byte 1
-		// 13	max_i addition amount byte 2
-		// 14	max_i addition amount byte 3
+		// 04	movTurn float part 3
+		// 05	movDir  float part 0
+		// 06	movDir  float part 1
+		// 07	movDir  float part 2
+		// 08	movDir  float part 3
+		// 09	hexabot_leg_cycle_t byte 0
+		// 10	hexabot_leg_cycle_t byte 1
+		// 11	hexabot_leg_cycle_t byte 2
+		// 12	hexabot_leg_cycle_t byte 3
+		// 13	max_i addition amount byte 0
+		// 14	max_i addition amount byte 1
+		// 15	max_i addition amount byte 2
+		// 16	max_i addition amount byte 3
+		// 17   walk EN
+		// 18	stance byte 0
+		// 19	stance byte 1
+		// 20	stance byte 2
+		// 21	stance byte 3
+		// 22	height byte 0
+		// 23	height byte 1
+		// 24	height byte 2
+		// 25	height byte 3
+		// 26	pull up byte 0
+		// 27	pull up byte 1
+		// 28	pull up byte 2
+		// 29	pull up byte 3
+		// 30	stride byte 0
+		// 31	stride byte 1
+		// 32	stride byte 2
+		// 33	stride byte 3
+	
+	
+	//packet structure (03):
+		// Byte Description
+		// 00	ID
+		// 01	movTurn float part 0
+		// 02	movTurn float part 1
+		// 03	movTurn float part 2
+		// 04	movTurn float part 3
+		// 05	movDir  float part 0
+		// 06	movDir  float part 1
+		// 07	movDir  float part 2
+		// 08	movDir  float part 3
+		// 09	hexabot_leg_cycle_t byte 0
+		// 10	hexabot_leg_cycle_t byte 1
+		// 11	hexabot_leg_cycle_t byte 2
+		// 12	hexabot_leg_cycle_t byte 3
+		// 13	max_i addition amount byte 0
+		// 14	max_i addition amount byte 1
+		// 15	max_i addition amount byte 2
+		// 16	max_i addition amount byte 3
+		// 17   walk EN
+		
+		switch(cmd[0]) {
+		
+		case 00:
+		
+		
+		break;
+		
+		case 01:
+		
+		break;
+		
+		case 02:
+				if(cmdLen != 34) break;
+				//moveTurn
+				hexabot_walk->movTurn = *(float*)(&cmd[1]);
+				//moveDir
+				hexabot_walk->movDir = *(float*)(&cmd[5]);
+				//hexabot cycle time
+				hexabot_walk->Hexabot_leg_cycle_t = cmd[9];
+				//max i addition
+				hexabot_walk->max_i += *(uint32_t*)&cmd[13];
+				//walk EN
+				hexabot_walk->Walk_EN = cmd[17];
+				//stance
+				hexabot_walk->stance = *(uint32_t*)&cmd[18];
+				//height
+				hexabot_walk->hgt = *(uint32_t*)&cmd[22];
+				//pull up
+				hexabot_walk->pup = *(uint32_t*)&cmd[26];
+				//stride
+				hexabot_walk->stride = *(uint32_t*)&cmd[30];
+				
+		break;
+		
+		//Critical walking pattern update
+		case 03:
+				if(cmdLen != 18) break;
+				//moveTurn
+				hexabot_walk->movTurn = *(float*)(&cmd[1]);
+				//moveDir
+				hexabot_walk->movDir = *(float*)(&cmd[5]);
+				//hexabot cycle time
+				hexabot_walk->Hexabot_leg_cycle_t = cmd[9];
+				//max i addition
+				hexabot_walk->max_i += cmd[13];
+				//walk EN
+				hexabot_walk->Walk_EN = cmd[17];
+		break;
+		}
 		
 }
