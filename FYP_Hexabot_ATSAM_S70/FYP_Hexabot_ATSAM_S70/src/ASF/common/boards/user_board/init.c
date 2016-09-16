@@ -65,7 +65,7 @@ void board_init(void)
 	uart_enable(USART_SERIAL);
 	uart_enable_tx(USART_SERIAL);
 	uart_enable_rx(USART_SERIAL);
-	uart_set_clock_divisor(UART4,(83/GLOBAL_SLOWDOWN));
+	uart_set_clock_divisor(UART4,(1000));
 	pmc_enable_periph_clk(ID_PIOD);
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_C,1<<3 | 1<<18);
 	//Test UART

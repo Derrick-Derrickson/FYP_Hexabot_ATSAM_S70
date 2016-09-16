@@ -17,3 +17,10 @@ FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/FYP_Hexabot_ATSAM_S70.map
 FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/src/main.o
 >>>>>>> origin/master
 FYP_Hexabot_ATSAM_S70/.vs/FYP_Hexabot_ATSAM_S70/v14/.atsuo
+*.bin
+*.hex
+FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/FYP_Hexabot_ATSAM_S70.lss
+*.srec
+FYP_Hexabot_ATSAM_S70/FYP_Hexabot_ATSAM_S70/Debug/src/main.o
+FYP_Hexabot_ATSAM_S70/.vs/FYP_Hexabot_ATSAM_S70/v14/.atsuo
+*.bin
