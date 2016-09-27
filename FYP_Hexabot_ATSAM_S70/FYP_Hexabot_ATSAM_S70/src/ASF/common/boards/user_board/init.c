@@ -69,7 +69,7 @@ void board_init(void)
 	pmc_enable_periph_clk(ID_PIOD);
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_C,1<<3 | 1<<18);
 	//Test UART
-	sendDebugString("MELLATRON9000 BOOT SEQUENCE\nUART CONSOLE STARTED ON UART4\nBaudRate: 115200\nBits: 8\nNo stop bits \n");
+	sendDebugString("MELLATRON9000 BOOT SEQUENCE\nUART CONSOLE STARTED ON UART4\nBaudRate: 9600\nBits: 8\nNo stop bits \n");
 	
 	
 	

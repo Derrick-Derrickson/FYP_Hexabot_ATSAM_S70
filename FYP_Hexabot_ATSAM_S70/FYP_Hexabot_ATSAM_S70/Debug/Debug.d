@@ -167,7 +167,8 @@ Debug.d Debug.o: .././Debug.c .././Debug.h ../src/asf.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\assert.h \
- ../src/ASF/sam/utils/fpu/fpu.h ../src/ASF/sam/drivers/sdramc/sdramc.h \
+ ../src/ASF/sam/drivers/rstc/rstc.h ../src/ASF/sam/utils/fpu/fpu.h \
+ ../src/ASF/sam/drivers/sdramc/sdramc.h \
  ../src/ASF/common/services/sleepmgr/sleepmgr.h \
  ../src/ASF/common/services/sleepmgr/sam/sleepmgr.h \
  ../src/config/conf_sleepmgr.h ../src/ASF/sam/drivers/ebi/smc/smc.h \
@@ -536,6 +537,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\assert.h:
+
+../src/ASF/sam/drivers/rstc/rstc.h:
 
 ../src/ASF/sam/utils/fpu/fpu.h:
 

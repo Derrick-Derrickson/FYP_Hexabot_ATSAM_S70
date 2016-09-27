@@ -1489,6 +1489,7 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 		// 31	stride byte 1
 		// 32	stride byte 2
 		// 33	stride byte 3
+		// 34	return
 	
 	
 	//packet structure (03):
@@ -1516,15 +1517,16 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 		
 		case 00:
 		
-		
 		break;
 		
 		case 01:
-		
+			extern char* BaseCmd;
+			strcpy(BaseCmd,&cmd[1]);
+			xSemaphoreGive(UARTsem);
 		break;
 		
 		case 02:
-				if(cmdLen != 34) break;
+				if(cmdLen != 35) break;
 				//moveTurn
 				hexabot_walk->movTurn = *(float*)(&cmd[1]);
 				//moveDir
@@ -1543,8 +1545,9 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 				hexabot_walk->pup = *(uint32_t*)&cmd[26];
 				//stride
 				hexabot_walk->stride = *(uint32_t*)&cmd[30];
-				
-		break;
+				//retval
+				hexabot_walk->ret = cmd[34];
+				break;
 		
 		//Critical walking pattern update
 		case 03:
