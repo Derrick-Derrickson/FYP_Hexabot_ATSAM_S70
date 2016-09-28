@@ -16,7 +16,7 @@
 #define _DW1000_H_INCLUDED
 
 #include <asf.h>
-#include <math.h>
+#include <arm_math.h>
 
 /****************************************************************************//**
  * @brief Bit definitions for register DEV_ID

@@ -34,6 +34,7 @@
 #include "DW1000.h"
 #include <Hexabot/Hexabot_Cmd.h>
 #include <Hexabot/Gait.h>
+#include <arm_math.h>
 
 #define CAM_DIF_TSH cam_dif_tsh
 
@@ -122,7 +123,7 @@ void vTask1 (void* pvParameters) {
 	for(;;) {
 				if(tg) {
 					pio_set(LED0);
-					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25)  batLowCount++;
+					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25 && !pio_get(PIOD,PIO_INPUT,1<<9))  batLowCount++;
 					else batLowCount = 0;
 					if(batLowCount > 10) {
 						sendDebugString("********************\n");
@@ -299,6 +300,7 @@ void CLItask(void* pvParameters) {
 			
 			else if(!strcmp(BaseCmd,"verbose")) VerboseMode = atoi(strtok(NULL," "));
 			
+			//DWM THINGS
 			else if(!strcmp(BaseCmd,"DWM-test\n")) cmdTestDW1000();
 			
 			else if(!strcmp(BaseCmd,"DWM-send")) cmdDWMsend(strtok(NULL," "));
@@ -306,6 +308,11 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"DWM-orLed\n")) cmdOverrideLEDDWM1000();
 			
 			else if(!strcmp(BaseCmd,"DWM-RWtest")) cmdWriteTestDW1000( strtol(strtok(NULL," "),NULL,16));
+			
+			else if(!strcmp(BaseCmd,"DWM-Init\n")) DW1000_initialise();
+			//END OF DWM THINGS
+			
+			
 			
 			else if(!strcmp(BaseCmd,"camdtsh")) cam_dif_tsh = atoi(strtok(NULL," "));
 			

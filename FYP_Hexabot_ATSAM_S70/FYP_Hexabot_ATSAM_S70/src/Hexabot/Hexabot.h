@@ -10,7 +10,7 @@
 #ifndef HEXABOT_H_
 #define HEXABOT_H_
 #include <asf.h>
-#include <math.h>
+#include <arm_math.h>
 #include "../Debug.h"
 
 #define write_SCCB(X, Y) i2cWriteReg(CAMERA_I2C_ADDR,X,Y)

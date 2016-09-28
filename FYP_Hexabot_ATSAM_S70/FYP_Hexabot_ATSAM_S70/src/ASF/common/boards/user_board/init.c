@@ -23,10 +23,7 @@
 #define USART_SERIAL_BAUDRATE        9600
 #define USART_SERIAL_CHAR_LENGTH     US_MR_CHRL_8_BIT
 #define USART_SERIAL_PARITY          US_MR_PAR_NO
-#define USART_SERIAL_STOP_BIT        US_MR_NBSTOP_1_BIT
-
-
-
+#define USART_SERIAL_STOP_BIT        US_MR_NBSTOP_1_BIT
 
 void board_init(void)
 {
@@ -45,6 +42,8 @@ void board_init(void)
 	 */
 	//enable UART4 as our DEBUG LINE
 	
+	//enable FPU
+	fpu_enable();
 	
 	
 	/* ######################################
@@ -564,7 +563,14 @@ void board_init(void)
 		pio_set_input(PIOC,1<<10,PIO_PULLUP | PIO_DEBOUNCE);
 		pio_set_input(PIOC,1<<9,PIO_PULLUP | PIO_DEBOUNCE);
 		sendDebugString("SWITCH INITIALIZATION - FINISHED\n");
-		
+	/* ######################################
+	   ######################################
+                  Setup USB POWER
+	   ######################################
+	   ###################################### */
+		sendDebugString("SWITCH INITIALIZATION - STARTED\n");
+		pio_set_input(PIOD,1<<9,PIO_PULLUP | PIO_DEBOUNCE);
+		sendDebugString("SWITCH INITIALIZATION - FINISHED\n");
 	/* ######################################
 	   ######################################
                   Setup Interrupts
