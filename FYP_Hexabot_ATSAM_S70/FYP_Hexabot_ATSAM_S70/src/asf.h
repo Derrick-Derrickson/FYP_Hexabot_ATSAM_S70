@@ -108,6 +108,9 @@
 // From module: QSPI - QUAD Serial Peripheral Interface
 #include <qspi.h>
 
+// From module: RSTC - Reset Controller
+#include <rstc.h>
+
 // From module: SAM FPU driver
 #include <fpu.h>
 

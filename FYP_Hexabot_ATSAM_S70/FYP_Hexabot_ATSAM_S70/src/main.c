@@ -173,9 +173,9 @@ void LegControlTask (void* pvParameters) {
 	
 	hexabot_walk.movTurn = 0;
 	hexabot_walk.movDir = 0;
-	hexabot_walk.stance = 185;
-	hexabot_walk.hgt = 100;
-	hexabot_walk.pup = 80;
+	hexabot_walk.stance = 165;
+	hexabot_walk.hgt = 20;
+	hexabot_walk.pup = 85;
 	hexabot_walk.stride = 65;
 	hexabot_walk.Walk_EN = 0;
 	hexabot_walk.Hexabot_leg_cycle_t = 150;
@@ -389,6 +389,8 @@ void CLItask(void* pvParameters) {
 				UART_Ctrl_Max = atoi(strtok(NULL," "));
 				pio_set(LED6);
 			}
+			
+			else if(!strcmp(BaseCmd,"RESET\n")) rstc_start_software_reset(RSTC);
 			
 			else sendDebugString("ERROR: Command not found\n");
 			

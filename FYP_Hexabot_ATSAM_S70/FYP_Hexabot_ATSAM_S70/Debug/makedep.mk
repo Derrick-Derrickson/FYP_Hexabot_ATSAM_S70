@@ -22,6 +22,8 @@ src\ASF\sam\drivers\pio\pio_handler.c
 
 src\ASF\sam\drivers\qspi\qspi.c
 
+src\ASF\sam\drivers\rstc\rstc.c
+
 src\ASF\sam\drivers\sdramc\sdramc.c
 
 src\ASF\sam\drivers\supc\supc.c

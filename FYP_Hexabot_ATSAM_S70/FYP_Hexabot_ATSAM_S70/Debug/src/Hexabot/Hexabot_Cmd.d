@@ -168,7 +168,8 @@ src/Hexabot/Hexabot_Cmd.d src/Hexabot/Hexabot_Cmd.o: \
  ../src/ASF/sam/drivers/pio/pio.h ../src/ASF/sam/drivers/pmc/sleep.h \
  ../src/ASF/sam/drivers/qspi/qspi.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\assert.h \
- ../src/ASF/sam/utils/fpu/fpu.h ../src/ASF/sam/drivers/sdramc/sdramc.h \
+ ../src/ASF/sam/drivers/rstc/rstc.h ../src/ASF/sam/utils/fpu/fpu.h \
+ ../src/ASF/sam/drivers/sdramc/sdramc.h \
  ../src/ASF/common/services/sleepmgr/sleepmgr.h \
  ../src/ASF/common/services/sleepmgr/sam/sleepmgr.h \
  ../src/config/conf_sleepmgr.h ../src/ASF/sam/drivers/ebi/smc/smc.h \
@@ -541,6 +542,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/sam/drivers/qspi/qspi.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\assert.h:
+
+../src/ASF/sam/drivers/rstc/rstc.h:
 
 ../src/ASF/sam/utils/fpu/fpu.h:
 

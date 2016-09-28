@@ -338,7 +338,6 @@ uint64_t DW1000_readReg(uint8_t cmd, int subindex, uint16_t offset, int n) {
 	for (i = n-1; i >= 0; i--) {
 		result = (result << 8) | data[i];
 	}
-
 	return result;
 }
 

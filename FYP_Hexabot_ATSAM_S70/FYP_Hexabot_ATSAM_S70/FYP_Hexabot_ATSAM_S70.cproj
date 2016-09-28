@@ -34,6 +34,7 @@
           <option id="common.services.basic.twihs" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.utils.interrupt" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.acc" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.afec" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.smc" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.isi" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.matrix" value="Add" config="" content-id="Atmel.ASF" />
@@ -47,7 +48,7 @@
           <option id="sam.drivers.usart" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.os.freertos.version" value="Add" config="8.2.3" content-id="Atmel.ASF" />
-          <option id="sam.drivers.afec" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.rstc" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.linker_scripts" value="Add" config="" content-id="Atmel.ASF" />
         </options>
         <configurations>
@@ -278,6 +279,9 @@
           <file path="src/ASF/sam/drivers/qspi/qspi.h" framework="" version="3.30.1" source="sam\drivers\qspi\qspi.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/afec/afec.c" framework="" version="3.30.1" source="sam\drivers\afec\afec.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/afec/afec.h" framework="" version="3.30.1" source="sam\drivers\afec\afec.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/rstc/rstc.c" framework="" version="3.30.1" source="sam\drivers\rstc\rstc.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/rstc/rstc.h" framework="" version="3.30.1" source="sam\drivers\rstc\rstc.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/rstc/example1/rstc_example1.h" framework="" version="3.30.1" source="sam\drivers\rstc\example1\rstc_example1.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.30.1/common.applications.user_application.user_board.sams70q20/html/index.html" />
         <offline-documentation help="" />
@@ -294,7 +298,7 @@
     <com_atmel_avrdbg_tool_atmelice>
       <ToolOptions>
         <InterfaceProperties>
-          <SwdClock>2000000</SwdClock>
+          <SwdClock>10000000</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
@@ -303,7 +307,7 @@
       <ToolName>Atmel-ICE</ToolName>
     </com_atmel_avrdbg_tool_atmelice>
     <avrtoolinterface>SWD</avrtoolinterface>
-    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>10000000</avrtoolinterfaceclock>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -359,6 +363,7 @@
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
       <Value>../src/ASF/sam/drivers/afec</Value>
+      <Value>../src/ASF/sam/drivers/rstc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -416,6 +421,7 @@
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
       <Value>../src/ASF/sam/drivers/afec</Value>
+      <Value>../src/ASF/sam/drivers/rstc</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM7=true -DBOARD=USER_BOARD -Dprintf=iprintf -Dscanf=iscanf -D__FREERTOS__</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -455,6 +461,7 @@
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
       <Value>../src/ASF/sam/drivers/afec</Value>
+      <Value>../src/ASF/sam/drivers/rstc</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -514,6 +521,7 @@
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
       <Value>../src/ASF/sam/drivers/afec</Value>
+      <Value>../src/ASF/sam/drivers/rstc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -572,6 +580,7 @@
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
       <Value>../src/ASF/sam/drivers/afec</Value>
+      <Value>../src/ASF/sam/drivers/rstc</Value>
     </ListValues>
   </armgcc.assembler.general.IncludePaths>
   <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -612,6 +621,7 @@
       <Value>../src/ASF/sam/drivers/ebi/smc</Value>
       <Value>../src/ASF/sam/drivers/qspi</Value>
       <Value>../src/ASF/sam/drivers/afec</Value>
+      <Value>../src/ASF/sam/drivers/rstc</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -647,6 +657,8 @@
     <Folder Include="src\ASF\sam\drivers\pio\" />
     <Folder Include="src\ASF\sam\drivers\pmc\" />
     <Folder Include="src\ASF\sam\drivers\qspi\" />
+    <Folder Include="src\ASF\sam\drivers\rstc\" />
+    <Folder Include="src\ASF\sam\drivers\rstc\example1\" />
     <Folder Include="src\ASF\sam\drivers\sdramc\" />
     <Folder Include="src\ASF\sam\drivers\supc\" />
     <Folder Include="src\ASF\sam\drivers\twihs\" />
@@ -758,6 +770,15 @@
       <SubType>compile</SubType>
     </Compile>
     <None Include="src\ASF\sam\drivers\qspi\qspi.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\sam\drivers\rstc\example1\rstc_example1.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\rstc\rstc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\rstc\rstc.h">
       <SubType>compile</SubType>
     </None>
     <Compile Include="src\ASF\sam\drivers\sdramc\sdramc.c">
