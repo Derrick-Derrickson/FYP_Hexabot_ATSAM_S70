@@ -38,7 +38,9 @@
 
 #define CAM_DIF_TSH cam_dif_tsh
 
-char buf [20];
+char buf [100];
+
+char RXbuf [2000];
 
 //define task functions
 void vTask1 (void*);
@@ -300,6 +302,7 @@ void CLItask(void* pvParameters) {
 			
 			else if(!strcmp(BaseCmd,"verbose")) VerboseMode = atoi(strtok(NULL," "));
 			
+			
 			//DWM THINGS
 			else if(!strcmp(BaseCmd,"DWM-test\n")) cmdTestDW1000();
 			
@@ -310,6 +313,21 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"DWM-RWtest")) cmdWriteTestDW1000( strtol(strtok(NULL," "),NULL,16));
 			
 			else if(!strcmp(BaseCmd,"DWM-Init\n")) DW1000_initialise();
+			
+			else if(!strcmp(BaseCmd,"DWM-LEDinit\n")) DW1000_toggleGPIO_MODE();
+			
+			else if(!strcmp(BaseCmd,"DWM-RXEN\n")) cmdRXen();
+			
+			else if(!strcmp(BaseCmd,"DWM-ReadRX\n")) {
+				
+				int msgLen = cmdDWMreadRX(RXbuf);
+				sprintf(buf,"Length: %d\n",msgLen);
+				sendDebugString(buf);
+				sprintf(buf,"SomeData: %s\n",RXbuf);
+				sendDebugString(buf);
+				
+			}
+			
 			//END OF DWM THINGS
 			
 			

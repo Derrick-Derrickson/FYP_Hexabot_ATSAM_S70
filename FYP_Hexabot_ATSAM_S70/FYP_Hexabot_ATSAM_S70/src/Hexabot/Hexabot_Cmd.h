@@ -33,4 +33,8 @@ void cmdWriteTestDW1000(uint64_t toRW);
 void cmdRelaxSvo(int,int);
 
 void cmdRelaxAll();
+
+void cmdRXen();
+
+int cmdDWMreadRX(char* buffer) ;
 #endif /* HEXABOT_CMD_H_ */

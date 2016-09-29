@@ -155,10 +155,14 @@ void cmdTestDW1000() {
 	DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, 0x000FFFFF, PMSC_LEDC_LEN);
 
 	delay_us(1);
-	sprintf(buf,"TestDevID: 0x%x\n",DW1000_readDeviceIdentifier());
+	sprintf(buf,"TestDevID: 0x%08x\n",DW1000_readDeviceIdentifier());
 	sendDebugString(buf);
 	sendDebugString("\n");
-	sprintf(buf,"SysStatus: 0x%x\n", DW1000_readSystemStatus());
+	sprintf(buf,"SysStatus: 0x%08x\n", DW1000_readSystemStatus());
+	sendDebugString(buf);
+	sendDebugString("\n");
+	
+	sprintf(buf,"RX_status: 0x%08x\n", DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_ID));
 	sendDebugString(buf);
 	sendDebugString("\n");
 	
@@ -167,8 +171,21 @@ void cmdTestDW1000() {
 
 void cmdDWMsend(char* tosend) {
 	DW1000_writeTxBuffer(0,tosend,strlen(tosend));
-	DW1000_setTxFrameControl(strlen(tosend));
+	DW1000_setTxFrameControl( 0x000D0000 | 0x7F&strlen(tosend)  );
 	DW1000_startTx();
+}
+void cmdRXen() {
+	DW1000_writeReg(SYS_CTRL_ID, DW1000_NO_SUB, 0x0, 0x00000100, SYS_CTRL_LEN);
+}
+
+int cmdDWMreadRX(char* buffer) {
+	uint64_t frameInfo = DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_ID);
+	int frameLen = frameInfo&0x7F;
+	int secToRead = frameLen / 4 + 1;
+	for(int i = 0;i<256;i++) {
+	((uint64_t*)buffer)[i] = DW1000_readRxBuffer(i*4,4);	
+	}
+	return frameLen;
 }
 
 void cmdOverrideLEDDWM1000() {

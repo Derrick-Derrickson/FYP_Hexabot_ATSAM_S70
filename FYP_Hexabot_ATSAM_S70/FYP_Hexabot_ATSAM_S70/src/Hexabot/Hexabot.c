@@ -1520,9 +1520,9 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 		break;
 		
 		case 01:
-			extern char* BaseCmd;
-			strcpy(BaseCmd,&cmd[1]);
-			xSemaphoreGive(UARTsem);
+			//extern char* BaseCmd;
+			//strcpy(BaseCmd,&cmd[1]);
+			//xSemaphoreGive(UARTsem);
 		break;
 		
 		case 02:

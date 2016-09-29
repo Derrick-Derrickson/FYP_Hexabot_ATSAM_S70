@@ -58,7 +58,7 @@ void DW1000_initialise2() {
 	
 
 }
-/* My settings (recommended values from DWM1000 User Manual)
+/* My settings (recommended values from User Manual)
  * Channel:				3
  * PRF:					16 MHz
  * Data rate:			110 kbps (changed from 6.8 Mbps)
@@ -75,11 +75,11 @@ void DW1000_initialise() {
 	//delay(5);
 
 	// Channel, preamble, bitrate selection
-	 DW1000_writeReg(CHAN_CTRL_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x29460033, CHAN_CTRL_LEN);
-	// DW1000_writeReg(TX_FCTRL_ID, NO_SUB, NO_OFFSET, 0x0015400C, TX_FCTRL_LEN);
+	 DW1000_writeReg(CHAN_CTRL_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x08440011, CHAN_CTRL_LEN);
+	 //DW1000_writeReg(TX_FCTRL_ID, NO_SUB, NO_OFFSET, 0x0015400C, TX_FCTRL_LEN);
 	 DW1000_writeReg(ACK_RESP_T_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x00000000, ACK_RESP_T_LEN); // changed
 	 DW1000_writeReg(SYS_CFG_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x00441200, SYS_CFG_LEN); // changed
-	 DW1000_writeReg(TX_POWER_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x6F6F6F6F, TX_POWER_LEN);
+	 DW1000_writeReg(TX_POWER_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x75757575, TX_POWER_LEN);
 
 	// Default values that should be modified
 	 DW1000_writeReg(AGC_CTRL_ID, DW1000_SUB, AGC_TUNE1_OFFSET, (AGC_TUNE1_16M & AGC_TUNE1_MASK), AGC_TUNE1_LEN);
@@ -229,8 +229,34 @@ void DW1000_setSystemConfig(uint64_t buffer) {
 }
 
 void DW1000_toggleGPIO_MODE() {
-	 DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET,0x001540, GPIO_MODE_LEN);
-	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, 0x00000120, PMSC_LEDC_LEN);
+    uint32_t led = 0;
+    //read the gio_mode register so we collect any of the reserved bits, not necessary for this one its all 0's  
+    led = DW1000_readReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET, GPIO_MODE_LEN);
+    //write to set up all the gpios as leds plus an extra 4 in the first 5, all the cool kids are doing it
+    DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET,0x5540, GPIO_MODE_LEN);
+   
+    //read the ctrl0 register to get all those reserved bits
+    led = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, PMSC_CTRL0_LEN);
+    led |= (1<<18) | (1<<23); //activate those 2 weird clocks bro
+    //and slam them in there
+    DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, led, PMSC_CTRL0_LEN);
+   
+    //apparently reading this is garbage and just gives whats in ctrl0 the first time so fuck that noise
+    //led = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, PMSC_LEDC_LEN);
+   
+    //enable blinking and set the default blink time
+    led = PMSC_LEDC_BLNKEN | (1<<5);
+   
+    //this makes all the lights blink now
+    led|= 0xf0000;
+    //slam it in
+    DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, led, PMSC_LEDC_LEN);
+   
+    led &= ~0xf0000; //write the same thing without the blink now
+    //and it should be ready to do stuff normally
+    DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, led, PMSC_LEDC_LEN);
+   
+   
 }
  
 void DW1000_setTxFrameControl(long buffer) {
