@@ -180,7 +180,7 @@ void cmdRXen() {
 
 int cmdDWMreadRX(char* buffer) {
 	uint64_t frameInfo = DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_ID);
-	int frameLen = frameInfo&0x7F;
+	int frameLen = frameInfo & 0x7F;
 	int secToRead = frameLen / 4 + 1;
 	for(int i = 0;i<256;i++) {
 	((uint64_t*)buffer)[i] = DW1000_readRxBuffer(i*4,4);	
