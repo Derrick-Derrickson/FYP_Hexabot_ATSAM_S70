@@ -151,18 +151,16 @@ void cmdWalk(int maxi) {
 
 void cmdTestDW1000() {
 	char buf[40];
-	DW1000_toggleGPIO_MODE();
-	DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_LEDC_OFFSET, 0x000FFFFF, PMSC_LEDC_LEN);
-
-	delay_us(1);
+	delay_ms(1);
 	sprintf(buf,"TestDevID: 0x%08x\n",DW1000_readDeviceIdentifier());
 	sendDebugString(buf);
 	sendDebugString("\n");
+	delay_ms(1);
 	sprintf(buf,"SysStatus: 0x%08x\n", DW1000_readSystemStatus());
 	sendDebugString(buf);
 	sendDebugString("\n");
-	
-	sprintf(buf,"RX_status: 0x%08x\n", DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_ID));
+	delay_ms(1);
+	sprintf(buf,"RX_status: 0x%08x\n", DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_LEN));
 	sendDebugString(buf);
 	sendDebugString("\n");
 	
@@ -178,14 +176,19 @@ void cmdRXen() {
 	DW1000_writeReg(SYS_CTRL_ID, DW1000_NO_SUB, 0x0, 0x00000100, SYS_CTRL_LEN);
 }
 
-int cmdDWMreadRX(char* buffer) {
-	uint64_t frameInfo = DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_ID);
+uint64_t cmdDWMreadRX(char* buffer) {
+	char buf[40];
+	uint64_t frameInfo = DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_LEN);
 	int frameLen = frameInfo & 0x7F;
-	int secToRead = frameLen / 4 + 1;
-	for(int i = 0;i<256;i++) {
-	((uint64_t*)buffer)[i] = DW1000_readRxBuffer(i*4,4);	
+	int secToRead = (frameLen&0x7F);
+	sprintf(buf,"Going to read: %d bytes\n",secToRead);
+	sendDebugString(buf);
+	for(int i = 0;i<secToRead;i++) {
+	buffer[i] = DW1000_readReg(RX_BUFFER_ID, DW1000_NO_SUB, i, 1);
+	delay_us(20);
 	}
-	return frameLen;
+	buffer[secToRead] = 0x00;
+	return frameInfo;
 }
 
 void cmdOverrideLEDDWM1000() {

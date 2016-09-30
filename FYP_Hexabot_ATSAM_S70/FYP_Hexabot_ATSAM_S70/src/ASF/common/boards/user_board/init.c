@@ -357,9 +357,7 @@ void board_init(void)
 	   ###################################### */
 
 	sendDebugString("CAMERA INITIALIZATION - STARTED\n");
-	pio_set_output(PIOD,PIO_PD10,LOW,DISABLE,DISABLE);
-	pio_set(PIOD,PIO_PD10);
-	delay_ms(10);
+	
 	//pio_clear(PIOD,PIO_PD10);
 	pio_set_peripheral(PIOD,PIO_TYPE_PIO_PERIPH_D,
 	1<<22	|
@@ -471,6 +469,8 @@ void board_init(void)
 	   ###################################### */
 	
 		sendDebugString("QSPI INITIALIZATION - STARTED\n");
+		
+		
 	    struct qspi_config_t qspiConf;
 	    qspiConf.serial_memory_mode = 0;
 	    qspiConf.loopback_en = 0;
@@ -478,7 +478,7 @@ void board_init(void)
 	    qspiConf.csmode = 0;
 	    qspiConf.bits_per_transfer = QSPI_MR_NBBITS_8_BIT;
 	    qspiConf.baudrate = 16000000;
-		qspiConf.min_delay_qcs = 4;
+		qspiConf.min_delay_qcs = 5;
 		qspiConf.delay_between_ct = 10;
 		qspiConf.clock_polarity = 0;
 		qspiConf.clock_phase = 0;
@@ -513,6 +513,11 @@ void board_init(void)
 		delay_ms(100);
 		qspi_enable(QSPI);
 		delay_ms(100);
+		
+		pio_set_output(PIOD,PIO_PD10,LOW,DISABLE,DISABLE);
+	pio_set(PIOD,PIO_PD10); 
+	delay_ms(100);
+	pio_clear(PIOD,PIO_PD10);
 		//DW1000_initialise();
 		sendDebugString("QSPI INITIALIZATION - FINISHED\n");
 		

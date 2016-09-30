@@ -38,9 +38,9 @@
 
 #define CAM_DIF_TSH cam_dif_tsh
 
-char buf [100];
+char buf [2000];
 
-char RXbuf [2000];
+char RXbuf [1024];
 
 //define task functions
 void vTask1 (void*);
@@ -94,9 +94,9 @@ int main (void)
 	sendDebugString("RTOS TASK INITIALIZATION - STARTED\n");
 	
 	xTaskCreate(vTask1,"TASK1",400,NULL,10,NULL);
-	xTaskCreate(LegControlTask,"LEGCTRLTASK",1600,NULL,4,NULL);
-	xTaskCreate(ImageProTask,"IMGTASK",400,NULL,3,NULL);
-	xTaskCreate(CLItask,"CLITASK",1600,NULL,5,NULL);
+	xTaskCreate(LegControlTask,"LEGCTRLTASK",2000,NULL,4,NULL);
+	xTaskCreate(ImageProTask,"IMGTASK",2000,NULL,3,NULL);
+	xTaskCreate(CLItask,"CLITASK",2500,NULL,5,NULL);
 	
 	sendDebugString("RTOS TASK INITIALIZATION - FINISHED\n");
 	
@@ -273,6 +273,7 @@ void CLItask(void* pvParameters) {
 	sendDebugString("\n");
 	UARTsem = xSemaphoreCreateBinary();
 	
+	
 	sendDebugString("FYP_Hexabot_ATSAMS70_MELLATRON9000>");
 	for(;;) {
 			if(xSemaphoreTake(UARTsem,0xFFFF) == pdTRUE) {
@@ -304,6 +305,12 @@ void CLItask(void* pvParameters) {
 			
 			
 			//DWM THINGS
+			else if(!strcmp(BaseCmd,"DWM-reset\n")) {
+				 	pio_set(PIOD,PIO_PD10);
+				 	delay_ms(100);
+				 	pio_clear(PIOD,PIO_PD10);
+			 }
+			
 			else if(!strcmp(BaseCmd,"DWM-test\n")) cmdTestDW1000();
 			
 			else if(!strcmp(BaseCmd,"DWM-send")) cmdDWMsend(strtok(NULL," "));
@@ -319,12 +326,15 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"DWM-RXEN\n")) cmdRXen();
 			
 			else if(!strcmp(BaseCmd,"DWM-ReadRX\n")) {
+						
+				//uint64_t msgLen = cmdDWMreadRX(RXbuf);
+				int cunt = 0;
+				cunt = DW1000_readReg(RX_BUFFER_ID, DW1000_NO_SUB,0,8);
+				sprintf(buf,"Length: 0x%016x\n",cunt);
+				sendDebugString(buf);
 				
-				int msgLen = cmdDWMreadRX(RXbuf);
-				sprintf(buf,"Length: %d\n",msgLen);
-				sendDebugString(buf);
-				sprintf(buf,"SomeData: %s\n",RXbuf);
-				sendDebugString(buf);
+				//sprintf(buf,"SomeData: %s\n",RXbuf);
+				//sendDebugString(buf);
 				
 			}
 			
@@ -501,6 +511,8 @@ void UART4_Handler(void) {
 		}
 	}
 	else {
-	if(temp = "\n") xSemaphoreGiveFromISR(UARTsem,NULL);
+	if(temp == 10){
+		 xSemaphoreGiveFromISR(UARTsem,NULL);
+		}
 	}
 }

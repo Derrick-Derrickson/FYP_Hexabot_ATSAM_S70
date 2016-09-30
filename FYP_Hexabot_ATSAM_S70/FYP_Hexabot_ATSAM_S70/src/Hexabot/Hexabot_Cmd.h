@@ -36,5 +36,5 @@ void cmdRelaxAll();
 
 void cmdRXen();
 
-int cmdDWMreadRX(char* buffer) ;
+uint64_t cmdDWMreadRX(char* buffer) ;
 #endif /* HEXABOT_CMD_H_ */
