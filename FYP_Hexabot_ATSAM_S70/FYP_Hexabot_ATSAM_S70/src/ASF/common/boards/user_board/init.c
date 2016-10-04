@@ -16,14 +16,13 @@
 #include "DW1000.h"
 #include <stdlib.h>
 //define board specific paramaters
-
 #define CONF_BOARD_SDRAMC
 #define USART_SERIAL                 UART4
 #define USART_SERIAL_ID              ID_UART4  //USART0 for sam4l
 #define USART_SERIAL_BAUDRATE        9600
 #define USART_SERIAL_CHAR_LENGTH     US_MR_CHRL_8_BIT
 #define USART_SERIAL_PARITY          US_MR_PAR_NO
-#define USART_SERIAL_STOP_BIT        US_MR_NBSTOP_1_BIT
+#define USART_SERIAL_STOP_BIT        US_MR_NBSTOP_1_BIT
 
 void board_init(void)
 {
@@ -103,7 +102,7 @@ void board_init(void)
 		wdt_disable(WDT);
 		sendDebugString("WATCHDOG INITIALIZATION - FINISHED\n");
 		
-		
+#if TX_TEST_MODE == 0		
 		
 	/* ######################################
 	   ######################################
@@ -118,6 +117,7 @@ void board_init(void)
 					Setup SDRAM
 	   ######################################
 	   ###################################### */
+
 	//Build Memory device settings:
 	sendDebugString("SDRAM INITIALIZATION - STARTED\n");
 	const sdramc_memory_dev_t SDRAM_ALLIANCE_AS4C = {
@@ -461,7 +461,7 @@ void board_init(void)
 	//ISI->ISI_PDECF = 32;
 	isi_enable(ISI);
 	sendDebugString("CAMERA INITIALIZATION - FINISHED\n");
-	
+#endif
 	/* ######################################
 	   ######################################
 			 	Setup Wireless Module
@@ -523,13 +523,13 @@ void board_init(void)
 		
 		//Initalize the dwm1000 module 
 		sendDebugString("DWM1000 INITIALIZATION - STARTED\n");
-		//DW1000_initialise2();
-		//DW1000_toggleGPIO_MODE();
+		DW1000_initialise();
+		DW1000_toggleGPIO_MODE();
 		sendDebugString("DWM1000 INITIALIZATION - FINISHED\n");
 		
 		
 		
-		
+#if TX_TEST_MODE == 0
 	/* ######################################
 	   ######################################
 			 		Setup ADC
@@ -581,7 +581,7 @@ void board_init(void)
                   Setup Interrupts
 	   ######################################
 	   ###################################### */
-	
+#endif
 		sendDebugString("PERIFERAL IRQ INITIALIZATION - STARTED\n");
 		//ISI
 		//isi_enable_interrupt(ISI,1<<16|1<<17);
@@ -594,6 +594,16 @@ void board_init(void)
 		NVIC_ClearPendingIRQ(UART4_IRQn);
 		NVIC_SetPriority(UART4_IRQn,6);
 		NVIC_EnableIRQ(UART4_IRQn);
+		
+		//Interrupt from wireless module
+		NVIC_DisableIRQ(PIOA_IRQn);
+		NVIC_ClearPendingIRQ(PIOA_IRQn);
+		NVIC_SetPriority(PIOA_IRQn, 6);
+		pio_enable_interrupt(PIOA,1<<10);
+		pio_configure_interrupt(PIOA,1<<10, PIO_IT_RISE_EDGE);
+		NVIC_EnableIRQ(PIOA_IRQn);
+		
+		
 		sendDebugString("PERIFERAL IRQ INITIALIZATION - FINISHED\n");
 }
 

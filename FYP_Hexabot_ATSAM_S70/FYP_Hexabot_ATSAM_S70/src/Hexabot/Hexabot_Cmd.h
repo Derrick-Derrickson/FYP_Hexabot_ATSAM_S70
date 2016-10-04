@@ -24,7 +24,7 @@ void cmdWalk(int maxi);
 
 void cmdTestDW1000();
 
-void cmdDWMsend(char* tosend);
+void cmdDWMsend(char* tosend, int charlen);
 
 void cmdOverrideLEDDWM1000();
 

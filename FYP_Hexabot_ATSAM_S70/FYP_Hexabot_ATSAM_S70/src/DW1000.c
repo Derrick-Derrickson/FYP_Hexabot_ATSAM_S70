@@ -75,11 +75,11 @@ void DW1000_initialise() {
 	//delay(5);
 
 	// Channel, preamble, bitrate selection
-	 DW1000_writeReg(CHAN_CTRL_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x08440011, CHAN_CTRL_LEN);
+	 DW1000_writeReg(CHAN_CTRL_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x10840011, CHAN_CTRL_LEN);
 	 //DW1000_writeReg(TX_FCTRL_ID, NO_SUB, NO_OFFSET, 0x0015400C, TX_FCTRL_LEN);
 	 DW1000_writeReg(ACK_RESP_T_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x00000000, ACK_RESP_T_LEN); // changed
 	 DW1000_writeReg(SYS_CFG_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x20441200, SYS_CFG_LEN); // changed
-	 DW1000_writeReg(TX_POWER_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x75757575, TX_POWER_LEN);
+	 DW1000_writeReg(TX_POWER_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, 0x1F1F1F1F, TX_POWER_LEN);
 
 	// Default values that should be modified
 	 DW1000_writeReg(AGC_CTRL_ID, DW1000_SUB, AGC_TUNE1_OFFSET, (AGC_TUNE1_16M & AGC_TUNE1_MASK), AGC_TUNE1_LEN);
@@ -89,7 +89,7 @@ void DW1000_initialise() {
 	 DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_TUNE0b_OFFSET, 0x000A, DRX_TUNE0b_LEN); // changed
 	 DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_TUNE1a_OFFSET, 0x0087, DRX_TUNE1a_LEN);
 	 DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_TUNE1b_OFFSET, 0x0064, DRX_TUNE1b_LEN); // changed
-	 DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_TUNE2_OFFSET, 0x351A009A, DRX_TUNE2_LEN); // changed
+	 DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_TUNE2_OFFSET, 0x371A011D, DRX_TUNE2_LEN); // changed````
 	 DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_TUNE4H_OFFSET, 0x0028, DRX_TUNE4H_LEN); // changed
 	 
 	// DW1000_writeReg(DRX_CONF_ID, DW1000_SUB, DRX_SFDTOC_OFFSET, 0xFFFF, DRX_SFDTOC_LEN); // changed
@@ -108,15 +108,21 @@ void DW1000_initialise() {
 
 	// Ensure CPLOCK and CPLL_LL flags are working correctly
 	 DW1000_writeReg(EXT_SYNC_ID, DW1000_SUB, EC_CTRL_OFFSET, 0x4, EC_CTRL_LEN);
-
+	 DW1000_writeReg(SYS_MASK_ID, DW1000_NO_SUB,DW1000_NO_OFFSET,1<<13,SYS_MASK_LEN);
+	 	DW1000_writeReg(OTP_IF_ID, DW1000_SUB, OTP_CTRL, 0x03,1);
 	// DW1000_writeReg(AON_ID, SUB, AON_WCFG_OFFSET, 0, AON_WCFG_LEN);
+	 delay_ms(100);
+	
+	// Load LDE microcode from ROM to RAM - NAH FUCK THAT
+	 //DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, (0x0301),  2);
+	 //DW1000_writeReg(OTP_IF_ID, DW1000_SUB, OTP_CTRL, 0x8000,			2);
+	 //delay_ms(2);
+	 //DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, (0x0200),  2);
 
-	// Load LDE microcode from ROM to RAM
-	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 0x0000, 2);
-	 DW1000_writeReg(OTP_IF_ID, DW1000_SUB, OTP_CTRL, OTP_CTRL_LDELOAD, 2);
-	 delay_ms(150);
-	 long temp = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 2);
-	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, 0x0200, 2);
+	 
+	 DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL1_OFFSET, (0x10000738),  4);
+	 
+	 
 
 	//long temp = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_CTRL1_OFFSET, PMSC_CTRL1_LEN);
 	//DW1000_writeReg(PMSC_ID, DW1000_SUB, PMSC_CTRL1_OFFSET, (temp & 0xFFFDFFFF), PMSC_CTRL1_LEN);
@@ -235,7 +241,7 @@ void DW1000_toggleGPIO_MODE() {
     //read the gio_mode register so we collect any of the reserved bits, not necessary for this one its all 0's  
     led = DW1000_readReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET, GPIO_MODE_LEN);
     //write to set up all the gpios as leds plus an extra 4 in the first 5, all the cool kids are doing it
-    DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET,0x5540, GPIO_MODE_LEN);
+    DW1000_writeReg(GPIO_CTRL_ID, DW1000_SUB, GPIO_MODE_OFFSET,0x1540, GPIO_MODE_LEN);
    
     //read the ctrl0 register to get all those reserved bits
     led = DW1000_readReg(PMSC_ID, DW1000_SUB, PMSC_CTRL0_OFFSET, PMSC_CTRL0_LEN);

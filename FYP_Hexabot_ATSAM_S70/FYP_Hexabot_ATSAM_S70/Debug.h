@@ -8,8 +8,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#define TX_TEST_MODE 0
+
 #ifndef DEBUG_H_
 #define DEBUG_H_
+
 
 void sendDebugString(const char*);
 

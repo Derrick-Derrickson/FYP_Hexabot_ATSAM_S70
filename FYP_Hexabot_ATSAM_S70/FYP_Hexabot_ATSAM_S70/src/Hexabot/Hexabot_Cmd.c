@@ -167,11 +167,14 @@ void cmdTestDW1000() {
 	
 }
 
-void cmdDWMsend(char* tosend) {
-	DW1000_writeTxBuffer(0,tosend,strlen(tosend));
-	DW1000_setTxFrameControl( 0x000D0000 | 0x7F&strlen(tosend)  );
+void cmdDWMsend(char* tosend, int charlen) {
+	for(int i = 0; i< charlen;i++){
+	DW1000_writeTxBuffer(i,tosend[i],1);
+	}
+	DW1000_setTxFrameControl( 0x000D0000 | 0x7F&charlen  );
 	DW1000_startTx();
 }
+
 void cmdRXen() {
 	DW1000_writeReg(SYS_CTRL_ID, DW1000_NO_SUB, 0x0, 0x00000100, SYS_CTRL_LEN);
 }
@@ -179,16 +182,16 @@ void cmdRXen() {
 uint64_t cmdDWMreadRX(char* buffer) {
 	char buf[40];
 	uint64_t frameInfo = DW1000_readReg(RX_FINFO_ID, DW1000_NO_SUB, DW1000_NO_OFFSET, RX_FINFO_LEN);
-	int frameLen = frameInfo & 0x7F;
-	int secToRead = (frameLen&0x7F);
-	sprintf(buf,"Going to read: %d bytes\n",secToRead);
-	sendDebugString(buf);
+	int frameLen = (frameInfo & 0x7F)-2;
+	int secToRead = (int)ceil(((float)frameLen / 4.00));
+	//sprintf(buf,"Going to read: %d sets\n",secToRead);
+	//sendDebugString(buf);
 	for(int i = 0;i<secToRead;i++) {
-	buffer[i] = DW1000_readReg(RX_BUFFER_ID, DW1000_NO_SUB, i, 1);
+	((uint32_t*)buffer)[i] = DW1000_readReg(RX_BUFFER_ID, DW1000_SUB, i*4, 4);
 	delay_us(20);
 	}
-	buffer[secToRead] = 0x00;
-	return frameInfo;
+	//buffer[secToRead] = 0x00;
+	return frameLen;
 }
 
 void cmdOverrideLEDDWM1000() {

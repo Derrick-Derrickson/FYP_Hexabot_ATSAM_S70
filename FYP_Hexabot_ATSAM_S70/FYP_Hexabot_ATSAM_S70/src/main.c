@@ -39,14 +39,18 @@
 #define CAM_DIF_TSH cam_dif_tsh
 
 char buf [2000];
-
-char RXbuf [1024];
+#if TX_TEST_MODE == 0
+char RXbuf[1024];
+#else
+char RXbuf[] = "WIRELESS TEST ABCD 1234";
+#endif
 
 //define task functions
 void vTask1 (void*);
 void LegControlTask (void*);
 void CLItask(void*);
 void ImageProTask(void*);
+void WirelessTask(void*);
 uint16_t* intl_frame;
 //global variables
 
@@ -73,11 +77,13 @@ float SvoCal[] = {-14.393074,1.680154,-4.851036,1.892199,-13.799789,1.693338,-11
 int UART_Ctrl_EN = 0;
 int UART_Ctrl_Cnt = 0;
 int UART_Ctrl_Max = 0;
+int ButtonStatus;
 
 
 //semaphores!
 SemaphoreHandle_t ISIsem = NULL;
 SemaphoreHandle_t UARTsem = NULL;
+SemaphoreHandle_t WIRELESSsem = NULL;
 
 int main (void)
 {
@@ -94,10 +100,12 @@ int main (void)
 	sendDebugString("RTOS TASK INITIALIZATION - STARTED\n");
 	
 	xTaskCreate(vTask1,"TASK1",400,NULL,10,NULL);
-	xTaskCreate(LegControlTask,"LEGCTRLTASK",2000,NULL,4,NULL);
-	xTaskCreate(ImageProTask,"IMGTASK",2000,NULL,3,NULL);
-	xTaskCreate(CLItask,"CLITASK",2500,NULL,5,NULL);
-	
+#if TX_TEST_MODE == 0
+	xTaskCreate(LegControlTask,"LEGCTRLTASK",2000,NULL,5,NULL);
+	xTaskCreate(ImageProTask,"IMGTASK",2000,NULL,4,NULL);
+	xTaskCreate(CLItask,"CLITASK",2500,NULL,6,NULL);
+	xTaskCreate(WirelessTask,"WIRELESSTASK",2500,NULL,3,NULL);
+#endif
 	sendDebugString("RTOS TASK INITIALIZATION - FINISHED\n");
 	
 	sendDebugString("STARTING RTOS\n");
@@ -125,6 +133,7 @@ void vTask1 (void* pvParameters) {
 	for(;;) {
 				if(tg) {
 					pio_set(LED0);
+#if TX_TEST_MODE == 0
 					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25 && !pio_get(PIOD,PIO_INPUT,1<<9))  batLowCount++;
 					else batLowCount = 0;
 					if(batLowCount > 10) {
@@ -146,10 +155,15 @@ void vTask1 (void* pvParameters) {
 						pio_set(LED6);
 						pio_set(LED7);
 					}
+#else
+					
+					cmdDWMsend(RXbuf,strlen(RXbuf)+2);
+#endif
 					tg = !tg;
 				}
 				else {
-					pio_clear(LED0);	
+					pio_clear(LED0);
+#if TX_TEST_MODE == 0
 					if(!hexabot_walk.Walk_EN && getBatVoltage() < 6.25) {
 						pio_clear(LED0);
 						pio_clear(LED1);
@@ -160,6 +174,7 @@ void vTask1 (void* pvParameters) {
 						pio_clear(LED6);
 						pio_clear(LED7);
 					}
+#endif
 					tg = !tg;
 				}	
 				vTaskDelay(250);
@@ -313,7 +328,10 @@ void CLItask(void* pvParameters) {
 			
 			else if(!strcmp(BaseCmd,"DWM-test\n")) cmdTestDW1000();
 			
-			else if(!strcmp(BaseCmd,"DWM-send")) cmdDWMsend(strtok(NULL," "));
+			else if(!strcmp(BaseCmd,"DWM-send")){
+				char* temp = strtok(NULL," ");
+				 cmdDWMsend(temp,strlen(temp));
+			}
 			
 			else if(!strcmp(BaseCmd,"DWM-orLed\n")) cmdOverrideLEDDWM1000();
 			
@@ -327,14 +345,25 @@ void CLItask(void* pvParameters) {
 			
 			else if(!strcmp(BaseCmd,"DWM-ReadRX\n")) {
 						
-				//uint64_t msgLen = cmdDWMreadRX(RXbuf);
-				int cunt = 0;
-				cunt = DW1000_readReg(RX_BUFFER_ID, DW1000_NO_SUB,0,8);
-				sprintf(buf,"Length: 0x%016x\n",cunt);
+				////uint64_t msgLen = cmdDWMreadRX(RXbuf);
+				//int cunt = 0;
+				//cunt = DW1000_readReg(RX_BUFFER_ID, DW1000_NO_SUB,0,4);
+				//sprintf(buf,"Length: 0x%016x\n",cunt);
+				//sendDebugString(buf);
+				//
+				////sprintf(buf,"SomeData: %s\n",RXbuf);
+				////sendDebugString(buf);
+				//
+				
+				//memset(RXbuf,0,1024);
+				uint64_t msgLen = cmdDWMreadRX(RXbuf);
+				
+				sprintf(buf,"Length: %d\n",msgLen);
 				sendDebugString(buf);
 				
-				//sprintf(buf,"SomeData: %s\n",RXbuf);
-				//sendDebugString(buf);
+				sprintf(buf,"SomeData: %s\n",RXbuf);
+				sendDebugString(buf);
+				
 				
 			}
 			
@@ -478,6 +507,24 @@ void ImageProTask(void* pvParams) {
 	}
 }
 
+void WirelessTask(void* pvParams) {
+	WIRELESSsem = xSemaphoreCreateBinary();
+	cmdRXen();
+	for(;;) {
+		if(xSemaphoreTake(WIRELESSsem,0xFFFF) == pdTRUE) {
+		pio_set(LED1);
+		uint64_t msgLen = cmdDWMreadRX(RXbuf);	
+		sprintf(buf,"WirelessRCVLEN: %d\n",msgLen);
+		sendDebugString(buf);
+		sprintf(buf,"WirelessRCVDAT: %s\n",RXbuf);
+		sendDebugString(buf);
+		cmdRXen();
+		pio_clear(LED1);
+		}
+	}
+}
+
+
 	/* ######################################
 	   ######################################
 			 	INTERUPT HANDLERS
@@ -515,4 +562,11 @@ void UART4_Handler(void) {
 		 xSemaphoreGiveFromISR(UARTsem,NULL);
 		}
 	}
+}
+
+void PIOA_Handler (void) {
+	ButtonStatus = pio_get_interrupt_status(PIOA);
+	ButtonStatus &= pio_get_interrupt_mask(PIOA);
+	xSemaphoreGiveFromISR(WIRELESSsem,NULL);
+
 }
