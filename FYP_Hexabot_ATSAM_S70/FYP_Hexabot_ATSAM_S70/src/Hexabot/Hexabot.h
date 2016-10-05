@@ -38,6 +38,7 @@ typedef struct walk_data_s {
 	int i;
 	int ret;
 	int gaitIndex;
+	int standing;
 } walk_data;
 
 //typedefs

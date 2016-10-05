@@ -6,6 +6,7 @@
 */
 #include "Hexabot/Hexabot.h"
 #include "Hexabot/Hexabot_Cmd.h"
+#include "Gait.h"
 
 #define REG_GAIN		0x00	/* Gain control, AGC[7:0] */
 #define REG_BLUE		0x01	/* AWB - Blue chanel gain */
@@ -1513,6 +1514,13 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 		// 16	max_i addition amount byte 3
 		// 17   walk EN
 		
+	//packet structure (04):
+		// Byte Description
+		// 00	ID (04)
+		// 01	1 - stand up, 0 - sit down
+		
+		
+		
 		switch(cmd[0]) {
 		
 		case 00:
@@ -1535,8 +1543,11 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 				hexabot_walk->Hexabot_leg_cycle_t = cmd[9];
 				//max i addition
 				hexabot_walk->max_i += *(uint32_t*)&cmd[13];
+				
 				//walk EN
-				hexabot_walk->Walk_EN = cmd[17];
+				if(hexabot_walk->standing == 1) {
+					hexabot_walk->Walk_EN = cmd[17];
+				}
 				//stance
 				hexabot_walk->stance = *(uint32_t*)&cmd[18];
 				//height
@@ -1560,9 +1571,38 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 				hexabot_walk->Hexabot_leg_cycle_t = cmd[9];
 				//max i addition
 				hexabot_walk->max_i += cmd[13];
+				
 				//walk EN
-				hexabot_walk->Walk_EN = cmd[17];
+				if(hexabot_walk->standing == 1) {
+					hexabot_walk->Walk_EN = cmd[17];
+				}
 		break;
-		}
+
+		case 04:
+			if(cmdLen != 2) break;
+			extern int resting;
+			if(cmd[1] == 1) {
+				if(resting != 0){
+				hexabot_walk->gaitIndex = 99;
+				hexabot_walk->i =0;
+				hexabot_walk->max_i = STAND_UP_TIME;
+				hexabot_walk->Walk_EN = 1;
+				resting = 0;
+				}
+			}
+			
+			else if(cmd[1] == 0) {
+				if(resting != 1){
+				hexabot_walk->gaitIndex = 98;
+				hexabot_walk->i =0;
+				hexabot_walk->max_i = STAND_UP_TIME;
+				hexabot_walk->Walk_EN = 1;
+				resting = 1;
+				}
+			}
+		
+		break;
+		
+	}
 		
 }
