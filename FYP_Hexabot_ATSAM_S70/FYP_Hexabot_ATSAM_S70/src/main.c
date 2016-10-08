@@ -54,7 +54,7 @@ void WirelessTask(void*);
 uint16_t* intl_frame;
 //global variables
 
-int resting = 0;
+int resting = 1;
 //frame pointer
 int isi_frames_done = 0;
 //pixel difference
@@ -72,7 +72,8 @@ int cam_dif_tsh = 25;
 //button up varuable
 int But_Up = 0;
 //Servo calibration array
-float SvoCal[] = {-14.393074,1.680154,-4.851036,1.892199,-13.799789,1.693338,-11.899818,1.735560,-0.599991,1.986667,4.199936,2.093332,0.400000,0.008889,-4.499998,-0.100000,-3.699999,-0.082222,-6.199996,-0.137778,-1.500000,-0.033333,-0.500000,-0.011111,11.999817,1.133331,-1.580338,0.982441,-1.999969,0.977778,-0.860184,0.990442,-7.371574,0.918094,-7.899879,0.912224};
+float SvoCal[] = {2.190468,2.048677,-8.911903,1.801958,-6.651421,1.852191,-3.200684,1.928874,-11.552467,1.743279,-13.162811,1.707493,0.919999,0.020444,-2.519998,-0.056000,-2.289998,-0.050889,-4.069998,-0.090444,-4.430007,-0.098445,-2.149998,-0.047778,3.470741,1.038564,-7.911690,0.912092,-0.450096,0.994999,-3.880829,0.956880,11.532463,1.128138,-11.432442,0.872973};
+
 
 int UART_Ctrl_EN = 0;
 int UART_Ctrl_Cnt = 0;
@@ -102,7 +103,7 @@ int main (void)
 	xTaskCreate(vTask1,"TASK1",400,NULL,10,NULL);
 #if TX_TEST_MODE == 0
 	xTaskCreate(LegControlTask,"LEGCTRLTASK",2000,NULL,5,NULL);
-	xTaskCreate(ImageProTask,"IMGTASK",2000,NULL,4,NULL);
+	//xTaskCreate(ImageProTask,"IMGTASK",2000,NULL,4,NULL);
 	xTaskCreate(CLItask,"CLITASK",2500,NULL,6,NULL);
 	xTaskCreate(WirelessTask,"WIRELESSTASK",2500,NULL,3,NULL);
 #endif
@@ -198,6 +199,7 @@ void LegControlTask (void* pvParameters) {
 	hexabot_walk.Hexabot_leg_cycle_t = 150;
 	hexabot_walk.ret = 0;
 	hexabot_walk.gaitIndex = 2;
+	hexabot_walk.standing = 1;
 	
 	cmdServoMan(6,0,90.00);
 	cmdServoMan(6,1,0.00);
@@ -387,19 +389,23 @@ void CLItask(void* pvParameters) {
 			else if(!strcmp(BaseCmd,"relaxSvo")) cmdRelaxSvo(atoi(strtok(NULL," ")) , atoi(strtok(NULL," ")));
 			
 			else if(!strcmp(BaseCmd,"StandUp\n")) {
-				hexabot_walk.gaitIndex = 99;
-				hexabot_walk.i =0;
-				hexabot_walk.max_i = STAND_UP_TIME;
-				hexabot_walk.Walk_EN = 1;
-				resting = 0;
+				if(resting != 0){
+					hexabot_walk.gaitIndex = 99;
+					hexabot_walk.i =0;
+					hexabot_walk.max_i = STAND_UP_TIME;
+					hexabot_walk.Walk_EN = 1;
+					resting = 0;
+				}
 			}
 			
 			else if(!strcmp(BaseCmd,"SitDown\n")) {
-				hexabot_walk.gaitIndex = 98;
-				hexabot_walk.i =0;
-				hexabot_walk.max_i = STAND_UP_TIME;
-				hexabot_walk.Walk_EN = 1;
-				resting = 1;
+				if(resting != 1){
+					hexabot_walk.gaitIndex = 98;
+					hexabot_walk.i =0;
+					hexabot_walk.max_i = STAND_UP_TIME;
+					hexabot_walk.Walk_EN = 1;
+					resting = 1;
+				}
 				
 			}
 			
@@ -512,14 +518,18 @@ void WirelessTask(void* pvParams) {
 	cmdRXen();
 	for(;;) {
 		if(xSemaphoreTake(WIRELESSsem,0xFFFF) == pdTRUE) {
-		pio_set(LED1);
+		pio_set(LED2);
 		uint64_t msgLen = cmdDWMreadRX(RXbuf);	
-		sprintf(buf,"WirelessRCVLEN: %d\n",msgLen);
+		
+		sendDebugString("Code Received 0x");
+		for(int i = 0; i < msgLen; i++) {
+		sprintf(buf,"%02x",RXbuf[i]);
 		sendDebugString(buf);
-		sprintf(buf,"WirelessRCVDAT: %s\n",RXbuf);
-		sendDebugString(buf);
+		}
+		sendDebugString("\n");
+		cmdInterp(RXbuf,msgLen,&hexabot_walk);
 		cmdRXen();
-		pio_clear(LED1);
+		pio_clear(LED2);
 		}
 	}
 }
@@ -568,5 +578,4 @@ void PIOA_Handler (void) {
 	ButtonStatus = pio_get_interrupt_status(PIOA);
 	ButtonStatus &= pio_get_interrupt_mask(PIOA);
 	xSemaphoreGiveFromISR(WIRELESSsem,NULL);
-
 }
