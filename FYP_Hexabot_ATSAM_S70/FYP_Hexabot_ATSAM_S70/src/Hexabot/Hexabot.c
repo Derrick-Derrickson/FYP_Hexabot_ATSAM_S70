@@ -1603,6 +1603,11 @@ void cmdInterp(uint8_t* cmd,int cmdLen,walk_data* hexabot_walk) {
 		
 		break;
 		
+		case 05:
+		if(cmdLen != 2) break;
+		if(cmd[1] == 1) surprise();
+		else hexabot_walk->ret = 1;
+		break;
 	}
 		
 }

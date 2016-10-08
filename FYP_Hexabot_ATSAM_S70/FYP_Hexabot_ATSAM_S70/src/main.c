@@ -54,7 +54,7 @@ void WirelessTask(void*);
 uint16_t* intl_frame;
 //global variables
 
-int resting = 0;
+int resting = 1;
 //frame pointer
 int isi_frames_done = 0;
 //pixel difference
@@ -518,7 +518,7 @@ void WirelessTask(void* pvParams) {
 	cmdRXen();
 	for(;;) {
 		if(xSemaphoreTake(WIRELESSsem,0xFFFF) == pdTRUE) {
-		pio_set(LED1);
+		pio_set(LED2);
 		uint64_t msgLen = cmdDWMreadRX(RXbuf);	
 		
 		sendDebugString("Code Received 0x");
@@ -529,7 +529,7 @@ void WirelessTask(void* pvParams) {
 		sendDebugString("\n");
 		cmdInterp(RXbuf,msgLen,&hexabot_walk);
 		cmdRXen();
-		pio_clear(LED1);
+		pio_clear(LED2);
 		}
 	}
 }
@@ -578,5 +578,4 @@ void PIOA_Handler (void) {
 	ButtonStatus = pio_get_interrupt_status(PIOA);
 	ButtonStatus &= pio_get_interrupt_mask(PIOA);
 	xSemaphoreGiveFromISR(WIRELESSsem,NULL);
-
 }

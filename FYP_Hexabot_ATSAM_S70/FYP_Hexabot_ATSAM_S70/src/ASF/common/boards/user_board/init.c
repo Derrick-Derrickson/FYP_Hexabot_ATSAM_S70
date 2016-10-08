@@ -537,14 +537,14 @@ void board_init(void)
 	   ###################################### */
 		sendDebugString("ADC INITIALIZATION - STARTED\n");
 		struct afec_config confDefaults;
-		pmc_enable_periph_clk(AFEC0);
+		pmc_enable_periph_clk(ID_AFEC0);
 		
 		afec_enable(AFEC0);
 		afec_get_config_defaults(&confDefaults);
 		afec_init(AFEC0,&confDefaults);
 		afec_set_trigger(AFEC0,AFEC_TRIG_SW);
 		
-		pmc_enable_periph_clk(AFEC1);
+		pmc_enable_periph_clk(ID_AFEC1);
 		
 		afec_enable(AFEC1);
 		afec_get_config_defaults(&confDefaults);
